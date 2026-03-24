@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sport & Society in Algeria — Digital Research Archive</title>
+    <title>Sport & Society in Algeria — Prof. Mahfoud Amara</title>
     
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css"/>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
@@ -14,9 +14,9 @@
 <div class="shell">
     <nav class="eco-nav">
         <div class="eco-container">
-            <span class="eco-tag">Cross-Project Links:</span>
+            <span class="eco-tag">Research Ecosystem:</span>
             <div class="eco-links">
-                <a href="https://mahfoudm33.github.io/Dr-Mahfoud-Amara-in-the-Peninsula-/" target="_blank">The Peninsula Archive</a>
+                <a href="https://mahfoudm33.github.io/Dr-Mahfoud-Amara-in-the-Peninsula-/" target="_blank">Peninsula Archive</a>
                 <a href="https://mahfoudm33.github.io/Dr-Mahfoud-Amara-Publications-Arab-World/" target="_blank">Arab World Research</a>
                 <a href="#">Sport in Islam Project</a>
             </div>
@@ -28,10 +28,10 @@
             <div class="dz-flag"><div class="green"></div><div class="white"></div></div>
             <div>
                 <h1 class="main-title">Sport, Society & Culture in Algeria</h1>
-                <p class="author-sub">Prof. Mahfoud Amara · Digital Research Platform</p>
+                <p class="author-sub">Digital Archive · Prof. Mahfoud Amara · Qatar University</p>
             </div>
         </div>
-        <button onclick="downloadCSV()" class="export-btn">📊 Export Bibliography</button>
+        <button onclick="downloadCSV()" class="export-btn">📊 Export Full Bibliography (CSV)</button>
     </header>
 
     <div class="filter-strip">
@@ -43,20 +43,18 @@
             <span class="pill" data-theme="Mediterranean">Mediterranean</span>
             <span class="pill" data-theme="Legitimacy">Legitimacy</span>
             <span class="pill" data-theme="Postcolonialism">Postcolonialism</span>
-            <button class="pill-clear" id="clear-btn" style="display:none" onclick="clearTheme()">✕ Reset Map</button>
+            <button class="pill-clear" id="clear-btn" style="display:none" onclick="clearTheme()">✕ Reset Filters</button>
         </div>
     </div>
 
     <main class="content-split">
         <div id="map"></div>
-        
         <aside class="side-panel" id="panel">
             <div class="panel-intro" id="panel-empty">
-                <div class="intro-icon">📓</div>
-                <h3>Geospatial Archive</h3>
-                <p>Click a marker on the map to explore extensive summaries and contributions to knowledge regarding the sociopolitical landscape of Algerian sport.</p>
+                <div class="intro-icon">🗺️</div>
+                <h3>Geographic Research Archive</h3>
+                <p>Click a marker to explore research on sport diplomacy, post-colonial history, and socio-political transition across Algeria.</p>
             </div>
-            
             <div id="panel-active" class="active-container" style="display:none;">
                 <div class="active-hdr">
                     <h2 id="city-name"></h2>
@@ -70,55 +68,69 @@
 
 <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-/* ── RESEARCH DATABASE ── */
+/* ── FULL RESEARCH DATABASE (12 ENTRIES) ── */
 const DATA = {
     oran: {
         city: "Oran", lat: 35.70, lon: -0.64, north: true,
-        pubs: [{ 
-            year: "2023", title: "The 19th Mediterranean Games, Oran 2022 and ‘the New Algeria’", 
-            ref: "Asian Journal of Sport History & Culture, 1(3).",
-            url: "https://doi.org/10.1080/27690148.2023.2195388",
-            summary: "Extensive analysis of the Oran 2022 Mediterranean Games as a symbolic platform for President Tebboune’s 'New Algeria' narrative.",
-            contribution: "Unpacks how regional mega-events signal national regeneration and diplomatic resilience.",
-            tags: ["Major sport events", "Mediterranean", "Legitimacy"]
-        }]
+        pubs: [{ year: "2023", title: "The 19th Mediterranean Games, Oran 2022 and ‘the New Algeria’", ref: "Asian Journal of Sport History & Culture, 1(3).", url: "https://doi.org/10.1080/27690148.2023.2195388", summary: "Examines the political mobilization of the Oran 2022 games for state legitimacy.", contribution: "Unpacks how regional mega-events signal national regeneration.", tags: ["Major sport events", "Mediterranean", "Legitimacy"] }]
+    },
+    algiers: {
+        city: "Algiers", lat: 36.74, lon: 3.06, north: true,
+        pubs: [
+            { year: "2012", title: "Football Sub-Culture and Youth Politics in Algeria", ref: "Mediterranean Politics, 17(1).", url: "https://doi.org/10.1080/13629387.2012.655046", summary: "Football fan chants as a medium for protest among youth.", contribution: "Stadiums as alternative sites for political dissent.", tags: ["Youth", "Legitimacy", "Nation state formation"] },
+            { year: "2021", title: "Moments and memories: football and state narratives", ref: "Soccer & Society, 22(8).", url: "https://doi.org/10.1080/14660970.2019.1680505", summary: "State co-option of football achievements for historical legitimacy.", contribution: "Analyzes collective memory through footballing triumphs.", tags: ["Postcolonialism", "Legitimacy", "Nation state formation"] },
+            { year: "2011", title: "Football, the new battlefield of business", ref: "Journal of North African Studies, 16(1).", url: "https://doi.org/10.1080/13629387.2010.536376", summary: "Transition from socialism to market economy through football corporatization.", contribution: "Sport nationalism intersecting with corporate branding.", tags: ["Legitimacy", "Nation state formation"] },
+            { year: "2022", title: "Football in Algeria from the 'Black Decade' to the Hirak", ref: "Middle East Report (MERIP), No. 304.", url: "https://merip.org/2022/10/football-in-algeria-from-the-black-decade-to-the-hirak/", summary: "Historical survey of football's role from civil war to the 2019 protests.", contribution: "Football as a vessel for continuity in public political life.", tags: ["Postcolonialism", "Nation state formation", "Youth"] }
+        ]
+    },
+    tiziouzou: {
+        city: "Tizi Ouzou", lat: 36.71, lon: 4.05, north: true,
+        pubs: [
+            { year: "2025", title: "Imane Khelif: Women’s Boxing and Geopolitical Power", ref: "The International Spectator.", url: "https://doi.org/10.1080/03932729.2025.2594466", summary: "Postcolonial agency against racialized media hostility.", contribution: "Framework for athletes navigating Global South/North tensions.", tags: ["Gender", "Geopolitics", "Major sport events"] },
+            { year: "2025", title: "Ghada Mahat: Whistling against the odds", ref: "Sport in Society.", url: "https://doi.org/10.1080/17430437.2025.2590520", summary: "Female refereeing as resistance in patriarchal structures.", contribution: "Structural barriers in post-independence Algerian football.", tags: ["Gender", "Nation state formation"] }
+        ]
+    },
+    tlemcen: {
+        city: "Tlemcen", lat: 34.88, lon: -1.31, north: true,
+        pubs: [{ year: "2022", title: "Algeria and the FIFA World Cup: Political Legitimization", ref: "Soccer and Society, 23(7).", url: "https://doi.org/10.1080/14660970.2022.2059871", summary: "Regional rivalry and political eras of nation-building.", contribution: "Civilizational projects in opposition to colonial narratives.", tags: ["Geopolitics", "Legitimacy", "Nation state formation"] }]
+    },
+    constantine: {
+        city: "Constantine", lat: 36.36, lon: 6.61, north: true,
+        pubs: [{ year: "2025", title: "Living Football, Navigating Politics: Salah Assad", ref: "IJHS.", url: "https://doi.org/10.1080/09523367.2025.2479455", summary: "Biographical study linking career to national political trauma.", contribution: "Linking individual agency to structural forces.", tags: ["Postcolonialism", "Nation state formation"] }]
+    },
+    bejaia: {
+        city: "Béjaïa", lat: 36.75, lon: 5.08, north: true,
+        pubs: [{ year: "2024", title: "Online Sources as Alternative Media Consumption", ref: "AJSHC.", url: "https://doi.org/10.1080/27690148.2024.2304318", summary: "Digital platforms bypassing official state broadcasts.", contribution: "Democratization of media in non-Western contexts.", tags: ["Youth", "Mediterranean"] }]
+    },
+    annaba: {
+        city: "Annaba", lat: 36.90, lon: 7.76, north: true,
+        pubs: [{ year: "2006", title: "Post-Colonial Discourses: Algérie-France 2001", ref: "IRMS.", url: "https://www.jstor.org/stable/41307963", summary: "Negotiating colonial memory through the 2001 friendly match.", contribution: "Sport as a lens for reconciliation and diaspora identity.", tags: ["Postcolonialism", "Mediterranean"] }]
     },
     tamanrasset: {
         city: "Tamanrasset", lat: 22.78, lon: 5.52, north: false,
-        pubs: [{ 
-            year: "2006", title: "Sport and Algerian Nationalism in the ‘Global’ era", 
-            ref: "Francophone and Postcolonial Studies, 4(1).",
-            url: "https://doi.org/10.3828/fps.2006.4.1.88",
-            summary: "Analyzes the tension between the Algerian nation-state's desire for territorial identity and globalized migration.",
-            contribution: "Argues that Algerian sport operates in a 'third space' beyond territorial borders.",
-            tags: ["Postcolonialism", "Nation state formation"]
-        }]
+        pubs: [{ year: "2006", title: "Sport and Algerian Nationalism in the ‘Global’ era", ref: "FPS.", url: "https://doi.org/10.3828/fps.2006.4.1.88", summary: "Territorial identity vs global diaspora flows.", contribution: "Analyzing the Saharan dimension of postcolonial identity.", tags: ["Postcolonialism", "Nation state formation"] }]
     }
-    // Add all 12 entries here following the oran/tamanrasset structure...
 };
 
 /* ── MAP INITIALIZATION ── */
 const map = L.map('map', { center: [28.0, 3.0], zoom: 5, minZoom: 4 });
 
-// Using CARTO Voyager: Standard delineation with clear Western Sahara borders
-L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-    attribution: '&copy; OpenStreetMap & CARTO'
+// USING OPENSTREETMAP: Ensures clear line between Morocco and Western Sahara
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
 }).addTo(map);
 
-// CRITICAL FIX: Ensures map visibility on initial load
-window.addEventListener('load', () => {
-    setTimeout(() => { map.invalidateSize(); }, 300);
-});
+// Robust initialization fix
+window.onload = function() { setTimeout(() => { map.invalidateSize(); }, 400); };
 
-/* ── MARKER & INTERACTION LOGIC ── */
-let currentActiveCity = null;
+let activeCityId = null;
 const allMarkers = {};
 
-function createIcon(id, cityData, isHighlighted = false) {
-    const color = isHighlighted ? '#b83820' : (cityData.north ? '#1a5fa8' : '#2e6b10');
+function createIcon(id, data, active = false) {
+    const color = active ? '#b83820' : (data.north ? '#1a5fa8' : '#2e6b10');
     return L.divIcon({
-        className: 'custom-marker',
-        html: `<div class="marker-blob" style="background:${color}"><div class="inner-dot"></div></div>`,
+        className: 'marker-wrap',
+        html: `<div class="marker-pin" style="background:${color}"><div class="dot"></div></div>`,
         iconSize: [30, 30], iconAnchor: [15, 15]
     });
 }
@@ -126,8 +138,8 @@ function createIcon(id, cityData, isHighlighted = false) {
 Object.entries(DATA).forEach(([id, info]) => {
     const marker = L.marker([info.lat, info.lon], { icon: createIcon(id, info) }).addTo(map);
     marker.on('click', () => {
-        if (currentActiveCity) allMarkers[currentActiveCity].setIcon(createIcon(currentActiveCity, DATA[currentActiveCity], false));
-        currentActiveCity = id;
+        if (activeCityId) allMarkers[activeCityId].setIcon(createIcon(activeCityId, DATA[activeCityId], false));
+        activeCityId = id;
         marker.setIcon(createIcon(id, info, true));
         map.flyTo([info.lat, info.lon], 6);
         openSidebar(info);
@@ -139,36 +151,32 @@ function openSidebar(info) {
     document.getElementById('panel-empty').style.display = 'none';
     document.getElementById('panel-active').style.display = 'flex';
     document.getElementById('city-name').textContent = info.city;
-    
-    const html = info.pubs.map(p => `
-        <div class="scholar-card">
-            <header class="card-meta">${p.year} • Publication</header>
-            <h4 class="card-title">${p.title}</h4>
-            <p class="card-ref">${p.ref}</p>
-            <div class="card-section"><strong>Summary:</strong> ${p.summary}</div>
-            <div class="card-section contrib"><strong>Contribution to Knowledge:</strong> ${p.contribution}</div>
-            <a href="${p.url}" target="_blank" class="card-link">View Full Text →</a>
+    document.getElementById('panel-body').innerHTML = info.pubs.map(p => `
+        <div class="pub-card">
+            <span class="pub-year">${p.year}</span>
+            <h4 class="pub-title">${p.title}</h4>
+            <p class="pub-ref">${p.ref}</p>
+            <div class="pub-detail"><strong>Summary:</strong> ${p.summary}</div>
+            <div class="pub-detail contrib"><strong>Knowledge:</strong> ${p.contribution}</div>
+            <a href="${p.url}" target="_blank" class="pub-link">🔗 View Publication</a>
         </div>
     `).join('<hr class="divider">');
-    
-    document.getElementById('panel-body').innerHTML = html;
 }
 
 function closePanel() {
-    if (currentActiveCity) allMarkers[currentActiveCity].setIcon(createIcon(currentActiveCity, DATA[currentActiveCity], false));
-    currentActiveCity = null;
+    if (activeCityId) allMarkers[activeCityId].setIcon(createIcon(activeCityId, DATA[activeCityId], false));
+    activeCityId = null;
     document.getElementById('panel-empty').style.display = 'flex';
     document.getElementById('panel-active').style.display = 'none';
     map.setView([28.0, 3.0], 5);
 }
 
-/* ── FILTERS & CSV ── */
 document.querySelectorAll('.pill').forEach(pill => {
     pill.addEventListener('click', () => {
         const theme = pill.dataset.theme;
         Object.entries(DATA).forEach(([id, info]) => {
-            const hasMatch = info.pubs.some(p => p.tags.includes(theme));
-            allMarkers[id].getElement().style.opacity = hasMatch ? '1' : '0.15';
+            const match = info.pubs.some(p => p.tags.includes(theme));
+            allMarkers[id].getElement().style.opacity = match ? '1' : '0.15';
         });
         document.getElementById('clear-btn').style.display = 'inline-block';
         pill.classList.add('active');
@@ -182,16 +190,14 @@ function clearTheme() {
 }
 
 function downloadCSV() {
-    let csv = "Year,City,Title,Summary,Contribution\n";
+    let csv = "Year,City,Title,Reference,Summary,Contribution\n";
     Object.values(DATA).forEach(c => c.pubs.forEach(p => {
-        csv += `${p.year},${c.city},"${p.title.replace(/"/g,'')}","${p.summary.replace(/"/g,'')}","${p.contribution.replace(/"/g,'')}"\n`;
+        csv += `${p.year},${c.city},"${p.title.replace(/"/g,'')}","${p.ref.replace(/"/g,'')}","${p.summary.replace(/"/g,'')}","${p.contribution.replace(/"/g,'')}"\n`;
     }));
     const blob = new Blob([csv], { type: 'text/csv' });
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
-    a.href = url;
-    a.download = 'Amara_Algeria_Scholarship.csv';
-    a.click();
+    a.href = url; a.download = 'Amara_Algeria_Scholarship.csv'; a.click();
 }
 </script>
 </body>
