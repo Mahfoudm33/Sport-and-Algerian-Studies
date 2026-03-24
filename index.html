@@ -30,7 +30,8 @@
     </header>
 
     <main class="main-content">
-        <div id="map"></div>
+        <div id="map" style="width: 100%; height: 100%;"></div>
+        
         <aside class="panel" id="panel">
             <div class="panel-empty" id="panel-empty">
                 <div class="empty-icon">🗺️</div>
@@ -50,7 +51,7 @@
 <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <script>
-/* ── Publication Database (All 12 References) ── */
+/* ── Publication Database ── */
 const PUB = {
     algiers: {
         city: "Algiers", lat: 36.74, lon: 3.06, north: true,
@@ -106,13 +107,25 @@ const PUB = {
     }
 };
 
-/* ── State & Map Management ── */
+/* ── Map Setup ── */
+// Initialize map centered on Algeria
+const map = L.map('map', { 
+    center: [28.0, 3.0], 
+    zoom: 5, 
+    minZoom: 4 
+});
+
+// FIX: Using CARTO Voyager (Clean, No Key Required)
+L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+    subdomains: 'abcd',
+    maxZoom: 19
+}).addTo(map);
+
+/* ── State Management ── */
 let activeTheme = null;
 let activeCityId = null;
 const markerRefs = {};
-
-const map = L.map('map', { center: [28.0, 3.0], zoom: 5, minZoom: 4 });
-L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png').addTo(map);
 
 function getIcon(id, data, isActive = false) {
     const color = isActive ? '#b83820' : (data.north ? '#1a5fa8' : '#2e6b10');
@@ -129,6 +142,7 @@ function getIcon(id, data, isActive = false) {
     });
 }
 
+// Place markers
 Object.entries(PUB).forEach(([id, data]) => {
     const marker = L.marker([data.lat, data.lon], { icon: getIcon(id, data) }).addTo(map);
     marker.bindTooltip(data.city, { className: 'city-tooltip', direction: 'top', offset: [0, -10] });
@@ -183,6 +197,12 @@ function closePanel() {
     map.setView([28.0, 3.0], 5);
 }
 
+// Ensure map is correctly sized on load
+window.onload = function() {
+    map.invalidateSize();
+};
+
+/* ── Theme Filtering ── */
 document.querySelectorAll('.pill[data-theme]').forEach(pill => {
     pill.addEventListener('click', () => {
         const theme = pill.dataset.theme;
