@@ -9,10 +9,15 @@
     
     <style>
         :root {
+            /* Core Theme Colors */
             --oxford: #1a5fa8; --desert: #fdfcf9; --sand: #f4f1ea;
             --dz-green: #006233; --dz-red: #d21034; --border: #e0ddd5;
-            --track-red: #b33922; --pitch-green: #386b36; --pitch-stripe: #2f5c2d;
-            --stands-base: #2a2a2a;
+            
+            /* Daytime Stadium Colors */
+            --track-red: #cc4735; /* Brighter, realistic track red */
+            --pitch-green: #448041; --pitch-stripe: #3d733b;
+            --stands-bg: #e2e8f0; --stands-seat: #ffffff;
+            --container-bg: #f0f4f8; /* Light, airy background replacing the black void */
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
@@ -32,7 +37,9 @@
         .hdr-brand { display: flex; align-items: center; gap: 15px; }
         
         /* ACCURATE SVG FLAG */
-        .hdr-flag { width: 44px; height: 28px; border-radius: 3px; overflow: hidden; border: 1px solid #ddd; display: flex; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .hdr-flag { width: 48px; height: 32px; border-radius: 3px; overflow: hidden; border: 1px solid #ccc; display: flex; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+        .hdr-flag svg { width: 100%; height: 100%; }
+
         .hdr-title { font-family: 'Playfair Display', serif; font-size: 22px; color: #111; line-height: 1.2; margin-bottom: 4px;}
         .hdr-sub { font-size: 11px; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: 0.5px; }
         .hdr-sub a { color: var(--oxford); text-decoration: none; font-weight: 700;}
@@ -51,14 +58,15 @@
         /* ── MAIN LAYOUT ── */
         .main-content { flex: 1 1 auto; display: flex; flex-direction: row; overflow: hidden; position: relative; }
         
-        /* ── 3D OLYMPIC STADIUM ENVIRONMENT ── */
+        /* ── 3D DAYTIME OLYMPIC STADIUM ENVIRONMENT ── */
         .stadium-container { 
             flex: 1 1 auto; 
             position: relative; 
-            background: radial-gradient(circle at center, #222 0%, #0a0a0a 100%); 
+            /* Clean, light daytime gradient replacing the black background */
+            background: radial-gradient(circle at center, #ffffff 0%, var(--container-bg) 100%); 
             overflow: hidden; 
             z-index: 1; 
-            box-shadow: inset 0 0 150px #000;
+            box-shadow: inset 0 0 50px rgba(0,0,0,0.05);
         }
 
         .stadium-wrapper {
@@ -69,48 +77,49 @@
         }
         
         .stadium-3d {
-            width: 850px; height: 550px;
+            /* Increased dimensions to make the track much bigger */
+            width: 1000px; height: 650px;
             position: relative;
-            transform: scale(0.7) rotateX(55deg) rotateZ(-15deg);
+            transform: scale(0.8) rotateX(52deg) rotateZ(-15deg);
             transform-style: preserve-3d;
             transition: 0.5s ease-in-out;
         }
         
         /* Responsive Scaling */
-        @media(max-width: 1400px) { .stadium-3d { transform: scale(0.6) rotateX(55deg) rotateZ(-15deg); } }
-        @media(max-width: 1100px) { .stadium-3d { transform: scale(0.5) rotateX(55deg) rotateZ(-15deg); } }
-        @media(max-width: 768px) { .stadium-3d { transform: scale(0.35) rotateX(55deg) rotateZ(-15deg); } }
+        @media(max-width: 1600px) { .stadium-3d { transform: scale(0.7) rotateX(52deg) rotateZ(-15deg); } }
+        @media(max-width: 1200px) { .stadium-3d { transform: scale(0.55) rotateX(52deg) rotateZ(-15deg); } }
+        @media(max-width: 768px) { .stadium-3d { transform: scale(0.4) rotateX(52deg) rotateZ(-15deg); } }
         
-        /* STADIUM ARCHITECTURE */
+        /* STADIUM ARCHITECTURE (Light Concrete Theme) */
         .stands-outer {
-            position: absolute; top: -160px; bottom: -160px; left: -160px; right: -160px;
-            background: linear-gradient(135deg, #333, #111);
-            border-radius: 400px;
-            box-shadow: 0 50px 100px rgba(0,0,0,0.9), inset 0 0 60px rgba(0,0,0,0.8);
-            border: 10px solid #444;
+            position: absolute; top: -140px; bottom: -140px; left: -140px; right: -140px;
+            background: #eef2f5;
+            border-radius: 450px;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.15), inset 0 0 50px rgba(0,0,0,0.05);
+            border: 12px solid #d1d9e6;
             transform: translateZ(-20px);
             z-index: 1;
         }
         
         .stands-inner {
-            position: absolute; top: -100px; bottom: -100px; left: -100px; right: -100px;
-            background: var(--stands-base);
-            border-radius: 350px;
-            box-shadow: inset 0 0 80px rgba(0,0,0,0.9);
-            border: 4px solid #1a1a1a;
+            position: absolute; top: -90px; bottom: -90px; left: -90px; right: -90px;
+            background: var(--stands-bg);
+            border-radius: 400px;
+            box-shadow: inset 0 0 60px rgba(0,0,0,0.15);
+            border: 4px solid #cbd5e1;
             transform: translateZ(-10px);
             z-index: 2;
-            background-image: radial-gradient(circle, #444 2px, transparent 2px);
-            background-size: 10px 10px;
+            /* White and light grey seat pattern resembling the uploaded image */
+            background-image: repeating-radial-gradient(circle at center, var(--stands-seat) 0, var(--stands-seat) 4px, var(--stands-bg) 5px, var(--stands-bg) 12px);
             overflow: hidden;
         }
 
         /* ── THE CROWD (WAVING FLAGS) ── */
         .crowd-flag {
             position: absolute; width: 14px; height: 9px; display: flex;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.6);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
             animation: flagWave 2s infinite ease-in-out;
-            opacity: 0.85; z-index: 3;
+            opacity: 0.9; z-index: 3;
         }
         .crowd-flag .g { background: var(--dz-green); flex: 1; }
         .crowd-flag .w { background: #fff; flex: 1; position: relative;}
@@ -122,107 +131,88 @@
             100% { transform: translateY(0) rotate(-15deg); }
         }
 
-        /* ── ATHLETIC TRACK & FIELD ── */
+        /* ── ENLARGED ATHLETIC TRACK & FIELD ── */
         .track {
             position: absolute; top: 0; bottom: 0; left: 0; right: 0;
             background: var(--track-red);
-            border-radius: 250px;
-            border: 2px solid #fff;
-            box-shadow: 0 0 0 8px var(--track-red), 0 0 0 12px #fff, inset 0 0 30px rgba(0,0,0,0.5), 0 20px 40px rgba(0,0,0,0.6);
+            border-radius: 350px; /* Adjusted for wider track */
+            border: 3px solid #fff;
+            box-shadow: 0 0 0 10px var(--track-red), 0 0 0 14px #fff, inset 0 0 20px rgba(0,0,0,0.3), 0 15px 30px rgba(0,0,0,0.2);
             z-index: 4;
             transform: translateZ(0px);
         }
         
-        .lane { position: absolute; border: 1.5px dashed rgba(255,255,255,0.5); border-radius: 250px; pointer-events: none;}
-        .lane-1 { top: 12px; bottom: 12px; left: 12px; right: 12px; }
-        .lane-2 { top: 24px; bottom: 24px; left: 24px; right: 24px; }
-        .lane-3 { top: 36px; bottom: 36px; left: 36px; right: 36px; }
-        .start-line { position: absolute; top: -12px; left: 25%; width: 50px; height: 5px; background: #fff; transform: rotate(90deg); box-shadow: 2px 2px 5px rgba(0,0,0,0.3);}
+        .lane { position: absolute; border: 2px dashed rgba(255,255,255,0.5); border-radius: 350px; pointer-events: none;}
+        .lane-1 { top: 15px; bottom: 15px; left: 15px; right: 15px; }
+        .lane-2 { top: 30px; bottom: 30px; left: 30px; right: 30px; }
+        .lane-3 { top: 45px; bottom: 45px; left: 45px; right: 45px; }
+        .start-line { position: absolute; top: -14px; left: 25%; width: 60px; height: 6px; background: #fff; transform: rotate(90deg); box-shadow: 2px 2px 5px rgba(0,0,0,0.1);}
 
         .pitch {
-            position: absolute; top: 48px; bottom: 48px; left: 48px; right: 48px;
-            border-radius: 200px;
-            background: repeating-linear-gradient(to right, var(--pitch-green), var(--pitch-green) 40px, var(--pitch-stripe) 40px, var(--pitch-stripe) 80px);
-            box-shadow: inset 0 0 40px rgba(0,0,0,0.7);
+            position: absolute; top: 60px; bottom: 60px; left: 60px; right: 60px;
+            border-radius: 300px;
+            background: repeating-linear-gradient(to right, var(--pitch-green), var(--pitch-green) 50px, var(--pitch-stripe) 50px, var(--pitch-stripe) 100px);
+            box-shadow: inset 0 0 40px rgba(0,0,0,0.4);
             border: 3px solid rgba(255,255,255,0.9);
             z-index: 5; overflow: hidden;
         }
 
         /* ── THEMATIC TIFOS ON PITCH ── */
         .tifo {
-            position: absolute; background: #fff; padding: 12px 30px;
+            position: absolute; background: #fff; padding: 15px 35px;
             font-family: 'Playfair Display', serif; font-weight: 800; color: #111;
-            box-shadow: 5px 15px 25px rgba(0,0,0,0.5); border-radius: 2px;
-            background-image: linear-gradient(to right, rgba(0,0,0,0.05) 1px, transparent 1px); background-size: 15px 100%;
+            box-shadow: 5px 15px 25px rgba(0,0,0,0.3); border-radius: 2px;
+            background-image: linear-gradient(to right, rgba(0,0,0,0.03) 1px, transparent 1px); background-size: 15px 100%;
         }
-        .tifo-giant { top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(5deg); border-top: 15px solid var(--dz-green); border-bottom: 15px solid var(--dz-red); padding: 20px 40px;}
-        .tifo.gijon { top: 20%; left: 15%; transform: rotate(-8deg); border-left: 8px solid var(--dz-green); border-right: 8px solid var(--dz-red); }
-        .tifo.fln { bottom: 20%; right: 15%; transform: rotate(-5deg); border-left: 8px solid #000; border-right: 8px solid var(--dz-green); }
+        .tifo-giant { top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(5deg); border-top: 15px solid var(--dz-green); border-bottom: 15px solid var(--dz-red); padding: 25px 50px;}
+        .tifo.gijon { top: 20%; left: 15%; transform: rotate(-8deg); border-left: 10px solid var(--dz-green); border-right: 10px solid var(--dz-red); }
+        .tifo.fln { bottom: 20%; right: 15%; transform: rotate(-5deg); border-left: 10px solid #000; border-right: 10px solid var(--dz-green); }
         
-        .tifo-title { font-size: 24px; letter-spacing: 1px; color: #111;}
-        .tifo-title-giant { font-size: 32px; letter-spacing: 2px; }
-        .tifo-sub { font-size: 11px; text-transform: uppercase; color: #555; font-family: 'Inter', sans-serif;}
+        .tifo-title { font-size: 26px; letter-spacing: 1px; color: #111;}
+        .tifo-title-giant { font-size: 36px; letter-spacing: 2px; }
+        .tifo-sub { font-size: 12px; text-transform: uppercase; color: #555; font-family: 'Inter', sans-serif;}
 
-        /* ── LED SCOREBOARD (REPLACING THE MAP ERROR) ── */
+        /* ── LIGHT JUMBOTRON SCOREBOARD ── */
         .scoreboard {
-            position: absolute; top: -220px; left: 50%; width: 450px; height: 120px;
-            background: #050505; border: 8px solid #333; border-radius: 8px;
+            position: absolute; top: -250px; left: 50%; width: 500px; height: 140px;
+            background: #fff; border: 10px solid #e2e8f0; border-radius: 8px;
             transform: translateX(-50%) translateZ(120px) rotateX(-55deg); /* Stands upright in 3D */
-            box-shadow: 0 30px 50px rgba(0,0,0,0.8), inset 0 0 20px #000;
-            display: flex; flex-direction: column; justify-content: center; padding: 15px;
+            box-shadow: 0 30px 50px rgba(0,0,0,0.2), inset 0 0 20px rgba(0,0,0,0.05);
+            display: flex; flex-direction: column; justify-content: center; padding: 20px;
             z-index: 20; transform-style: preserve-3d;
         }
         .led-text {
-            font-family: 'Share Tech Mono', monospace; font-size: 14px;
-            color: #0f0; text-shadow: 0 0 8px #0f0; margin-bottom: 8px; letter-spacing: 1px;
+            font-family: 'Share Tech Mono', monospace; font-size: 16px;
+            color: #1a5fa8; margin-bottom: 8px; letter-spacing: 1px; font-weight: bold;
         }
-        .led-alert { color: #f00; text-shadow: 0 0 8px #f00; font-weight: bold;}
-        .led-highlight { color: #ffb700; text-shadow: 0 0 8px #ffb700; font-size: 18px;}
-
-        /* ── OLYMPIC FLAME CAULDRON (Ghardaïa Mosaic Style) ── */
-        .cauldron-base {
-            position: absolute; bottom: -200px; left: 50%; width: 80px; height: 80px;
-            background: repeating-conic-gradient(#c8872a 0% 10%, #1a5fa8 10% 20%, #fdfcf9 20% 30%);
-            border-radius: 50%; border: 4px solid #fff;
-            transform: translateX(-50%) translateZ(40px) rotateX(-55deg);
-            box-shadow: 0 20px 30px rgba(0,0,0,0.8); z-index: 20;
-            display: flex; align-items: center; justify-content: center;
-        }
-        .flame {
-            width: 40px; height: 60px; background: radial-gradient(ellipse at bottom, #fff 0%, #ffd700 20%, #ff5722 60%, transparent 100%);
-            border-radius: 50% 50% 20% 20%; transform-origin: bottom center;
-            animation: flicker 0.5s infinite alternate; filter: blur(2px); margin-top: -40px;
-        }
-        @keyframes flicker {
-            0% { transform: scale(1) rotate(-2deg); opacity: 0.9; }
-            100% { transform: scale(1.1) rotate(2deg); opacity: 1; }
-        }
+        .led-alert { color: #d21034; }
+        .led-highlight { color: #006233; font-size: 20px;}
 
         /* ── 3D SIGNPOST MARKERS (THE TIMELINE) ── */
         .track-marker {
-            position: absolute; width: 48px; height: 48px;
-            background: var(--oxford); border: 3px solid #fff; border-radius: 50%;
-            color: #fff; font-size: 14px; font-weight: 800;
+            position: absolute; width: 54px; height: 54px;
+            background: var(--oxford); border: 4px solid #fff; border-radius: 50%;
+            color: #fff; font-size: 16px; font-weight: 800;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             /* Counter-rotate to stand perfectly upright */
-            transform: translate(-50%, -150%) rotateZ(15deg) rotateX(-55deg);
-            transform-origin: bottom center; box-shadow: 0 15px 20px rgba(0,0,0,0.6);
+            transform: translate(-50%, -150%) rotateZ(15deg) rotateX(-52deg);
+            transform-origin: bottom center; box-shadow: 0 15px 20px rgba(0,0,0,0.4);
             cursor: pointer; transition: 0.3s ease-in-out; z-index: 50;
         }
-        .track-marker span { font-size: 9px; color: #b3d4ff; margin-top: -2px; }
+        .track-marker span { font-size: 10px; color: #b3d4ff; margin-top: -2px; }
         .track-marker::after {
-            content: ''; position: absolute; bottom: -30px; left: 50%;
-            transform: translateX(-50%); width: 5px; height: 30px; background: #e0e0e0;
-            box-shadow: 2px 2px 5px rgba(0,0,0,0.5); z-index: -1;
+            content: ''; position: absolute; bottom: -35px; left: 50%;
+            transform: translateX(-50%); width: 6px; height: 35px; background: #ccc;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.3); z-index: -1;
         }
         .track-marker:hover, .track-marker.active {
             background: #ffd700; color: #111; border-color: #fff;
-            transform: translate(-50%, -150%) rotateZ(15deg) rotateX(-55deg) scale(1.25); z-index: 60;
+            transform: translate(-50%, -150%) rotateZ(15deg) rotateX(-52deg) scale(1.2); z-index: 60;
         }
         .track-marker:hover span, .track-marker.active span { color: #555; }
 
         /* ── ACADEMIC SIDEBAR ── */
-        .panel { flex: 0 0 580px; width: 580px; background: #fff; border-left: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; z-index: 1000; box-shadow: -4px 0 20px rgba(0,0,0,0.1); }
+        .panel { flex: 0 0 580px; width: 580px; background: #fff; border-left: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; z-index: 1000; box-shadow: -4px 0 20px rgba(0,0,0,0.05); }
         .panel-empty { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 50px; text-align: center; color: #888; }
         .empty-art { font-size: 65px; margin-bottom: 20px; opacity: 0.5; }
         .panel-hdr { flex: 0 0 auto; padding: 25px 35px; background: #fbfbf9; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
@@ -269,9 +259,11 @@
     <header class="hdr">
         <div class="hdr-brand">
             <div class="hdr-flag">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3 2">
-                    <rect width="3" height="2" fill="#fff"/><rect width="1.5" height="2" fill="#006233"/>
-                    <path fill="#d21034" d="m1.725 1a.332.332 0 1 1 -.664 0c0 -.081.029 -.155.077 -.213a.267.267 0 1 0 0 .426c-.048 -.058 -.077 -.132 -.077 -.213zm.1.189 2.5 7.691 -6.551 -4.759h8.102l-6.551 4.759z" transform="translate(-.17) rotate(18)"/>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600">
+                    <rect width="450" height="600" fill="#006233"/>
+                    <rect x="450" width="450" height="600" fill="#ffffff"/>
+                    <path fill="#d21034" d="M450,150 A150,150 0 1,0 450,450 A120,120 0 1,1 450,150 Z"/>
+                    <polygon fill="#d21034" points="450,225 470,285 535,285 485,325 505,385 450,350 395,385 415,325 365,285 430,285" transform="rotate(15 450 315)"/>
                 </svg>
             </div>
             <div>
@@ -302,8 +294,8 @@
                 <div class="stadium-3d" id="stadium">
                     
                     <div class="scoreboard">
-                        <div class="led-text led-alert">> MAP STATUS: PENDING AUTH (401)</div>
-                        <div class="led-text">> OVERRIDE: STADIUM TIMELINE ENGAGED</div>
+                        <div class="led-text led-alert">> MAP STATUS: OFFLINE</div>
+                        <div class="led-text">> OVERRIDE: ACADEMIC STADIUM ENGAGED</div>
                         <div class="led-text led-highlight">> AWAITING USER INPUT...</div>
                     </div>
 
@@ -329,10 +321,6 @@
                                 <div class="tifo-sub">Sport & Revolutionary Diplomacy</div>
                             </div>
                         </div>
-                    </div>
-                    
-                    <div class="cauldron-base">
-                        <div class="flame"></div>
                     </div>
 
                     </div>
@@ -372,7 +360,7 @@ const DATA = [
     },
     { 
         distance: "40m", year: "2011", title: "Football, the new battlefield of business in Algeria", ref: "The Journal of North African Studies, 16(1).", url: "https://doi.org/10.1080/13629387.2010.536376", 
-        summary: "This article critically examines the sudden corporatization of Algerian football following the dramatic, politically charged 2010 World Cup qualification against Egypt. It specifically analyzes how multi-national mobile telecommunication companies co-opted national sporting fervor for aggressive corporate branding, creating a new nexus of sport, state, and capital.", 
+        summary: "This article critically examines the sudden corporatization of Algerian football following the dramatic, politically charged 2010 World Cup qualification against Egypt. It specifically analyzes how multi-national mobile telecommunication companies (such as Djezzy and Nedjma) co-opted national sporting fervor for aggressive corporate branding, creating a new nexus of sport, state, and capital.", 
         contribution: "Provides crucial empirical evidence mapping Algeria's complex, often contradictory transition from a rigid socialist, state-controlled economy to a hybrid, fiercely competitive market economy, viewed exclusively through the lens of sport sponsorship and governance.", tags: ["Legitimacy", "Nation state formation"] 
     },
     { 
@@ -446,7 +434,7 @@ for (let i = 0; i < 200; i++) {
 }
 
 /* ── CALCULATE SAFE TRACK POSITIONS ── */
-// Distributing 12 markers safely on the red track
+// Distributing 12 markers safely on the enlarged red track
 const POSITIONS = [
     { top: '3%', left: '25%' },   // 0m
     { top: '3%', left: '50%' },   // 20m 
@@ -484,6 +472,7 @@ DATA.forEach((paper, index) => {
     
     marker.addEventListener('click', () => {
         if(activeMarker) {
+            // Restore previous active marker color
             if(activeMarker.innerHTML.includes("200m")) {
                  activeMarker.style.background = "#ffd700";
                  activeMarker.style.color = "#111";
@@ -492,6 +481,7 @@ DATA.forEach((paper, index) => {
             }
         }
         
+        // Highlight new active marker
         if (paper.distance === "200m") {
             marker.style.background = "#fff";
             marker.style.color = "#ffd700";
@@ -560,12 +550,12 @@ document.querySelectorAll('.pill').forEach(pill => {
         markers.forEach(m => {
             if(m.dataset.tags.includes(theme)) {
                 m.style.opacity = '1';
-                m.style.transform = 'translate(-50%, -150%) rotateZ(15deg) rotateX(-55deg) scale(1.15)';
+                m.style.transform = 'translate(-50%, -150%) rotateZ(15deg) rotateX(-52deg) scale(1.15)';
                 m.style.borderColor = '#ffd700';
                 if(m.innerHTML.includes("200m")) { m.style.borderColor = "#fff"; }
             } else {
                 m.style.opacity = '0.2';
-                m.style.transform = 'translate(-50%, -150%) rotateZ(15deg) rotateX(-55deg) scale(0.85)';
+                m.style.transform = 'translate(-50%, -150%) rotateZ(15deg) rotateX(-52deg) scale(0.85)';
                 m.style.borderColor = '#fff';
             }
         });
@@ -580,7 +570,7 @@ document.querySelectorAll('.pill').forEach(pill => {
 function clearTheme() {
     document.querySelectorAll('.track-marker').forEach(m => {
         m.style.opacity = '1';
-        m.style.transform = 'translate(-50%, -150%) rotateZ(15deg) rotateX(-55deg) scale(1)';
+        m.style.transform = 'translate(-50%, -150%) rotateZ(15deg) rotateX(-52deg) scale(1)';
         if(m.innerHTML.includes("200m")) {
             m.style.color = "#111";
             m.style.borderColor = "#ffd700";
