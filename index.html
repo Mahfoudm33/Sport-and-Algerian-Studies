@@ -12,6 +12,7 @@
             --oxford: #1a5fa8; --desert: #fdfcf9; --sand: #f4f1ea;
             --dz-green: #006233; --dz-red: #b83820; --border: #e0ddd5;
             --track-red: #b53c2a; --pitch-green: #3a6c38; --pitch-stripe: #336031;
+            --stands-grey: #4a4a4a; --seat-grey: #333;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
@@ -19,7 +20,7 @@
         .shell { display: flex; flex-direction: column; height: 100vh; width: 100vw; }
         
         /* Ecosystem Nav */
-        .eco-nav { flex: 0 0 auto; background: #121212; color: #fff; padding: 10px 25px; border-bottom: 2px solid var(--oxford); z-index: 1000; }
+        .eco-nav { flex: 0 0 auto; background: #121212; color: #fff; padding: 10px 25px; border-bottom: 2px solid var(--oxford); z-index: 1001; }
         .eco-container { display: flex; justify-content: space-between; align-items: center; max-width: 1600px; margin: 0 auto; }
         .eco-label { font-size: 10px; font-weight: 800; color: #888; text-transform: uppercase; letter-spacing: 1px; }
         .eco-links { display: flex; gap: 20px; }
@@ -27,12 +28,13 @@
         .eco-links a:hover { color: var(--oxford); }
 
         /* Header */
-        .hdr { flex: 0 0 auto; padding: 16px 25px; background: #fff; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; z-index: 1000; }
+        .hdr { flex: 0 0 auto; padding: 16px 25px; background: #fff; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; z-index: 1001; }
         .hdr-brand { display: flex; align-items: center; gap: 15px; }
-        .dz-flag { width: 36px; height: 24px; display: flex; border: 1px solid #ddd; border-radius: 2px; overflow: hidden; }
-        .flag-green { background: var(--dz-green); flex: 1; }
-        .flag-white { background: #fff; flex: 1; position: relative; }
-        .flag-white::after { content: ''; position: absolute; width: 4px; height: 4px; background: var(--dz-red); border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+        
+        /* ACCURATE SVG FLAG */
+        .hdr-flag { width: 40px; height: 26px; border-radius: 2px; overflow: hidden; border: 1px solid #ddd; display: flex; }
+        .hdr-flag svg { width: 100%; height: 100%; }
+
         .hdr-title { font-family: 'Playfair Display', serif; font-size: 22px; color: #111; line-height: 1.2; margin-bottom: 4px;}
         .hdr-sub { font-size: 11px; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: 0.5px; }
         .hdr-sub a { color: var(--oxford); text-decoration: none; font-weight: 700;}
@@ -41,7 +43,7 @@
         .btn-export:hover { background: #144e8c; transform: translateY(-1px); }
 
         /* Filters */
-        .filter-strip { flex: 0 0 auto; background: #fff; border-bottom: 1px solid var(--border); padding: 12px 25px; z-index: 1000; }
+        .filter-strip { flex: 0 0 auto; background: #fff; border-bottom: 1px solid var(--border); padding: 12px 25px; z-index: 1001; }
         .filter-scroll { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
         .pill { padding: 6px 14px; background: var(--sand); border-radius: 20px; font-size: 11px; font-weight: 600; cursor: pointer; white-space: nowrap; border: 1px solid transparent; transition: 0.2s; color: #444; }
         .pill:hover { background: #e8e5de; }
@@ -51,55 +53,78 @@
         /* Main Layout */
         .main-content { flex: 1 1 auto; display: flex; flex-direction: row; overflow: hidden; position: relative; }
         
-        /* ── 3D ISOMETRIC STADIUM ── */
+        /* ── THE VISUAL STADIUM CONTAINER ── */
+        .stadium-container { 
+            flex: 1 1 auto; 
+            position: relative; 
+            background: #2a2a2a; 
+            overflow: hidden; 
+            z-index: 1; 
+            box-shadow: inset 0 0 150px #000;
+        }
+
+        /* ── 3D ISOMETRIC STADIUM (THE ULTIMATE FIX) ── */
         .stadium-wrapper {
-            flex: 1 1 auto;
-            background: #161616;
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            perspective: 1800px; /* Increased perspective for less distortion */
-            overflow: hidden;
-            position: relative;
-            box-shadow: inset 0 0 150px #000;
+            perspective: 2000px; /* Activates 3D space */
+            z-index: 5;
         }
         
         .stadium-3d {
             width: 800px;
             height: 500px;
             position: relative;
-            /* Default scale shrunk slightly to keep all markers in frame */
-            transform: scale(0.8) rotateX(55deg) rotateZ(-15deg);
+            transform: scale(0.75) rotateX(55deg) rotateZ(-15deg);
             transform-style: preserve-3d;
             transition: 0.5s ease-in-out;
         }
         
         /* Responsive Scaling for smaller screens */
         @media(max-width: 1400px) { .stadium-3d { transform: scale(0.65) rotateX(55deg) rotateZ(-15deg); } }
-        @media(max-width: 1100px) { .stadium-3d { transform: scale(0.55) rotateX(55deg) rotateZ(-15deg); } }
-        @media(max-width: 768px) { .stadium-3d { transform: scale(0.4) rotateX(55deg) rotateZ(-15deg); } }
+        @media(max-width: 1100px) { .stadium-3d { transform: scale(0.5) rotateX(55deg) rotateZ(-15deg); } }
+        @media(max-width: 768px) { .stadium-3d { transform: scale(0.35) rotateX(55deg) rotateZ(-15deg); } }
         
-        /* The Spectator Stands */
-        .stands {
+        /* ── Visual stands with seats ── */
+        .stands-container {
             position: absolute;
-            top: -80px; bottom: -80px; left: -80px; right: -80px;
-            background: radial-gradient(ellipse at center, #2a2a2a 0%, #0a0a0a 100%);
-            border-radius: 350px;
-            box-shadow: 0 40px 100px rgba(0,0,0,0.9), inset 0 0 40px rgba(0,0,0,0.9);
-            border: 5px solid #333;
+            top: -150px; bottom: -150px; left: -150px; right: -150px;
+            background: var(--stands-grey);
+            border-radius: 400px;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.9);
+            border: 8px solid #333;
             z-index: 1;
+            /* SEAT PATTERN */
+            background-image: 
+                radial-gradient(circle, var(--seat-grey) 2px, transparent 2px), 
+                radial-gradient(circle, var(--seat-grey) 2px, transparent 2px);
+            background-size: 10px 10px;
+            background-position: 0 0, 5px 5px;
+            opacity: 0.95;
+            overflow: hidden;
         }
-        
-        .stands-flag {
+
+        /* ── Crowd waving flags (The Appealing Surrounding) ── */
+        .crowd-flag {
             position: absolute;
-            width: 14px; height: 10px;
+            width: 15px; height: 10px;
             display: flex;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+            animation: flagWave 2s infinite ease-in-out;
             opacity: 0.8;
         }
-        .stands-flag .g { background: var(--dz-green); flex: 1; }
-        .stands-flag .w { background: #fff; flex: 1; position: relative;}
-        .stands-flag .w::after { content: ''; position: absolute; width: 3px; height: 3px; background: var(--dz-red); border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+        .crowd-flag .g { background: var(--dz-green); flex: 1; }
+        .crowd-flag .w { background: #fff; flex: 1; position: relative;}
+        .crowd-flag .w::after { content: ''; position: absolute; width: 3px; height: 3px; background: var(--dz-red); border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+
+        @keyframes flagWave {
+            0% { transform: translateY(0) rotate(-10deg); }
+            50% { transform: translateY(-5px) rotate(10deg); }
+            100% { transform: translateY(0) rotate(-10deg); }
+        }
 
         /* The Athletic Track */
         .track {
@@ -146,7 +171,7 @@
         .tifo.gijon { top: 25%; left: 20%; transform: rotate(-8deg); border-left: 8px solid var(--dz-green); border-right: 8px solid var(--dz-red); }
         .tifo.hirak { top: 60%; left: 45%; transform: rotate(6deg); border-left: 8px solid var(--dz-red); border-right: 8px solid var(--dz-green); }
         .tifo.fln { bottom: 20%; right: 15%; transform: rotate(-5deg); border-left: 8px solid #000; border-right: 8px solid var(--dz-green); }
-        .tifo-title { font-size: 22px; letter-spacing: 1px; }
+        .tifo-title { font-size: 20px; letter-spacing: 1px; }
         .tifo-sub { font-size: 10px; text-transform: uppercase; color: #555; }
 
         /* 3D Signpost Markers */
@@ -159,25 +184,15 @@
             color: #fff;
             font-size: 13px; font-weight: 800;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            /* Stands perfectly upright in 3D */
+            /* CRITICAL: Counter-rotate the markers so they stand straight up in the 3D space */
             transform: translate(-50%, -150%) rotateZ(15deg) rotateX(-55deg);
             transform-origin: bottom center;
             box-shadow: 0 15px 15px rgba(0,0,0,0.5);
             cursor: pointer;
             transition: 0.3s ease-in-out;
             z-index: 50;
-            animation: float 3s infinite ease-in-out;
         }
-        
-        /* Gentle bobbing to show interactivity */
-        @keyframes float {
-            0% { transform: translate(-50%, -150%) rotateZ(15deg) rotateX(-55deg) scale(1); }
-            50% { transform: translate(-50%, -155%) rotateZ(15deg) rotateX(-55deg) scale(1.05); box-shadow: 0 20px 20px rgba(0,0,0,0.4); }
-            100% { transform: translate(-50%, -150%) rotateZ(15deg) rotateX(-55deg) scale(1); }
-        }
-
         .track-marker span { font-size: 9px; color: #b3d4ff; margin-top: -2px; }
-        
         /* The pole of the signpost */
         .track-marker::after {
             content: '';
@@ -194,7 +209,6 @@
             background: #ffd700; color: #111; border-color: #fff;
             transform: translate(-50%, -150%) rotateZ(15deg) rotateX(-55deg) scale(1.25);
             z-index: 60;
-            animation: none; /* Stops floating when hovered/active */
         }
         .track-marker:hover span, .track-marker.active span { color: #555; }
 
@@ -224,7 +238,7 @@
 
         @media(max-width: 1000px) {
             .main-content { flex-direction: column; }
-            .stadium-wrapper { flex: 1 1 45vh; height: 45vh; }
+            .stadium-container { flex: 1 1 45vh; height: 45vh; }
             .panel { flex: 1 1 auto; width: 100%; border-left: none; border-top: 1px solid var(--border); }
         }
     </style>
@@ -245,7 +259,12 @@
 
     <header class="hdr">
         <div class="hdr-brand">
-            <div class="dz-flag"><div class="flag-green"></div><div class="flag-white"></div></div>
+            <div class="hdr-flag">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3 2">
+                    <rect width="3" height="2" fill="#fff"/><rect width="1.5" height="2" fill="#006233"/>
+                    <path fill="#d21034" d="m1.725 1a.332.332 0 1 1 -.664 0c0 -.081.029 -.155.077 -.213a.267.267 0 1 0 0 .426c-.048 -.058 -.077 -.132 -.077 -.213zm.1.189 2.5 7.691 -6.551 -4.759h8.102l-6.551 4.759z" transform="translate(-.17) rotate(18)"/>
+                </svg>
+            </div>
             <div>
                 <h1 class="hdr-title">Sport, Society & Culture in Algeria</h1>
                 <p class="hdr-sub">The Academic Stadium · Prof. Mahfoud Amara · <a href="https://orcid.org/0000-0002-1418-6710" target="_blank">ORCID: 0000-0002-1418-6710</a></p>
@@ -269,30 +288,32 @@
     </div>
 
     <main class="main-content">
-        <div class="stadium-wrapper">
-            <div class="stadium-3d" id="stadium">
-                <div class="stands" id="stands"></div>
-                <div class="track">
-                    <div class="lane lane-1"></div>
-                    <div class="lane lane-2"></div>
-                    <div class="lane lane-3"></div>
-                    <div class="start-line"></div>
-                    <div class="pitch">
-                        <div class="tifo gijon">
-                            <div class="tifo-title">Gijón 1982 ★</div>
-                            <div class="tifo-sub">Historic Victory against West Germany</div>
-                        </div>
-                        <div class="tifo hirak">
-                            <div class="tifo-title">AFCON 2019 ★ ★</div>
-                            <div class="tifo-sub">Champions d'Afrique & The Hirak</div>
-                        </div>
-                        <div class="tifo fln">
-                            <div class="tifo-title">FLN Team 1958</div>
-                            <div class="tifo-sub">Sport & Revolutionary Diplomacy</div>
+        <div class="stadium-container" id="stadium">
+            <div class="stadium-wrapper">
+                <div class="stadium-3d" id="track">
+                    <div class="stands-container" id="stands"></div>
+                    <div class="track">
+                        <div class="lane lane-1"></div>
+                        <div class="lane lane-2"></div>
+                        <div class="lane lane-3"></div>
+                        <div class="start-line"></div>
+                        <div class="pitch">
+                            <div class="tifo gijon">
+                                <div class="tifo-title">Gijón 1982 ★</div>
+                                <div class="tifo-sub">Historic Victory against West Germany</div>
+                            </div>
+                            <div class="tifo hirak">
+                                <div class="tifo-title">AFCON 2019 ★ ★</div>
+                                <div class="tifo-sub">Champions d'Afrique & The Hirak</div>
+                            </div>
+                            <div class="tifo fln">
+                                <div class="tifo-title">FLN Team 1958</div>
+                                <div class="tifo-sub">Sport & Revolutionary Diplomacy</div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                </div>
+                    </div>
+            </div>
         </div>
         
         <aside class="panel" id="panel">
@@ -378,43 +399,44 @@ const DATA = [
     }
 ];
 
-/* ── GENERATE CROWD FLAGS ── */
+/* ── GENERATE VISUAL stands & CROWD FLAGS (Replaces Black Surrounding) ── */
 const standsEl = document.getElementById('stands');
-for (let i = 0; i < 180; i++) {
+for (let i = 0; i < 250; i++) { // Generated flags and crowd
     const flag = document.createElement('div');
-    flag.className = 'stands-flag';
-    // Keep flags out of the central track hole
-    let top = Math.random() * 100;
-    let left = Math.random() * 100;
-    if (top > 15 && top < 85 && left > 15 && left < 85) {
-        top = top > 50 ? top + 35 : top - 35;
-    }
+    flag.className = 'crowd-flag';
+    // Position flags only in the stands area
+    let top, left;
+    do {
+        top = Math.random() * 100;
+        left = Math.random() * 100;
+    } while (top > 15 && top < 85 && left > 15 && left < 85); // Skip central hole
+
     flag.style.top = `${top}%`;
     flag.style.left = `${left}%`;
-    flag.style.transform = `rotate(${Math.random() * 360}deg)`;
+    flag.style.animationDelay = `${Math.random() * 2}s`; // Offset waving
+
     flag.innerHTML = '<div class="g"></div><div class="w"></div>';
     standsEl.appendChild(flag);
 }
 
-/* ── RECALCULATED SAFE TRACK POSITIONS ── */
-// These sit directly on the red border of the .track element
+/* ── CALCULATE SAFE TRACK POSITIONS (0m to 220m) ── */
 const POSITIONS = [
-    { top: '5%', left: '25%' },   // 0m (Top straight)
-    { top: '5%', left: '50%' },   // 20m 
-    { top: '5%', left: '75%' },   // 40m 
-    { top: '25%', left: '95%' },  // 60m (Right curve top)
+    { top: '3%', left: '25%' },   // 0m (Top straight)
+    { top: '3%', left: '50%' },   // 20m 
+    { top: '3%', left: '75%' },   // 40m 
+    { top: '22%', left: '96%' },  // 60m (Right curve top)
     { top: '50%', left: '98%' },  // 80m (Right curve middle)
-    { top: '75%', left: '95%' },  // 100m (Right curve bottom)
-    { top: '95%', left: '75%' },  // 120m (Bottom straight)
-    { top: '95%', left: '50%' },  // 140m 
-    { top: '95%', left: '25%' },  // 160m 
-    { top: '75%', left: '5%' },   // 180m (Left curve bottom)
+    { top: '78%', left: '96%' },  // 100m (Right curve bottom)
+    { top: '97%', left: '75%' },  // 120m (Bottom straight)
+    { top: '97%', left: '50%' },  // 140m 
+    { top: '97%', left: '25%' },  // 160m 
+    { top: '78%', left: '4%' },   // 180m (Left curve bottom)
     { top: '50%', left: '2%' },   // 200m (Left curve middle)
-    { top: '25%', left: '5%' },   // 220m (Left curve top)
+    { top: '22%', left: '4%' },   // 220m (Left curve top)
 ];
 
 /* ── INJECT 3D MARKERS ── */
-const stadiumEl = document.getElementById('stadium');
+const trackEl = document.getElementById('track');
 let activeMarker = null;
 
 DATA.forEach((paper, index) => {
@@ -423,10 +445,11 @@ DATA.forEach((paper, index) => {
     marker.style.top = POSITIONS[index].top;
     marker.style.left = POSITIONS[index].left;
     
-    // Highlight Khelif 2025 Node
+    // Championship Gold for Imane Khelif node
     if (paper.distance === "200m") {
         marker.style.borderColor = "#ffd700";
-        marker.style.color = "#ffd700";
+        marker.style.background = "#ffd700";
+        marker.style.color = "#111";
     }
     
     marker.innerHTML = `${paper.year}<span>${paper.distance}</span>`;
@@ -434,20 +457,34 @@ DATA.forEach((paper, index) => {
     
     marker.addEventListener('click', () => {
         if(activeMarker) {
-            activeMarker.classList.remove('active');
+            // Restore default colors
+            if(activeMarker.innerHTML.includes("200m")) {
+                 activeMarker.style.background = "#ffd700";
+                 activeMarker.style.color = "#111";
+            } else {
+                 activeMarker.classList.remove('active');
+            }
         }
-        marker.classList.add('active');
+        
+        // Apply active colors
+        if (paper.distance === "200m") {
+            marker.style.background = "#fff";
+            marker.style.color = "#ffd700";
+        } else {
+            marker.classList.add('active');
+        }
+        
         activeMarker = marker;
         openSidebar(paper);
     });
     
-    stadiumEl.appendChild(marker);
+    trackEl.appendChild(marker);
 });
 
 function openSidebar(paper) {
     document.getElementById('panel-empty').style.display = 'none';
     document.getElementById('panel-content').style.display = 'flex';
-    document.getElementById('distance-label').textContent = `${paper.distance} Mark • Academic Timeline`;
+    document.getElementById('distance-label').textContent = `${paper.distance} Mark • Chronological Node`;
     
     document.getElementById('panel-body').innerHTML = `
         <article class="pub-card">
@@ -472,7 +509,14 @@ function openSidebar(paper) {
 }
 
 function closePanel() {
-    if(activeMarker) activeMarker.classList.remove('active');
+    if(activeMarker) {
+         if(activeMarker.innerHTML.includes("200m")) {
+             activeMarker.style.background = "#ffd700";
+             activeMarker.style.color = "#111";
+         } else {
+             activeMarker.classList.remove('active');
+         }
+    }
     activeMarker = null;
     document.getElementById('panel-empty').style.display = 'flex';
     document.getElementById('panel-content').style.display = 'none';
@@ -488,14 +532,15 @@ document.querySelectorAll('.pill').forEach(pill => {
             if(m.dataset.tags.includes(theme)) {
                 m.style.opacity = '1';
                 m.style.transform = 'translate(-50%, -150%) rotateZ(15deg) rotateX(-55deg) scale(1.15)';
-                m.style.background = '#ffd700';
-                m.style.color = '#111';
-                m.style.borderColor = '#fff';
+                m.style.borderColor = '#ffd700';
+                // Champion Gold exception
+                if(m.innerHTML.includes("200m")) {
+                    m.style.borderColor = "#fff";
+                }
             } else {
-                m.style.opacity = '0.25';
-                m.style.transform = 'translate(-50%, -150%) rotateZ(15deg) rotateX(-55deg) scale(0.85)';
-                m.style.background = 'var(--oxford)';
-                m.style.color = '#fff';
+                m.style.opacity = '0.2';
+                m.style.transform = 'translate(-50%, -150%) rotateZ(15deg) rotateX(-55deg) scale(0.9)';
+                m.style.borderColor = '#fff';
             }
         });
         
@@ -509,9 +554,9 @@ function clearTheme() {
     document.querySelectorAll('.track-marker').forEach(m => {
         m.style.opacity = '1';
         m.style.transform = 'translate(-50%, -150%) rotateZ(15deg) rotateX(-55deg) scale(1)';
-        m.style.background = 'var(--oxford)';
+        
         if(m.innerHTML.includes("200m")) {
-            m.style.color = "#ffd700";
+            m.style.color = "#111";
             m.style.borderColor = "#ffd700";
         } else {
             m.style.color = "#fff";
@@ -536,7 +581,7 @@ function downloadCSV() {
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url; 
-    a.download = 'Amara_Academic_Track.csv'; 
+    a.download = 'Amara_Algerian_Sport_Archive.csv'; 
     a.click();
 }
 </script>
