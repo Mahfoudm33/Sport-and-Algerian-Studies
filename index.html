@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sport & Society in Algeria — Digital Archive</title>
+    <title>Sport & Society in Algeria — Digital Research Archive</title>
     
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css"/>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
@@ -12,12 +12,12 @@
 <body>
 
 <div class="shell">
-    <nav class="ecosystem-nav">
-        <div class="nav-container">
-            <span class="eco-label">Digital Research Ecosystem:</span>
+    <nav class="eco-nav">
+        <div class="eco-container">
+            <span class="eco-tag">Cross-Project Links:</span>
             <div class="eco-links">
                 <a href="https://mahfoudm33.github.io/Dr-Mahfoud-Amara-in-the-Peninsula-/" target="_blank">The Peninsula Archive</a>
-                <a href="https://mahfoudm33.github.io/Dr-Mahfoud-Amara-Publications-Arab-World/" target="_blank">Arab World Publications</a>
+                <a href="https://mahfoudm33.github.io/Dr-Mahfoud-Amara-Publications-Arab-World/" target="_blank">Arab World Research</a>
                 <a href="#">Sport in Islam Project</a>
             </div>
         </div>
@@ -25,17 +25,17 @@
 
     <header class="hdr">
         <div class="hdr-brand">
-            <div class="flag"><div class="flag-g"></div><div class="flag-w"></div></div>
+            <div class="dz-flag"><div class="green"></div><div class="white"></div></div>
             <div>
-                <h1 class="hdr-title">Sport, Society & Culture in Algeria</h1>
-                <p class="hdr-sub">Prof. Mahfoud Amara · Associate Professor, Qatar University</p>
+                <h1 class="main-title">Sport, Society & Culture in Algeria</h1>
+                <p class="author-sub">Prof. Mahfoud Amara · Digital Research Platform</p>
             </div>
         </div>
-        <button onclick="downloadCSV()" class="btn-export">Export Data (CSV)</button>
+        <button onclick="downloadCSV()" class="export-btn">📊 Export Bibliography</button>
     </header>
 
     <div class="filter-strip">
-        <div class="filter-scroll" id="pill-bar">
+        <div class="scroll-pills" id="pill-bar">
             <span class="pill" data-theme="Nation state formation">Nation State Formation</span>
             <span class="pill" data-theme="Youth">Youth</span>
             <span class="pill" data-theme="Gender">Gender</span>
@@ -43,26 +43,26 @@
             <span class="pill" data-theme="Mediterranean">Mediterranean</span>
             <span class="pill" data-theme="Legitimacy">Legitimacy</span>
             <span class="pill" data-theme="Postcolonialism">Postcolonialism</span>
-            <button class="pill pill-clear" id="clear-btn" style="display:none" onclick="clearTheme()">✕ Reset</button>
+            <button class="pill-clear" id="clear-btn" style="display:none" onclick="clearTheme()">✕ Reset Map</button>
         </div>
     </div>
 
-    <main class="main-content">
+    <main class="content-split">
         <div id="map"></div>
         
-        <aside class="panel" id="panel">
-            <div class="panel-empty" id="panel-empty">
-                <div class="empty-art">📚</div>
-                <h3>Geographic Archive</h3>
-                <p>Click a marker on the map to explore extensive summaries and contributions to knowledge across Algeria.</p>
+        <aside class="side-panel" id="panel">
+            <div class="panel-intro" id="panel-empty">
+                <div class="intro-icon">📓</div>
+                <h3>Geospatial Archive</h3>
+                <p>Click a marker on the map to explore extensive summaries and contributions to knowledge regarding the sociopolitical landscape of Algerian sport.</p>
             </div>
             
-            <div id="panel-content" style="display:none; flex-direction:column; height:100%;">
-                <div class="panel-hdr">
-                    <h2 id="city-label"></h2>
-                    <button class="close-panel" onclick="closePanel()">✕</button>
+            <div id="panel-active" class="active-container" style="display:none;">
+                <div class="active-hdr">
+                    <h2 id="city-name"></h2>
+                    <button class="close-x" onclick="closePanel()">✕</button>
                 </div>
-                <div class="panel-body" id="panel-body"></div>
+                <div class="active-body" id="panel-body"></div>
             </div>
         </aside>
     </main>
@@ -70,15 +70,15 @@
 
 <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-/* ── DATABASE ── */
-const PUB = {
+/* ── RESEARCH DATABASE ── */
+const DATA = {
     oran: {
         city: "Oran", lat: 35.70, lon: -0.64, north: true,
         pubs: [{ 
             year: "2023", title: "The 19th Mediterranean Games, Oran 2022 and ‘the New Algeria’", 
             ref: "Asian Journal of Sport History & Culture, 1(3).",
             url: "https://doi.org/10.1080/27690148.2023.2195388",
-            summary: "Extensive analysis of the Oran 2022 Mediterranean Games as a symbolic platform for President Tebboune’s 'New Algeria' narrative. The paper explores how the games were mobilized for domestic legitimacy post-Hirak.",
+            summary: "Extensive analysis of the Oran 2022 Mediterranean Games as a symbolic platform for President Tebboune’s 'New Algeria' narrative.",
             contribution: "Unpacks how regional mega-events signal national regeneration and diplomatic resilience.",
             tags: ["Major sport events", "Mediterranean", "Legitimacy"]
         }]
@@ -89,87 +89,86 @@ const PUB = {
             year: "2006", title: "Sport and Algerian Nationalism in the ‘Global’ era", 
             ref: "Francophone and Postcolonial Studies, 4(1).",
             url: "https://doi.org/10.3828/fps.2006.4.1.88",
-            summary: "Analyzes the tension between the Algerian nation-state's desire for territorial identity and the global flows of diaspora athletes.",
-            contribution: "Argues that Algerian sport operates in a 'third space' between national sovereignty and globalized migration.",
+            summary: "Analyzes the tension between the Algerian nation-state's desire for territorial identity and globalized migration.",
+            contribution: "Argues that Algerian sport operates in a 'third space' beyond territorial borders.",
             tags: ["Postcolonialism", "Nation state formation"]
         }]
     }
-    // ... Additional entries follow the same pattern
+    // Add all 12 entries here following the oran/tamanrasset structure...
 };
 
-/* ── MAP FIX ── */
+/* ── MAP INITIALIZATION ── */
 const map = L.map('map', { center: [28.0, 3.0], zoom: 5, minZoom: 4 });
 
-// Using CARTO Voyager for a modern, visible border (Western Sahara Delineation)
+// Using CARTO Voyager: Standard delineation with clear Western Sahara borders
 L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
     attribution: '&copy; OpenStreetMap & CARTO'
 }).addTo(map);
 
-// Fix for invisible map on load
-setTimeout(() => { map.invalidateSize(); }, 500);
+// CRITICAL FIX: Ensures map visibility on initial load
+window.addEventListener('load', () => {
+    setTimeout(() => { map.invalidateSize(); }, 300);
+});
 
-/* ── LOGIC ── */
-let activeCityId = null;
-const markerRefs = {};
+/* ── MARKER & INTERACTION LOGIC ── */
+let currentActiveCity = null;
+const allMarkers = {};
 
-function getIcon(id, data, isActive = false) {
-    const color = isActive ? '#b83820' : (data.north ? '#1a5fa8' : '#2e6b10');
+function createIcon(id, cityData, isHighlighted = false) {
+    const color = isHighlighted ? '#b83820' : (cityData.north ? '#1a5fa8' : '#2e6b10');
     return L.divIcon({
-        className: '',
-        html: `<div class="marker-pin" style="background:${color}"><div class="marker-dot"></div></div>`,
+        className: 'custom-marker',
+        html: `<div class="marker-blob" style="background:${color}"><div class="inner-dot"></div></div>`,
         iconSize: [30, 30], iconAnchor: [15, 15]
     });
 }
 
-Object.entries(PUB).forEach(([id, data]) => {
-    const marker = L.marker([data.lat, data.lon], { icon: getIcon(id, data) }).addTo(map);
+Object.entries(DATA).forEach(([id, info]) => {
+    const marker = L.marker([info.lat, info.lon], { icon: createIcon(id, info) }).addTo(map);
     marker.on('click', () => {
-        if (activeCityId) markerRefs[activeCityId].setIcon(getIcon(activeCityId, PUB[activeCityId], false));
-        activeCityId = id;
-        marker.setIcon(getIcon(id, data, true));
-        map.flyTo([data.lat, data.lon], 6);
-        renderPanel(data);
+        if (currentActiveCity) allMarkers[currentActiveCity].setIcon(createIcon(currentActiveCity, DATA[currentActiveCity], false));
+        currentActiveCity = id;
+        marker.setIcon(createIcon(id, info, true));
+        map.flyTo([info.lat, info.lon], 6);
+        openSidebar(info);
     });
-    markerRefs[id] = marker;
+    allMarkers[id] = marker;
 });
 
-function renderPanel(data) {
+function openSidebar(info) {
     document.getElementById('panel-empty').style.display = 'none';
-    document.getElementById('panel-content').style.display = 'flex';
-    document.getElementById('city-label').textContent = data.city;
-    document.getElementById('panel-body').innerHTML = data.pubs.map(p => `
-        <article class="pub-card">
-            <span class="pub-meta">${p.year} • ${data.city}</span>
-            <h2 class="pub-title">${p.title}</h2>
-            <p class="pub-ref">${p.ref}</p>
-            <div class="pub-info">
-                <strong>Summary</strong>
-                <p>${p.summary}</p>
-            </div>
-            <div class="pub-info contrib">
-                <strong>Contribution to Knowledge</strong>
-                <p>${p.contribution}</p>
-            </div>
-            <a href="${p.url}" target="_blank" class="pub-link">Read Full Publication →</a>
-        </article>
-    `).join('<div class="spacer"></div>');
+    document.getElementById('panel-active').style.display = 'flex';
+    document.getElementById('city-name').textContent = info.city;
+    
+    const html = info.pubs.map(p => `
+        <div class="scholar-card">
+            <header class="card-meta">${p.year} • Publication</header>
+            <h4 class="card-title">${p.title}</h4>
+            <p class="card-ref">${p.ref}</p>
+            <div class="card-section"><strong>Summary:</strong> ${p.summary}</div>
+            <div class="card-section contrib"><strong>Contribution to Knowledge:</strong> ${p.contribution}</div>
+            <a href="${p.url}" target="_blank" class="card-link">View Full Text →</a>
+        </div>
+    `).join('<hr class="divider">');
+    
+    document.getElementById('panel-body').innerHTML = html;
 }
 
 function closePanel() {
-    if (activeCityId) markerRefs[activeCityId].setIcon(getIcon(activeCityId, PUB[activeCityId], false));
-    activeCityId = null;
+    if (currentActiveCity) allMarkers[currentActiveCity].setIcon(createIcon(currentActiveCity, DATA[currentActiveCity], false));
+    currentActiveCity = null;
     document.getElementById('panel-empty').style.display = 'flex';
-    document.getElementById('panel-content').style.display = 'none';
+    document.getElementById('panel-active').style.display = 'none';
     map.setView([28.0, 3.0], 5);
 }
 
+/* ── FILTERS & CSV ── */
 document.querySelectorAll('.pill').forEach(pill => {
     pill.addEventListener('click', () => {
         const theme = pill.dataset.theme;
-        if(!theme) return;
-        Object.entries(PUB).forEach(([id, data]) => {
-            const match = data.pubs.some(p => p.tags.includes(theme));
-            markerRefs[id].getElement().style.opacity = match ? '1' : '0.15';
+        Object.entries(DATA).forEach(([id, info]) => {
+            const hasMatch = info.pubs.some(p => p.tags.includes(theme));
+            allMarkers[id].getElement().style.opacity = hasMatch ? '1' : '0.15';
         });
         document.getElementById('clear-btn').style.display = 'inline-block';
         pill.classList.add('active');
@@ -177,21 +176,21 @@ document.querySelectorAll('.pill').forEach(pill => {
 });
 
 function clearTheme() {
-    Object.values(markerRefs).forEach(m => m.getElement().style.opacity = '1');
+    Object.values(allMarkers).forEach(m => m.getElement().style.opacity = '1');
     document.getElementById('clear-btn').style.display = 'none';
     document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
 }
 
 function downloadCSV() {
-    let csv = "Year,City,Title,Reference,Summary,Contribution\n";
-    Object.values(PUB).forEach(c => c.pubs.forEach(p => {
-        csv += `${p.year},${c.city},"${p.title.replace(/"/g,'')}",,"${p.summary.replace(/"/g,'')}","${p.contribution.replace(/"/g,'')}"\n`;
+    let csv = "Year,City,Title,Summary,Contribution\n";
+    Object.values(DATA).forEach(c => c.pubs.forEach(p => {
+        csv += `${p.year},${c.city},"${p.title.replace(/"/g,'')}","${p.summary.replace(/"/g,'')}","${p.contribution.replace(/"/g,'')}"\n`;
     }));
     const blob = new Blob([csv], { type: 'text/csv' });
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
-    a.setAttribute('href', url);
-    a.setAttribute('download', 'Amara_Scholarship_Algeria.csv');
+    a.href = url;
+    a.download = 'Amara_Algeria_Scholarship.csv';
     a.click();
 }
 </script>
