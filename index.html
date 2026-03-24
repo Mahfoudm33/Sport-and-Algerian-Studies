@@ -5,791 +5,390 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sport, Society & Politics in Algeria — Prof. Mahfoud Amara</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 <style>
-/* ── Tokens ── */
-:root {
-  --oxford: #1a5fa8;
-  --oxford-dark: #144e8c;
-  --desert: #fdfcf9;
-  --sand: #f4f1ea;
-  --sand2: #ece9e0;
-  --green: #006233;
-  --green2: #2e6b10;
-  --red: #b83820;
-  --amber: #c8872a;
-  --border: #e0ddd5;
-  --border2: #ccc9bf;
-  --text: #1a1a1a;
-  --text2: #555550;
-  --text3: #99998f;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=Playfair+Display:wght@700&display=swap');
+:root{
+  --ox:#1a5fa8; --ox2:#144e8c;
+  --des:#fdfcf9; --sand:#f4f1ea; --sand2:#e8e5dc;
+  --grn:#006233; --grn2:#2e6b10;
+  --red:#b83820; --amb:#c8872a;
+  --bdr:#e0ddd5; --bdr2:#ccc9bf;
+  --tx:#1a1a1a; --tx2:#55554e; --tx3:#99998e;
 }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;width:100%;overflow:hidden;font-family:'Inter',-apple-system,sans-serif;background:var(--des);color:var(--tx);}
+.shell{display:flex;flex-direction:column;height:100vh;width:100vw;}
 
-/* ── Reset ── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html, body {
-  height: 100%; width: 100%;
-  font-family: 'Inter', -apple-system, sans-serif;
-  background: var(--desert);
-  color: var(--text);
-  overflow: hidden;
+/* ── Ecosystem nav ── */
+.eco{
+  flex:0 0 auto;background:#0d0d0d;color:#fff;
+  padding:0 20px;border-bottom:2px solid var(--ox);
+  display:flex;align-items:stretch;min-height:38px;
 }
-
-/* ── Shell ── */
-.shell { display: flex; flex-direction: column; height: 100vh; width: 100vw; }
-
-/* ── Top nav ── */
-.eco-nav {
-  flex: 0 0 auto;
-  background: #111;
-  color: #fff;
-  padding: 8px 24px;
-  border-bottom: 2px solid var(--oxford);
-  z-index: 1000;
+.eco-brand{
+  display:flex;align-items:center;gap:10px;
+  padding:0 16px 0 0;
+  border-right:1px solid rgba(255,255,255,.1);
+  margin-right:4px;
 }
-.eco-inner {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 1600px;
-  margin: 0 auto;
+.eco-brand-icon{
+  width:24px;height:24px;border-radius:4px;
+  background:var(--ox);
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:800;color:#fff;
+  flex-shrink:0;
 }
-.eco-label { font-size: 10px; font-weight: 800; color: #666; text-transform: uppercase; letter-spacing: 1.2px; }
-.eco-links { display: flex; gap: 20px; }
-.eco-links a { color: #ccc; text-decoration: none; font-size: 11px; font-weight: 500; transition: color .2s; }
-.eco-links a:hover { color: #fff; }
+.eco-brand-text{font-size:10px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:1px;white-space:nowrap;}
+.eco-links{display:flex;align-items:stretch;gap:0;flex:1;}
+.eco-link{
+  display:flex;align-items:center;gap:7px;
+  padding:0 14px;
+  color:#aaa;text-decoration:none;
+  font-size:11px;font-weight:500;
+  border-right:1px solid rgba(255,255,255,.07);
+  transition:all .2s;
+  white-space:nowrap;
+}
+.eco-link:hover{color:#fff;background:rgba(255,255,255,.05);}
+.eco-link.active{color:#fff;background:rgba(26,95,168,.25);border-bottom:2px solid var(--ox);}
+.eco-link .eco-dot{
+  width:6px;height:6px;border-radius:50%;flex-shrink:0;
+}
+.eco-right{display:flex;align-items:center;margin-left:auto;padding-left:12px;gap:10px;}
+.eco-tag{font-size:9.5px;color:#555;letter-spacing:.5px;}
 
 /* ── Header ── */
-.hdr {
-  flex: 0 0 auto;
-  padding: 14px 24px;
-  background: #fff;
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 1000;
-  gap: 12px;
-  flex-wrap: wrap;
+.hdr{
+  flex:0 0 auto;background:#fff;border-bottom:1px solid var(--bdr);
+  padding:12px 20px;display:flex;justify-content:space-between;
+  align-items:center;gap:10px;flex-wrap:wrap;
 }
-.hdr-brand { display: flex; align-items: center; gap: 14px; }
-.dz-flag {
-  width: 36px; height: 24px;
-  display: flex;
-  border: 1px solid #ddd;
-  border-radius: 3px;
-  overflow: hidden;
-  flex-shrink: 0;
-}
-.flag-green { background: var(--green); flex: 1; }
-.flag-white { background: #fff; flex: 1; }
-.hdr-title { font-family: 'Playfair Display', serif; font-size: 22px; color: #111; line-height: 1.2; }
-.hdr-sub { font-size: 11px; font-weight: 500; color: #888; margin-top: 2px; letter-spacing: .3px; }
-.btn-cite {
-  background: var(--oxford);
-  color: #fff;
-  border: none;
-  padding: 9px 16px;
-  border-radius: 6px;
-  font-size: 11px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all .2s;
-  white-space: nowrap;
-  letter-spacing: .3px;
-}
-.btn-cite:hover { background: var(--oxford-dark); transform: translateY(-1px); }
+.hdr-brand{display:flex;align-items:center;gap:13px;}
+.dz-flag{width:34px;height:22px;display:flex;border:1px solid #ddd;border-radius:3px;overflow:hidden;flex-shrink:0;}
+.flag-g{background:var(--grn);flex:1;}.flag-w{background:#fff;flex:1;}
+.hdr-title{font-family:'Playfair Display',Georgia,serif;font-size:20px;color:#111;line-height:1.2;}
+.hdr-sub{font-size:10.5px;font-weight:500;color:#999;margin-top:2px;}
+.hdr-right{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+.btn{padding:7px 14px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;border:none;font-family:inherit;transition:all .2s;white-space:nowrap;}
+.btn-primary{background:var(--ox);color:#fff;}
+.btn-primary:hover{background:var(--ox2);}
+.btn-outline{background:transparent;color:var(--tx2);border:1px solid var(--bdr2);}
+.btn-outline:hover{border-color:var(--ox);color:var(--ox);}
 
-/* ── Filter strip ── */
-.filter-strip {
-  flex: 0 0 auto;
-  background: #fff;
-  border-bottom: 1px solid var(--border);
-  padding: 10px 24px;
-  z-index: 999;
-}
-.filter-row {
-  display: flex;
-  gap: 7px;
-  overflow-x: auto;
-  padding-bottom: 2px;
-  align-items: center;
-  scrollbar-width: thin;
-  scrollbar-color: var(--border) transparent;
-}
-.filter-row::-webkit-scrollbar { height: 3px; }
-.filter-row::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
-.filter-label {
-  font-size: 10px;
-  font-weight: 700;
-  color: var(--text3);
-  text-transform: uppercase;
-  letter-spacing: .8px;
-  white-space: nowrap;
-  margin-right: 2px;
-  flex-shrink: 0;
-}
-.pill {
-  padding: 5px 13px;
-  background: var(--sand);
-  border-radius: 20px;
-  font-size: 11px;
-  font-weight: 600;
-  cursor: pointer;
-  white-space: nowrap;
-  border: 1px solid transparent;
-  transition: all .18s;
-  color: var(--text2);
-  user-select: none;
-  flex-shrink: 0;
-}
-.pill:hover { background: var(--sand2); }
-.pill.on { background: var(--oxford); color: #fff; border-color: var(--oxford); }
-.pill.clear {
-  background: transparent;
-  color: var(--text3);
-  border-color: transparent;
-  font-weight: 500;
-  display: none;
-}
-.pill.clear:hover { color: var(--red); }
-.pill.clear.visible { display: inline-flex; }
+/* ── Filter bar ── */
+.filterbar{flex:0 0 auto;background:#fff;border-bottom:1px solid var(--bdr);padding:9px 20px;}
+.filter-inner{display:flex;gap:6px;overflow-x:auto;align-items:center;padding-bottom:1px;scrollbar-width:thin;scrollbar-color:var(--bdr) transparent;}
+.filter-inner::-webkit-scrollbar{height:2px;}.filter-inner::-webkit-scrollbar-thumb{background:var(--bdr);}
+.flbl{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--tx3);white-space:nowrap;flex-shrink:0;margin-right:2px;}
+.pill{padding:4px 12px;background:var(--sand);border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;white-space:nowrap;border:1px solid transparent;transition:all .15s;color:var(--tx2);user-select:none;flex-shrink:0;font-family:inherit;}
+.pill:hover{background:var(--sand2);}
+.pill.on{background:var(--ox);color:#fff;border-color:var(--ox);}
+.pclear{font-size:10.5px;padding:4px 10px;background:transparent;border:1px solid var(--bdr);border-radius:20px;color:var(--tx3);cursor:pointer;white-space:nowrap;font-weight:600;display:none;font-family:inherit;transition:all .15s;}
+.pclear.show{display:inline-block;}.pclear:hover{color:var(--red);border-color:var(--red);}
 
 /* ── Body ── */
-.body {
-  flex: 1;
-  display: grid;
-  grid-template-columns: 1fr 400px;
-  min-height: 0;
-  overflow: hidden;
-}
-@media (max-width: 860px) {
-  .body { grid-template-columns: 1fr; grid-template-rows: 52vh 1fr; }
-}
+.body{flex:1;display:grid;grid-template-columns:1fr 390px;min-height:0;overflow:hidden;}
+@media(max-width:820px){.body{grid-template-columns:1fr;grid-template-rows:50vh 1fr;}}
+#map{width:100%;height:100%;}
 
-/* ── Map ── */
-#map { width: 100%; height: 100%; }
-
-/* ── Custom Leaflet markers ── */
-.mk-wrap { position: relative; width: 36px; height: 36px; cursor: pointer; }
-.mk {
-  width: 36px; height: 36px;
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 2px 10px rgba(0,0,0,.32), 0 0 0 2.5px rgba(255,255,255,.9);
-  transition: transform .15s, box-shadow .15s, background .15s;
-}
-.mk:hover { transform: scale(1.18); box-shadow: 0 4px 16px rgba(0,0,0,.4), 0 0 0 3px #fff; }
-.mk svg { width: 17px; height: 17px; fill: rgba(255,255,255,.95); pointer-events: none; }
-.mk.north { background: var(--oxford); }
-.mk.south { background: var(--green2); }
-.mk.selected {
-  background: var(--red) !important;
-  box-shadow: 0 0 0 3.5px var(--red), 0 0 0 6px rgba(184,56,32,.2), 0 4px 14px rgba(0,0,0,.4) !important;
-  transform: scale(1.24) !important;
-}
-.mk.dimmed { opacity: .14; transform: scale(.82) !important; }
-.mk-badge {
-  position: absolute; top: -5px; right: -5px;
-  width: 17px; height: 17px; border-radius: 50%;
-  background: var(--amber); color: #fff;
-  font-size: 9px; font-weight: 800;
-  display: flex; align-items: center; justify-content: center;
-  border: 2px solid #fff;
-  box-shadow: 0 1px 4px rgba(0,0,0,.25);
-  pointer-events: none;
-}
-
-/* Leaflet tooltip */
-.leaflet-tooltip.ct {
-  background: #fff;
-  border: .5px solid var(--border);
-  border-radius: 6px;
-  padding: 3px 10px;
-  font-size: 11px; font-weight: 600;
-  color: var(--text);
-  box-shadow: 0 2px 8px rgba(0,0,0,.12);
-  white-space: nowrap;
-  font-family: 'Inter', sans-serif;
-}
-.leaflet-tooltip.ct::before { display: none; }
+/* ── Markers ── */
+.mk-wrap{position:relative;width:36px;height:36px;cursor:pointer;}
+.mk{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:transform .15s,box-shadow .15s,background .2s,opacity .2s;box-shadow:0 2px 10px rgba(0,0,0,.3),0 0 0 2.5px rgba(255,255,255,.9);}
+.mk:hover{transform:scale(1.2);box-shadow:0 4px 16px rgba(0,0,0,.38),0 0 0 3px #fff;}
+.mk svg{width:17px;height:17px;fill:rgba(255,255,255,.95);pointer-events:none;}
+.mk.north{background:var(--ox);}.mk.south{background:var(--grn2);}
+.mk.active{background:var(--red)!important;transform:scale(1.25)!important;box-shadow:0 0 0 3px var(--red),0 0 0 6px rgba(184,56,32,.2),0 4px 14px rgba(0,0,0,.4)!important;}
+.mk.dimmed{opacity:.12!important;transform:scale(.8)!important;}
+.mk-cnt{position:absolute;top:-5px;right:-5px;width:17px;height:17px;border-radius:50%;background:var(--amb);color:#fff;font-size:9px;font-weight:800;display:flex;align-items:center;justify-content:center;border:2px solid #fff;pointer-events:none;}
+.leaflet-tooltip.tip{background:#fff;border:.5px solid var(--bdr);border-radius:6px;padding:3px 9px;font-size:11px;font-weight:600;color:var(--tx);box-shadow:0 2px 8px rgba(0,0,0,.1);font-family:'Inter',sans-serif;}
+.leaflet-tooltip.tip::before{display:none;}
 
 /* Map legend */
-.map-legend {
-  background: rgba(255,255,255,.94);
-  border: .5px solid var(--border);
-  border-radius: 9px;
-  padding: 10px 13px;
-  font-size: 10.5px;
-  color: var(--text2);
-  line-height: 1.9;
-  box-shadow: 0 2px 10px rgba(0,0,0,.1);
-  backdrop-filter: blur(4px);
-  font-family: 'Inter', sans-serif;
-}
-.map-legend b {
-  display: block;
-  font-size: 9px; font-weight: 800;
-  text-transform: uppercase; letter-spacing: .7px;
-  color: var(--text3); margin-bottom: 5px;
-}
-.leg-row { display: flex; align-items: center; gap: 7px; }
-.leg-dot {
-  width: 10px; height: 10px; border-radius: 50%;
-  border: 2px solid rgba(255,255,255,.8);
-  box-shadow: 0 1px 3px rgba(0,0,0,.25);
-  flex-shrink: 0;
-}
+.map-legend{background:rgba(255,255,255,.93);border:.5px solid var(--bdr);border-radius:9px;padding:9px 12px;font-family:'Inter',sans-serif;font-size:10.5px;color:var(--tx2);line-height:1.9;box-shadow:0 2px 10px rgba(0,0,0,.1);}
+.map-legend strong{display:block;font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;color:var(--tx3);margin-bottom:4px;}
+.leg-row{display:flex;align-items:center;gap:7px;}
+.leg-dot{width:10px;height:10px;border-radius:50%;border:2px solid rgba(255,255,255,.8);flex-shrink:0;}
 
-/* ── Side panel ── */
-.panel {
-  background: var(--desert);
-  border-left: 1px solid var(--border);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-
-/* Empty state */
-.p-empty {
-  flex: 1; display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  padding: 2.5rem 2rem; text-align: center;
-  color: var(--text3);
-}
-.p-empty-icon { font-size: 44px; margin-bottom: 14px; opacity: .3; }
-.p-empty h3 { font-size: 14px; font-weight: 600; color: var(--text2); margin-bottom: 8px; }
-.p-empty p { font-size: 12px; line-height: 1.75; max-width: 200px; }
-
-/* Loaded state wrapper */
-#p-loaded {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  overflow: hidden;
-}
-
-/* Panel header */
-.p-hdr {
-  flex-shrink: 0;
-  background: #fff;
-  border-bottom: 1px solid var(--border);
-  padding: .85rem 1.2rem .7rem;
-  display: flex; align-items: center; justify-content: space-between;
-}
-.p-city-label {
-  font-size: 10px; font-weight: 800;
-  letter-spacing: .1em; text-transform: uppercase;
-  color: var(--oxford);
-  display: flex; align-items: center; gap: 7px;
-}
-.p-city-dot {
-  width: 8px; height: 8px; border-radius: 50%;
-  background: var(--oxford); flex-shrink: 0;
-}
-.p-close {
-  width: 26px; height: 26px; border-radius: 50%;
-  border: 1px solid var(--border); background: transparent;
-  cursor: pointer; font-size: 16px; color: var(--text3);
-  display: flex; align-items: center; justify-content: center;
-  transition: all .15s; line-height: 1;
-}
-.p-close:hover { background: var(--sand); color: var(--text); }
-
-/* Pub nav */
-.p-nav {
-  flex-shrink: 0;
-  display: flex; align-items: center; gap: 8px;
-  padding: .5rem 1.2rem;
-  background: var(--sand);
-  border-bottom: 1px solid var(--border);
-}
-.p-nav button {
-  font-size: 11px; padding: 3px 12px;
-  border: 1px solid var(--border2); border-radius: 20px;
-  background: #fff; cursor: pointer; color: var(--text);
-  font-weight: 600; transition: all .15s;
-  font-family: 'Inter', sans-serif;
-}
-.p-nav button:hover { background: var(--oxford); color: #fff; border-color: var(--oxford); }
-.p-nav-ctr { font-size: 11px; color: var(--text3); flex: 1; text-align: center; font-weight: 500; }
-
-/* Panel body */
-.p-body {
-  flex: 1; overflow-y: auto;
-  padding: 1.25rem 1.3rem;
-  scrollbar-width: thin;
-  scrollbar-color: var(--border) transparent;
-}
-.p-body::-webkit-scrollbar { width: 4px; }
-.p-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
-
-/* Publication card elements */
-.pub-year {
-  display: inline-flex; align-items: center; gap: 5px;
-  font-size: 10px; font-weight: 700;
-  padding: 3px 10px; border-radius: 20px;
-  background: #e8f0fa; color: var(--oxford);
-  margin-bottom: 10px; letter-spacing: .3px;
-}
-.pub-title {
-  font-size: 14.5px; font-weight: 600;
-  line-height: 1.55; margin-bottom: 10px; color: var(--text);
-}
-.pub-ref {
-  font-size: 11px; color: var(--text2);
-  line-height: 1.65; margin-bottom: 16px;
-  padding: .65rem .9rem;
-  background: var(--sand);
-  border-radius: 0 6px 6px 0;
-  border-left: 3px solid var(--amber);
-  font-style: italic;
-}
-.pub-sec { margin-bottom: 14px; }
-.pub-sec-lbl {
-  font-size: 9px; font-weight: 800;
-  text-transform: uppercase; letter-spacing: .9px;
-  color: var(--text3); margin-bottom: 5px;
-}
-.pub-sec p { font-size: 12.5px; line-height: 1.75; color: var(--text); }
-.pub-takeaway {
-  background: #f0f7ef;
-  border-left: 3px solid var(--green2);
-  border-radius: 0 6px 6px 0;
-  padding: .75rem .9rem;
-  margin-bottom: 14px;
-}
-.pub-takeaway .pub-sec-lbl { color: var(--green2); }
-.pub-takeaway p { font-size: 12.5px; line-height: 1.75; color: #1a3a14; }
-.tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 4px; }
-.tag {
-  font-size: 10px; padding: 2px 9px;
-  border-radius: 20px;
-  border: 1px solid var(--border);
-  background: #fff; color: var(--text2);
-  font-weight: 500;
-}
-.tag.hl {
-  background: #e8f0fa; border-color: #aac4e8;
-  color: var(--oxford); font-weight: 600;
-}
-
-/* Leaflet attribution override */
-.leaflet-control-attribution { font-size: 9px !important; }
+/* ── Panel ── */
+.panel{background:var(--des);border-left:1px solid var(--bdr);display:flex;flex-direction:column;overflow:hidden;}
+.p-empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2.5rem 2rem;text-align:center;color:var(--tx3);}
+.p-empty-icon{font-size:40px;margin-bottom:14px;opacity:.3;}
+.p-empty h3{font-size:14px;font-weight:600;color:var(--tx2);margin-bottom:8px;}
+.p-empty p{font-size:12px;line-height:1.7;max-width:200px;}
+.p-loaded{display:none;flex-direction:column;height:100%;overflow:hidden;}
+.p-loaded.show{display:flex;}
+.p-hdr{flex-shrink:0;background:#fff;border-bottom:1px solid var(--bdr);padding:.8rem 1.1rem .65rem;display:flex;align-items:center;justify-content:space-between;}
+.p-city{display:flex;align-items:center;gap:7px;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ox);}
+.p-city-dot{width:8px;height:8px;border-radius:50%;background:var(--ox);flex-shrink:0;}
+.p-close{width:26px;height:26px;border-radius:50%;border:1px solid var(--bdr);background:transparent;cursor:pointer;font-size:16px;color:var(--tx3);display:flex;align-items:center;justify-content:center;transition:all .15s;font-family:inherit;}
+.p-close:hover{background:var(--sand);color:var(--tx);}
+.p-nav{flex-shrink:0;display:flex;align-items:center;gap:7px;padding:.5rem 1.1rem;background:var(--sand);border-bottom:1px solid var(--bdr);}
+.p-nav button{font-size:11px;padding:3px 11px;border:1px solid var(--bdr2);border-radius:20px;background:#fff;cursor:pointer;color:var(--tx);font-weight:600;transition:all .15s;font-family:inherit;}
+.p-nav button:hover{background:var(--ox);color:#fff;border-color:var(--ox);}
+.p-nav-ctr{font-size:11px;color:var(--tx3);flex:1;text-align:center;}
+.p-body{flex:1;overflow-y:auto;padding:1.2rem;scrollbar-width:thin;scrollbar-color:var(--bdr) transparent;}
+.p-body::-webkit-scrollbar{width:4px;}.p-body::-webkit-scrollbar-thumb{background:var(--bdr);border-radius:2px;}
+.pub-year{display:inline-block;font-size:10px;font-weight:700;padding:2px 10px;border-radius:20px;background:#e8f0fa;color:var(--ox);margin-bottom:9px;}
+.pub-title{font-size:14px;font-weight:600;line-height:1.55;margin-bottom:9px;}
+.pub-ref{font-size:11px;color:var(--tx2);line-height:1.65;margin-bottom:14px;padding:.6rem .85rem;background:var(--sand);border-radius:0 6px 6px 0;border-left:3px solid var(--amb);font-style:italic;}
+.pub-sec{margin-bottom:13px;}
+.pub-sec-lbl{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.9px;color:var(--tx3);margin-bottom:5px;}
+.pub-sec p{font-size:12.5px;line-height:1.75;}
+.pub-tk{background:#f0f7ef;border-left:3px solid var(--grn2);border-radius:0 6px 6px 0;padding:.7rem .85rem;margin-bottom:13px;}
+.pub-tk .pub-sec-lbl{color:var(--grn2);}
+.pub-tk p{font-size:12.5px;line-height:1.75;color:#1a3a14;}
+.tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:4px;}
+.tag{font-size:10px;padding:2px 9px;border-radius:20px;border:1px solid var(--bdr);background:#fff;color:var(--tx2);font-weight:500;}
+.tag.hl{background:#e8f0fa;border-color:#aac4e8;color:var(--ox);font-weight:600;}
+.leaflet-control-attribution{font-size:9px!important;}
 </style>
 </head>
 <body>
 <div class="shell">
 
-  <!-- Top nav -->
-  <nav class="eco-nav">
-    <div class="eco-inner">
-      <span class="eco-label">Research Platform &nbsp;·&nbsp; Qatar University &nbsp;·&nbsp; College of Sport Sciences</span>
-      <div class="eco-links">
-        <a href="#" onclick="return false;">Publications</a>
-        <a href="#" onclick="return false;">About</a>
-        <a href="#" onclick="return false;">Contact</a>
-      </div>
+  <!-- ECOSYSTEM NAV — links all three projects -->
+  <nav class="eco">
+    <div class="eco-brand">
+      <div class="eco-brand-icon">MA</div>
+      <span class="eco-brand-text">Prof. Mahfoud Amara</span>
+    </div>
+    <div class="eco-links">
+      <a class="eco-link" href="https://mahfoudm33.github.io/" target="_blank" rel="noopener">
+        <div class="eco-dot" style="background:#6b9fd4"></div>
+        Academic Portfolio
+      </a>
+      <a class="eco-link" href="https://mahfoudm33.github.io/Dr-Mahfoud-Amara-Publications-Arab-World/" target="_blank" rel="noopener">
+        <div class="eco-dot" style="background:#e8a04a"></div>
+        Publications — Arab World
+      </a>
+      <a class="eco-link active" href="#" onclick="return false;">
+        <div class="eco-dot" style="background:#5fa85f"></div>
+        Sport in Algeria
+      </a>
+      <a class="eco-link" href="https://mahfoudm33.github.io/Sport-in-Islam/" target="_blank" rel="noopener">
+        <div class="eco-dot" style="background:#c87aa8"></div>
+        Sport in Islam &amp; Muslim Communities
+      </a>
+    </div>
+    <div class="eco-right">
+      <span class="eco-tag">Qatar University · College of Sport Sciences</span>
     </div>
   </nav>
 
-  <!-- Header -->
-  <header class="hdr">
+  <!-- HEADER -->
+  <div class="hdr">
     <div class="hdr-brand">
-      <div class="dz-flag"><div class="flag-green"></div><div class="flag-white"></div></div>
+      <div class="dz-flag"><div class="flag-g"></div><div class="flag-w"></div></div>
       <div>
         <div class="hdr-title">Sport, Society &amp; Politics in Algeria</div>
-        <div class="hdr-sub">Prof. Mahfoud Amara &nbsp;·&nbsp; Interactive Research Archive &nbsp;·&nbsp; 2006–2025</div>
+        <div class="hdr-sub">Interactive Research Archive &nbsp;·&nbsp; 2006–2025</div>
       </div>
     </div>
-    <button class="btn-cite" onclick="alert('To cite this platform:\nAmara, M. (2025). Sport, Society & Politics in Algeria: An Interactive Research Archive. Qatar University.')">
-      How to cite
-    </button>
-  </header>
-
-  <!-- Filter strip -->
-  <div class="filter-strip">
-    <div class="filter-row" id="filter-row">
-      <span class="filter-label">Filter:</span>
-      <span class="pill" data-theme="Postcolonialism">Postcolonialism</span>
-      <span class="pill" data-theme="National identity">National identity</span>
-      <span class="pill" data-theme="Mega-events">Mega-events</span>
-      <span class="pill" data-theme="Gender">Gender</span>
-      <span class="pill" data-theme="Political legitimacy">Political legitimacy</span>
-      <span class="pill" data-theme="Sport media">Sport media</span>
-      <span class="pill" data-theme="Youth politics">Youth politics</span>
-      <span class="pill" data-theme="Geopolitics">Geopolitics</span>
-      <span class="pill" data-theme="Post-socialism">Post-socialism</span>
-      <span class="pill" data-theme="Pan-Africanism">Pan-Africanism</span>
-      <span class="pill clear" id="clear-btn" onclick="clearTheme()">✕ Clear filter</span>
+    <div class="hdr-right">
+      <button class="btn btn-outline" onclick="alert('Amara, M. (2025). Sport, Society \u0026 Politics in Algeria: An Interactive Research Archive. Qatar University.')">How to cite</button>
+      <button class="btn btn-primary" onclick="window.open('https://mahfoudm33.github.io/','_blank')">All projects &#8599;</button>
     </div>
   </div>
 
-  <!-- Map + Panel -->
+  <!-- FILTER BAR -->
+  <div class="filterbar">
+    <div class="filter-inner">
+      <span class="flbl">Filter by theme:</span>
+      <span class="pill" data-t="Postcolonialism">Postcolonialism</span>
+      <span class="pill" data-t="National identity">National identity</span>
+      <span class="pill" data-t="Mega-events">Mega-events</span>
+      <span class="pill" data-t="Gender">Gender</span>
+      <span class="pill" data-t="Political legitimacy">Political legitimacy</span>
+      <span class="pill" data-t="Sport media">Sport media</span>
+      <span class="pill" data-t="Youth politics">Youth politics</span>
+      <span class="pill" data-t="Geopolitics">Geopolitics</span>
+      <span class="pill" data-t="Post-socialism">Post-socialism</span>
+      <span class="pill" data-t="Pan-Africanism">Pan-Africanism</span>
+      <button class="pclear" id="clrbtn" onclick="clearTheme()">&#10005; Clear</button>
+    </div>
+  </div>
+
+  <!-- MAP + PANEL -->
   <div class="body">
     <div id="map"></div>
-    <aside class="panel">
-      <div class="p-empty" id="p-empty">
-        <div class="p-empty-icon">📍</div>
+    <div class="panel">
+      <div class="p-empty" id="pempty">
+        <div class="p-empty-icon">&#128205;</div>
         <h3>Select a city</h3>
         <p>Click any marker on the map to explore research publications linked to that location.</p>
       </div>
-      <div id="p-loaded" style="display:none;">
+      <div class="p-loaded" id="ploaded">
         <div class="p-hdr">
-          <span class="p-city-label">
-            <span class="p-city-dot" id="p-city-dot"></span>
-            <span id="p-city-name"></span>
-          </span>
-          <button class="p-close" onclick="closePanel()">×</button>
+          <div class="p-city">
+            <div class="p-city-dot" id="pdot"></div>
+            <span id="pname"></span>
+          </div>
+          <button class="p-close" onclick="closePanel()">&#215;</button>
         </div>
-        <div id="p-nav-wrap"></div>
-        <div class="p-body" id="p-body"></div>
+        <div id="pnav"></div>
+        <div class="p-body" id="pbody"></div>
       </div>
-    </aside>
+    </div>
   </div>
+</div>
 
-</div><!-- /shell -->
-
-<!-- Leaflet from jsDelivr -->
 <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
-
 <script>
-/* ══════════════════════════════════════════════
-   PUBLICATIONS
-══════════════════════════════════════════════ */
-const PUB = {
-  oran: {
-    city:"Oran", lat:35.70, lon:-0.64, north:true,
-    pubs:[{
-      year:"2023",
-      title:"The 19th Mediterranean Games, Oran 2022 and 'the New Algeria'",
-      ref:"Amara, M. (2023). Asian Journal of Sport History & Culture, 1(3), 234–249. DOI: 10.1080/27690148.2023.2195388",
-      summary:"Examines how Algeria mobilised the 19th Mediterranean Games in Oran as a political and symbolic platform for President Tebboune's 'New Algeria' narrative. Analyses the interplay between mega-event hosting, national regeneration discourse, and regional geopolitics within the post-Hirak context.",
-      takeaway:"Mega-events in Algeria function not merely as sporting spectacles but as instruments of state legitimisation — projecting domestic renewal outward while managing the political tensions left by the Hirak protest movement.",
-      tags:["Mega-events","State legitimacy","Post-Hirak Algeria","Mediterranean Games","Geopolitics","Oran"]
-    }]
-  },
-  algiers: {
-    city:"Algiers", lat:36.74, lon:3.06, north:true,
-    pubs:[
-      {year:"2012",
-       title:"Football Sub-Culture and Youth Politics in Algeria",
-       ref:"Amara, M. (2012). Mediterranean Politics, 17(1), 41–58.",
-       summary:"Drawing on Bourdieu's field theory, explores how Algerian football ultras constitute a site of political contestation, situating fan cultures within dynamics of youth unemployment, state authoritarianism, and generational frustration in post-independence Algeria.",
-       takeaway:"Football stadiums in Algeria are one of the rare public spaces where youth can voice political dissent — making ultras culture a barometer of social tensions that formal political institutions fail to channel.",
-       tags:["Youth politics","Football culture","Ultras","Bourdieu","Algeria"]},
-      {year:"2021",
-       title:"Moments and Memories: Football and State Narratives in Algeria",
-       ref:"Bouandel, Y. & Amara, M. (2021). Soccer & Society, 22(8), 1084–1094. DOI: 10.1080/14660970.2019.1680505",
-       summary:"Interrogates how the Algerian state co-opts football victories — the 1982 World Cup and the 2019 AFCON — to construct national narratives, using collective memory theory to show how key football moments are institutionalised into state identity discourse.",
-       takeaway:"Football in Algeria serves as a reservoir of national memory that the state strategically activates or suppresses to consolidate legitimacy or deflect socio-political pressures.",
-       tags:["Collective memory","State narratives","AFCON","National identity","Political legitimacy"]},
-      {year:"2022",
-       title:"Algeria and the FIFA World Cup: Political Legitimisation and Regional Rivalry",
-       ref:"Amara, M. & Bouandel, Y. (2022). Soccer and Society, 23(7), 735–746.",
-       summary:"Analyses how Algeria's World Cup campaigns become entangled with intra-Maghreb rivalries — particularly vis-à-vis Morocco — and how the World Cup is mobilised for domestic legitimisation by successive regimes from Boumediene to Tebboune.",
-       takeaway:"The FIFA World Cup functions for Algeria as both a soft power arena and a domestic legitimisation tool, with Maghrebi geopolitical rivalries consistently shaping how football success or failure is politically framed.",
-       tags:["World Cup","Soft power","Maghreb rivalry","Morocco","Political legitimacy","Geopolitics"]},
-      {year:"2022",
-       title:"Football in Algeria from the 'Black Decade' to the Hirak",
-       ref:"Amara, M. (Fall 2022). Middle East Report (MERIP), No. 304.",
-       summary:"Charts Algerian football across two rupture points: the 1990s civil war and the 2019 Hirak uprising — examining how football reflected societal trauma, offered sanctuary from violence, and became a medium through which protest politics were articulated.",
-       takeaway:"Football in Algeria carries the scars of the Black Decade and the aspirations of the Hirak — a mirror of national suffering and a vehicle for popular political expression across generations.",
-       tags:["Black Decade","Hirak","Civil war","Political protest","Football history","National identity"]},
-      {year:"2011",
-       title:"Football, the New Battlefield of Business in Algeria",
-       ref:"Amara, M. (2011). Journal of North African Studies, 16(1). DOI: 10.1080/13629387.2010.536376",
-       summary:"Analyses the commercialisation of Algerian football within the political economy of post-socialism: private capital, politically connected businessmen, and incomplete club professionalisation during Algeria's transition from a socialist to a market economy.",
-       takeaway:"Algerian football's commercialisation reflects post-socialist contradictions: formal market structures are adopted while patronage networks and informal economies remain dominant, producing a hybrid and often dysfunctional football economy.",
-       tags:["Commercialisation","Political economy","Post-socialism","Football business","Transition"]}
-    ]
-  },
-  constantine: {
-    city:"Constantine", lat:36.37, lon:6.61, north:true,
-    pubs:[{
-      year:"2025",
-      title:"Living Football, Navigating Politics: Salah Assad's Life Story in Post-Colonial and Post-Conflict Algeria",
-      ref:"Amara, M. & Bouandel, Y. (2025). International Journal of the History of Sport, 1–17. DOI: 10.1080/09523367.2025.2479455",
-      summary:"Through biographical and oral history methods, reconstructs the career of footballer Salah Assad across colonial, independence, and post-conflict eras, illuminating the entanglement of individual sporting biographies with Algeria's turbulent political history.",
-      takeaway:"Individual football biographies offer a human-scale lens onto Algeria's macro-political history — Assad's life traverses colonialism and civil war, revealing how footballers in postcolonial states navigate politics whether they choose to or not.",
-      tags:["Biographical method","Postcolonialism","Post-conflict","Football history","Algeria","Oral history"]
-    }]
-  },
-  annaba: {
-    city:"Annaba", lat:36.90, lon:7.77, north:true,
-    pubs:[
-      {year:"2006",
-       title:"Sport and Algerian Nationalism in the 'Global' Era: Within and Beyond the Nation-State",
-       ref:"Amara, M. (2006). Francophone and Postcolonial Studies, 4(1), 88–115.",
-       summary:"Examines how Algerian nationalism is constructed through sport amid globalisation, analysing the tension between nation-state identity and the transnational flows of diaspora athletes in France who complicate nationalist narratives through dual belonging.",
-       takeaway:"In the global era, Algerian sporting nationalism operates both within and beyond the nation-state: diaspora athletes become contested symbols of identity, forcing a renegotiation of who counts as 'Algerian' in international sport.",
-       tags:["Nationalism","Diaspora","Postcolonialism","Globalisation","National identity"]},
-      {year:"2006",
-       title:"Soccer, Post-Colonial and Post-Conflict Discourses: Algérie–France, 6 Octobre 2001",
-       ref:"Amara, M. (2006). International Review of Modern Sociology, 32(2), 217–239.",
-       summary:"A sociological reading of the abandoned France–Algeria match of October 2001. Using postcolonial theory and discourse analysis, argues the incident crystallised unresolved colonial wounds and exposed the inadequacy of French republican integration narratives.",
-       takeaway:"The 2001 match was a postcolonial rupture — silenced histories of colonialism and migration erupted onto the world's most watched sporting arena, exposing the fragility of post-conflict reconciliation narratives.",
-       tags:["Postcolonialism","France-Algeria","Colonial memory","Diaspora","Discourse analysis","Post-conflict"]}
-    ]
-  },
-  tiziouzou: {
-    city:"Tizi Ouzou", lat:36.71, lon:4.05, north:true,
-    pubs:[
-      {year:"2025",
-       title:"Imane Khelif: Women's Boxing, Geopolitical Power and Gendered Media Narratives",
-       ref:"Amara, M., Ahmad, N. & Hamidou, K. (2025). The International Spectator, 1–20. DOI: 10.1080/03932729.2025.2594466",
-       summary:"Analyses the geopolitical and media storm surrounding Algerian boxer Imane Khelif at Paris 2024 — a flashpoint for debates on gender verification, Islamophobia, and geopolitical rivalry between Algeria and Western nations, examined through critical feminist and postcolonial frameworks.",
-       takeaway:"Khelif's case reveals that Muslim women athletes from the Global South face a double burden: their legitimacy questioned through gendered and racialised narratives intersecting with geopolitical hostilities — making the Olympic stage a site of colonial continuation.",
-       tags:["Gender","Boxing","Paris 2024","Geopolitics","Postcolonialism","Sport media","Women in sport"]},
-      {year:"2025",
-       title:"Ghada Mahat: Whistling Against the Odds — Female Refereeing, Gender Dynamics, and Resistance in Algerian Soccer",
-       ref:"Amara, M. (2025). Sport in Society, 1–16. DOI: 10.1080/17430437.2025.2590520",
-       summary:"Through the career of female referee Ghada Mahat, investigates structural barriers, gendered hostility, and forms of resistance encountered by women in officiating roles in Algerian football, drawing on feminist sport sociology and postcolonial theory.",
-       takeaway:"Female referees navigate a patriarchal institution that questions their authority at every level. Their persistence constitutes an act of quiet resistance against gender norms and post-independence notions of appropriate femininity.",
-       tags:["Women in sport","Gender","Refereeing","Resistance","Feminist theory","Algeria"]}
-    ]
-  },
-  bejaia: {
-    city:"Béjaïa", lat:36.75, lon:5.07, north:true,
-    pubs:[{
-      year:"2024",
-      title:"Online Sources as Alternative Media for Sporting Events' Consumption in Algeria",
-      ref:"Hamidou, K. & Amara, M. (2024). Asian Journal of Sport History & Culture, 3(1), 1–21. DOI: 10.1080/27690148.2024.2304318",
-      summary:"Using Technology Acceptance Model (TAM) and Uses and Gratifications Theory (UGT), investigates how Algerian sports fans use online platforms as alternatives to official broadcast media, exploring motivations and the role of user-generated content in reshaping Algeria's sport media landscape.",
-      takeaway:"Algerian sports fans have built a parallel media ecology through digital platforms, bypassing official broadcasts — challenging state and commercial control of sport media and pointing to the democratising, yet uneven, potential of online sport consumption.",
-      tags:["Sport media","Digital platforms","TAM","UGT","Algeria","Online consumption"]
-    }]
-  },
-  tlemcen: {
-    city:"Tlemcen", lat:34.89, lon:-1.32, north:true,
-    pubs:[{
-      year:"2022",
-      title:"Algeria and the FIFA World Cup: Maghrebi Rivalry and Western Border Identity",
-      ref:"Amara, M. & Bouandel, Y. (2022). Soccer and Society, 23(7), 735–746. [Thematic node — western Algeria]",
-      summary:"Tlemcen, on Algeria's western border with Morocco, anchors the geopolitical dimension of Algeria's sporting identity vis-à-vis Morocco. Analyses how World Cup football becomes entangled with Morocco–Algeria rivalry and how border regions inflect nationalist football discourse.",
-      takeaway:"Algeria's western border identity and its rivalry with Morocco inflect how World Cup football is consumed and politically deployed — making sport a terrain of Maghrebi geopolitics as much as national celebration.",
-      tags:["World Cup","Maghreb rivalry","Morocco","Geopolitics","Political legitimacy","West Algeria"]
-    }]
-  },
-  ghardaia: {
-    city:"Ghardaïa", lat:32.49, lon:3.67, north:false,
-    pubs:[{
-      year:"2011",
-      title:"Football, Business and Algeria's Interior Economy",
-      ref:"Amara, M. (2011). Journal of North African Studies, 16(1). [Thematic node — M'zab Valley]",
-      summary:"The M'zab valley anchors exploration of Algeria's post-socialist transition in the interior. Interrogates how the political economy of Algeria's hinterland — informal trade and hydrocarbon revenues — shapes sport financing and governance nationally.",
-      takeaway:"Understanding Algeria's football economy requires attention to uneven interior development: the informal and hydrocarbon economies of central Algeria produce structural inequalities that permeate national sport governance.",
-      tags:["Post-socialism","Transition economy","Political economy","Interior Algeria","Football governance"]
-    }]
-  },
-  ouargla: {
-    city:"Ouargla", lat:31.95, lon:5.32, north:false,
-    pubs:[{
-      year:"2022",
-      title:"Algeria's Saharan-African Geopolitics and Sport Diplomacy",
-      ref:"Amara, M. & Bouandel, Y. (2022). Soccer and Society, 23(7), 735–746. [Thematic node — Saharan Algeria]",
-      summary:"Ouargla — heart of Algeria's hydrocarbon-producing south — anchors the analysis of Algeria's dual geopolitical identity as both Mediterranean and African. Algeria's World Cup diplomacy must be read against this Saharan territorial depth and its pan-African implications.",
-      takeaway:"Algeria's sporting identity cannot be reduced to its Mediterranean face. The Saharan south anchors Africa-directed geopolitical engagements and informs sport diplomacy toward sub-Saharan Africa and pan-African institutions including the CAF.",
-      tags:["World Cup","Geopolitics","Sahara","Sport diplomacy","Pan-Africanism","National identity"]
-    }]
-  },
-  tamanrasset: {
-    city:"Tamanrasset", lat:22.79, lon:5.52, north:false,
-    pubs:[{
-      year:"2006",
-      title:"Sport and Algerian Nationalism: Saharan and Pan-African Dimensions",
-      ref:"Amara, M. (2006). Francophone and Postcolonial Studies, 4(1), 88–115. [Thematic node — deep south]",
-      summary:"Tamanrasset — crossroads of Tuareg, Arab, and trans-Saharan cultures — represents the dimension of Amara's research engaging with Algeria's deep African identity. Algeria's postcolonial territorial identity stretches south to the Sahara, shaping sport policy and diplomatic strategy vis-à-vis pan-African institutions.",
-      takeaway:"Understanding Algerian sport nationalism requires acknowledging multi-directional geopolitical pulls — Mediterranean, Arab, Maghrebi, and pan-African. The Saharan south is not marginal but constitutive of what Algeria is as a sporting and geopolitical actor.",
-      tags:["Pan-Africanism","Sahara","Sport diplomacy","National identity","Postcolonialism","Tuareg"]
-    }]
-  }
+var C={
+  oran:{city:"Oran",lat:35.70,lon:-0.64,north:true,pubs:[
+    {year:"2023",title:"The 19th Mediterranean Games, Oran 2022 and \u2018the New Algeria\u2019",ref:"Amara, M. (2023). Asian Journal of Sport History &amp; Culture, 1(3), 234\u2013249. DOI: 10.1080/27690148.2023.2195388",summary:"Examines how Algeria mobilised the 19th Mediterranean Games in Oran as a political and symbolic platform for President Tebboune\u2019s \u2018New Algeria\u2019 narrative, analysing the interplay between mega-event hosting, national regeneration discourse, and regional geopolitics within the post-Hirak context.",takeaway:"Mega-events in Algeria function not merely as sporting spectacles but as instruments of state legitimisation \u2014 projecting domestic renewal outward while managing the political tensions left by the Hirak protest movement.",tags:["Mega-events","State legitimacy","Post-Hirak Algeria","Mediterranean Games","Geopolitics","Oran"]}
+  ]},
+  algiers:{city:"Algiers",lat:36.74,lon:3.06,north:true,pubs:[
+    {year:"2012",title:"Football Sub-Culture and Youth Politics in Algeria",ref:"Amara, M. (2012). Mediterranean Politics, 17(1), 41\u201358.",summary:"Drawing on Bourdieu\u2019s field theory, explores how Algerian football ultras constitute a site of political contestation, situating fan cultures within dynamics of youth unemployment, state authoritarianism, and generational frustration in post-independence Algeria.",takeaway:"Football stadiums in Algeria are one of the rare public spaces where youth can voice political dissent \u2014 making ultras culture a barometer of social tensions that formal political institutions fail to channel.",tags:["Youth politics","Football culture","Ultras","Bourdieu","Algeria"]},
+    {year:"2021",title:"Moments and Memories: Football and State Narratives in Algeria",ref:"Bouandel, Y. &amp; Amara, M. (2021). Soccer &amp; Society, 22(8), 1084\u20131094.",summary:"Interrogates how the Algerian state co-opts football victories \u2014 the 1982 World Cup and the 2019 AFCON \u2014 to construct national narratives, using collective memory theory to show how key football moments are institutionalised into state identity discourse.",takeaway:"Football in Algeria serves as a reservoir of national memory that the state strategically activates or suppresses to consolidate legitimacy or deflect socio-political pressures.",tags:["Collective memory","State narratives","AFCON","National identity","Political legitimacy"]},
+    {year:"2022",title:"Algeria and the FIFA World Cup: Political Legitimisation and Regional Rivalry",ref:"Amara, M. &amp; Bouandel, Y. (2022). Soccer and Society, 23(7), 735\u2013746.",summary:"Analyses how Algeria\u2019s World Cup campaigns become entangled with intra-Maghreb rivalries \u2014 particularly vis-\u00e0-vis Morocco \u2014 and how the World Cup is mobilised for domestic legitimisation by successive regimes from Boumediene to Tebboune.",takeaway:"The FIFA World Cup functions for Algeria as both a soft power arena and a domestic legitimisation tool, with Maghrebi geopolitical rivalries consistently shaping how football success or failure is politically framed.",tags:["World Cup","Soft power","Maghreb rivalry","Morocco","Political legitimacy","Geopolitics"]},
+    {year:"2022",title:"Football in Algeria from the \u2018Black Decade\u2019 to the Hirak",ref:"Amara, M. (Fall 2022). Middle East Report (MERIP), No. 304.",summary:"Charts Algerian football across two rupture points: the 1990s civil war and the 2019 Hirak uprising \u2014 examining how football reflected societal trauma, offered sanctuary from violence, and became a medium through which protest politics were articulated.",takeaway:"Football in Algeria carries the scars of the Black Decade and the aspirations of the Hirak \u2014 a mirror of national suffering and a vehicle for popular political expression across generations.",tags:["Black Decade","Hirak","Civil war","Political protest","Football history","National identity"]},
+    {year:"2011",title:"Football, the New Battlefield of Business in Algeria",ref:"Amara, M. (2011). Journal of North African Studies, 16(1). DOI: 10.1080/13629387.2010.536376",summary:"Analyses the commercialisation of Algerian football within the political economy of post-socialism: private capital, politically connected businessmen, and incomplete club professionalisation during Algeria\u2019s transition from a socialist to a market economy.",takeaway:"Algerian football\u2019s commercialisation reflects post-socialist contradictions: formal market structures are adopted while patronage networks and informal economies remain dominant, producing a hybrid and often dysfunctional football economy.",tags:["Commercialisation","Political economy","Post-socialism","Football business","Transition"]}
+  ]},
+  constantine:{city:"Constantine",lat:36.37,lon:6.61,north:true,pubs:[
+    {year:"2025",title:"Living Football, Navigating Politics: Salah Assad\u2019s Life Story in Post-Colonial and Post-Conflict Algeria",ref:"Amara, M. &amp; Bouandel, Y. (2025). International Journal of the History of Sport, 1\u201317. DOI: 10.1080/09523367.2025.2479455",summary:"Through biographical and oral history methods, reconstructs the career of footballer Salah Assad across colonial, independence, and post-conflict eras, illuminating the entanglement of individual sporting biographies with Algeria\u2019s turbulent political history.",takeaway:"Individual football biographies offer a human-scale lens onto Algeria\u2019s macro-political history \u2014 Assad\u2019s life traverses colonialism and civil war, revealing how footballers in postcolonial states navigate politics whether they choose to or not.",tags:["Biographical method","Postcolonialism","Post-conflict","Football history","Algeria","Oral history"]}
+  ]},
+  annaba:{city:"Annaba",lat:36.90,lon:7.77,north:true,pubs:[
+    {year:"2006",title:"Sport and Algerian Nationalism in the \u2018Global\u2019 Era: Within and Beyond the Nation-State",ref:"Amara, M. (2006). Francophone and Postcolonial Studies, 4(1), 88\u2013115.",summary:"Examines how Algerian nationalism is constructed through sport amid globalisation, analysing the tension between nation-state identity and the transnational flows of diaspora athletes in France who complicate nationalist narratives through dual belonging.",takeaway:"In the global era, Algerian sporting nationalism operates both within and beyond the nation-state: diaspora athletes become contested symbols of identity, forcing a renegotiation of who counts as \u2018Algerian\u2019 in international sport.",tags:["Nationalism","Diaspora","Postcolonialism","Globalisation","National identity"]},
+    {year:"2006",title:"Soccer, Post-Colonial and Post-Conflict Discourses: Alg\u00e9rie\u2013France, 6 Octobre 2001",ref:"Amara, M. (2006). International Review of Modern Sociology, 32(2), 217\u2013239.",summary:"A sociological reading of the abandoned France\u2013Algeria match of October 2001. Using postcolonial theory and discourse analysis, argues the incident crystallised unresolved colonial wounds and exposed the inadequacy of French republican integration narratives.",takeaway:"The 2001 match was a postcolonial rupture \u2014 silenced histories of colonialism and migration erupted onto the world\u2019s most watched sporting arena, exposing the fragility of post-conflict reconciliation narratives.",tags:["Postcolonialism","France-Algeria","Colonial memory","Diaspora","Discourse analysis","Post-conflict"]}
+  ]},
+  tiziouzou:{city:"Tizi Ouzou",lat:36.71,lon:4.05,north:true,pubs:[
+    {year:"2025",title:"Imane Khelif: Women\u2019s Boxing, Geopolitical Power and Gendered Media Narratives",ref:"Amara, M., Ahmad, N. &amp; Hamidou, K. (2025). The International Spectator, 1\u201320. DOI: 10.1080/03932729.2025.2594466",summary:"Analyses the geopolitical and media storm surrounding Algerian boxer Imane Khelif at Paris 2024 \u2014 a flashpoint for debates on gender verification, Islamophobia, and geopolitical rivalry between Algeria and Western nations, examined through critical feminist and postcolonial frameworks.",takeaway:"Khelif\u2019s case reveals that Muslim women athletes from the Global South face a double burden: their legitimacy questioned through gendered and racialised narratives intersecting with geopolitical hostilities \u2014 making the Olympic stage a site of colonial continuation.",tags:["Gender","Boxing","Paris 2024","Geopolitics","Postcolonialism","Sport media","Women in sport"]},
+    {year:"2025",title:"Ghada Mahat: Whistling Against the Odds \u2014 Female Refereeing, Gender Dynamics, and Resistance in Algerian Soccer",ref:"Amara, M. (2025). Sport in Society, 1\u201316. DOI: 10.1080/17430437.2025.2590520",summary:"Through the career of female referee Ghada Mahat, investigates structural barriers, gendered hostility, and forms of resistance encountered by women in officiating roles in Algerian football, drawing on feminist sport sociology and postcolonial theory.",takeaway:"Female referees navigate a patriarchal institution that questions their authority at every level. Their persistence constitutes an act of quiet resistance against gender norms and post-independence notions of appropriate femininity.",tags:["Women in sport","Gender","Refereeing","Resistance","Feminist theory","Algeria"]}
+  ]},
+  bejaia:{city:"B\u00e9ja\u00efa",lat:36.75,lon:5.07,north:true,pubs:[
+    {year:"2024",title:"Online Sources as Alternative Media for Sporting Events\u2019 Consumption in Algeria",ref:"Hamidou, K. &amp; Amara, M. (2024). Asian Journal of Sport History &amp; Culture, 3(1), 1\u201321. DOI: 10.1080/27690148.2024.2304318",summary:"Using Technology Acceptance Model (TAM) and Uses and Gratifications Theory (UGT), investigates how Algerian sports fans use online platforms as alternatives to official broadcast media, exploring motivations and the role of user-generated content in reshaping Algeria\u2019s sport media landscape.",takeaway:"Algerian sports fans have built a parallel media ecology through digital platforms, bypassing official broadcasts \u2014 challenging state and commercial control of sport media and pointing to the democratising, yet uneven, potential of online sport consumption.",tags:["Sport media","Digital platforms","TAM","UGT","Algeria","Online consumption"]}
+  ]},
+  tlemcen:{city:"Tlemcen",lat:34.89,lon:-1.32,north:true,pubs:[
+    {year:"2022",title:"Algeria and the FIFA World Cup: Maghrebi Rivalry and Western Border Identity",ref:"Amara, M. &amp; Bouandel, Y. (2022). Soccer and Society, 23(7), 735\u2013746. [Thematic node]",summary:"Tlemcen, on Algeria\u2019s western border with Morocco, anchors the geopolitical dimension of Algeria\u2019s sporting identity vis-\u00e0-vis Morocco. Analyses how World Cup football becomes entangled with Morocco\u2013Algeria rivalry and how border regions inflect nationalist football discourse.",takeaway:"Algeria\u2019s western border identity and its rivalry with Morocco inflect how World Cup football is consumed and politically deployed \u2014 making sport a terrain of Maghrebi geopolitics as much as national celebration.",tags:["World Cup","Maghreb rivalry","Morocco","Geopolitics","Political legitimacy","West Algeria"]}
+  ]},
+  ghardaia:{city:"Gharda\u00efa",lat:32.49,lon:3.67,north:false,pubs:[
+    {year:"2011",title:"Football, Business and Algeria\u2019s Interior Economy",ref:"Amara, M. (2011). Journal of North African Studies, 16(1). [Thematic node \u2014 M\u2019zab Valley]",summary:"The M\u2019zab valley anchors exploration of Algeria\u2019s post-socialist transition in the interior. Interrogates how the political economy of Algeria\u2019s hinterland \u2014 informal trade and hydrocarbon revenues \u2014 shapes sport financing and governance nationally.",takeaway:"Understanding Algeria\u2019s football economy requires attention to uneven interior development: the informal and hydrocarbon economies of central Algeria produce structural inequalities that permeate national sport governance.",tags:["Post-socialism","Transition economy","Political economy","Interior Algeria","Football governance"]}
+  ]},
+  ouargla:{city:"Ouargla",lat:31.95,lon:5.32,north:false,pubs:[
+    {year:"2022",title:"Algeria\u2019s Saharan-African Geopolitics and Sport Diplomacy",ref:"Amara, M. &amp; Bouandel, Y. (2022). Soccer and Society, 23(7). [Thematic node]",summary:"Ouargla \u2014 heart of Algeria\u2019s hydrocarbon-producing south \u2014 anchors the analysis of Algeria\u2019s dual geopolitical identity as both Mediterranean and African. Algeria\u2019s World Cup diplomacy must be read against this Saharan territorial depth and its pan-African implications.",takeaway:"Algeria\u2019s sporting identity cannot be reduced to its Mediterranean face. The Saharan south anchors Africa-directed geopolitical engagements and informs sport diplomacy toward sub-Saharan Africa and pan-African institutions including the CAF.",tags:["World Cup","Geopolitics","Sahara","Sport diplomacy","Pan-Africanism","National identity"]}
+  ]},
+  tamanrasset:{city:"Tamanrasset",lat:22.79,lon:5.52,north:false,pubs:[
+    {year:"2006",title:"Sport and Algerian Nationalism: Saharan and Pan-African Dimensions",ref:"Amara, M. (2006). Francophone and Postcolonial Studies, 4(1), 88\u2013115. [Thematic node]",summary:"Tamanrasset \u2014 crossroads of Tuareg, Arab, and trans-Saharan cultures \u2014 represents the dimension of Amara\u2019s research engaging with Algeria\u2019s deep African identity. Algeria\u2019s postcolonial territorial identity stretches south to the Sahara, shaping sport policy and diplomatic strategy vis-\u00e0-vis pan-African institutions.",takeaway:"Understanding Algerian sport nationalism requires acknowledging multi-directional geopolitical pulls \u2014 Mediterranean, Arab, Maghrebi, and pan-African. The Saharan south is not marginal but constitutive of what Algeria is as a sporting and geopolitical actor.",tags:["Pan-Africanism","Sahara","Sport diplomacy","National identity","Postcolonialism","Tuareg"]}
+  ]}
 };
 
-/* ══════════════════════════════════════════════
-   STATE
-══════════════════════════════════════════════ */
-let activeTheme = null;
-let currentCity = null;
-let currentIdx  = 0;
+var theme=null,curCity=null,curIdx=0;
+var PIN='M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z';
 
-/* ══════════════════════════════════════════════
-   MAP
-══════════════════════════════════════════════ */
-const map = L.map('map', {
-  center: [27.5, 3.0],
-  zoom: 5,
-  minZoom: 4,
-  maxZoom: 12
-});
-
-L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png', {
-  attribution:'&copy; <a href="https://stadiamaps.com/">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap</a>',
-  maxZoom: 20,
-  detectRetina: true
+var map=L.map('map',{center:[27,3],zoom:5,minZoom:4,maxZoom:12});
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+  attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+  maxZoom:19
 }).addTo(map);
 
-/* pin SVG path */
-const PIN = '<path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>';
-
-/* place markers */
-Object.entries(PUB).forEach(([id, d]) => {
-  const badge = d.pubs.length > 1 ? `<div class="mk-badge">${d.pubs.length}</div>` : '';
-  const icon = L.divIcon({
-    html: `<div class="mk-wrap"><div class="mk ${d.north?'north':'south'}" id="mk-${id}"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">${PIN}</svg></div>${badge}</div>`,
-    className: '',
-    iconSize: [36,36],
-    iconAnchor: [18,18],
-    tooltipAnchor: [18,0]
+Object.entries(C).forEach(function(e){
+  var id=e[0],d=e[1];
+  var badge=d.pubs.length>1?'<div class="mk-cnt">'+d.pubs.length+'</div>':'';
+  var icon=L.divIcon({
+    html:'<div class="mk-wrap"><div class="mk '+(d.north?'north':'south')+'" id="mk-'+id+'"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="'+PIN+'"/></svg></div>'+badge+'</div>',
+    className:'',iconSize:[36,36],iconAnchor:[18,18],tooltipAnchor:[18,-4]
   });
-  L.marker([d.lat, d.lon], {icon, title:d.city})
-    .addTo(map)
-    .bindTooltip(d.city, {className:'ct', direction:'top', offset:[0,-8]})
-    .on('click', () => showCity(id));
+  L.marker([d.lat,d.lon],{icon:icon,title:d.city}).addTo(map)
+    .bindTooltip(d.city,{className:'tip',direction:'top',offset:[0,-10]})
+    .on('click',function(){openCity(id);});
 });
 
-/* legend */
-const leg = L.control({position:'bottomleft'});
-leg.onAdd = () => {
-  const el = L.DomUtil.create('div','map-legend');
-  el.innerHTML = `<b>City markers</b>
-    <div class="leg-row"><div class="leg-dot" style="background:#1a5fa8"></div>Northern Algeria</div>
-    <div class="leg-row"><div class="leg-dot" style="background:#2e6b10"></div>Southern Algeria (Sahara)</div>
-    <div class="leg-row"><div class="leg-dot" style="background:#b83820"></div>Selected city</div>
-    <div style="margin-top:5px;font-size:9px;color:#aaa">Badge = no. of publications</div>`;
+var lgd=L.control({position:'bottomleft'});
+lgd.onAdd=function(){
+  var el=L.DomUtil.create('div','map-legend');
+  el.innerHTML='<strong>Markers</strong>'
+    +'<div class="leg-row"><div class="leg-dot" style="background:#1a5fa8;box-shadow:0 1px 3px rgba(0,0,0,.3)"></div>Northern Algeria</div>'
+    +'<div class="leg-row"><div class="leg-dot" style="background:#2e6b10;box-shadow:0 1px 3px rgba(0,0,0,.3)"></div>Southern Algeria</div>'
+    +'<div class="leg-row"><div class="leg-dot" style="background:#b83820;box-shadow:0 1px 3px rgba(0,0,0,.3)"></div>Selected</div>'
+    +'<div style="margin-top:5px;font-size:9px;color:#aaa">Badge = no. of publications</div>';
   return el;
 };
-leg.addTo(map);
+lgd.addTo(map);
 
-/* ══════════════════════════════════════════════
-   THEME FILTER
-══════════════════════════════════════════════ */
-document.querySelectorAll('.pill[data-theme]').forEach(p => {
-  p.addEventListener('click', () => {
-    const t = p.dataset.theme;
-    if (activeTheme === t) { clearTheme(); return; }
-    document.querySelectorAll('.pill[data-theme]').forEach(x => x.classList.remove('on'));
-    p.classList.add('on');
-    activeTheme = t;
-    document.getElementById('clear-btn').classList.add('visible');
-    applyFilter();
+document.querySelectorAll('.pill[data-t]').forEach(function(p){
+  p.addEventListener('click',function(){
+    var t=p.dataset.t;
+    if(theme===t){clearTheme();return;}
+    document.querySelectorAll('.pill[data-t]').forEach(function(x){x.classList.remove('on');});
+    p.classList.add('on');theme=t;
+    document.getElementById('clrbtn').classList.add('show');
+    filterM();
   });
 });
 
-function clearTheme() {
-  activeTheme = null;
-  document.querySelectorAll('.pill[data-theme]').forEach(x => x.classList.remove('on'));
-  document.getElementById('clear-btn').classList.remove('visible');
-  applyFilter();
+function clearTheme(){
+  theme=null;
+  document.querySelectorAll('.pill[data-t]').forEach(function(x){x.classList.remove('on');});
+  document.getElementById('clrbtn').classList.remove('show');
+  filterM();
 }
 
-function applyFilter() {
-  Object.entries(PUB).forEach(([id, d]) => {
-    const el = document.getElementById('mk-' + id);
-    if (!el) return;
-    if (!activeTheme) {
-      el.classList.remove('dimmed');
-      return;
-    }
-    const match = d.pubs.some(p => p.tags.some(t =>
-      t.toLowerCase().includes(activeTheme.toLowerCase())
-    ));
-    if (match) el.classList.remove('dimmed');
-    else el.classList.add('dimmed');
+function filterM(){
+  Object.entries(C).forEach(function(e){
+    var id=e[0],d=e[1],el=document.getElementById('mk-'+id);
+    if(!el)return;
+    if(!theme){el.classList.remove('dimmed');return;}
+    var hit=d.pubs.some(function(p){return p.tags.some(function(t){return t.toLowerCase().indexOf(theme.toLowerCase())>=0;});});
+    el.classList.toggle('dimmed',!hit);
   });
-  if (currentCity) renderPanel(PUB[currentCity]);
+  if(curCity)drawPanel(C[curCity]);
 }
 
-/* ══════════════════════════════════════════════
-   PANEL
-══════════════════════════════════════════════ */
-function showCity(id) {
-  if (!PUB[id]) return;
-  currentCity = id;
-  currentIdx = 0;
-
-  /* reset markers */
-  Object.entries(PUB).forEach(([k, d]) => {
-    const el = document.getElementById('mk-' + k);
-    if (!el) return;
-    el.classList.remove('selected');
-    el.style.background = d.north ? '#1a5fa8' : '#2e6b10';
+function openCity(id){
+  if(!C[id])return;
+  curCity=id;curIdx=0;
+  Object.entries(C).forEach(function(e){
+    var k=e[0],d=e[1],el=document.getElementById('mk-'+k);
+    if(!el)return;
+    el.classList.remove('active');
+    el.style.background=d.north?'#1a5fa8':'#2e6b10';
   });
-  const sel = document.getElementById('mk-' + id);
-  if (sel) { sel.classList.add('selected'); sel.style.background = '#b83820'; }
-
-  /* update dot colour in panel header */
-  const dot = document.getElementById('p-city-dot');
-  if (dot) dot.style.background = PUB[id].north ? '#1a5fa8' : '#2e6b10';
-
-  renderPanel(PUB[id]);
-  map.flyTo([PUB[id].lat, PUB[id].lon], 6.8, {duration:1.0});
+  var sel=document.getElementById('mk-'+id);
+  if(sel){sel.classList.add('active');sel.style.background='#b83820';}
+  var dot=document.getElementById('pdot');
+  if(dot)dot.style.background=C[id].north?'#1a5fa8':'#2e6b10';
+  drawPanel(C[id]);
+  map.flyTo([C[id].lat,C[id].lon],7,{duration:1});
 }
 
-function closePanel() {
-  document.getElementById('p-empty').style.display = '';
-  document.getElementById('p-loaded').style.display = 'none';
-  currentCity = null;
-  Object.entries(PUB).forEach(([k, d]) => {
-    const el = document.getElementById('mk-' + k);
-    if (!el) return;
-    el.classList.remove('selected');
-    el.style.background = d.north ? '#1a5fa8' : '#2e6b10';
+function closePanel(){
+  document.getElementById('pempty').style.display='';
+  document.getElementById('ploaded').classList.remove('show');
+  curCity=null;
+  Object.entries(C).forEach(function(e){
+    var k=e[0],d=e[1],el=document.getElementById('mk-'+k);
+    if(!el)return;
+    el.classList.remove('active');
+    el.style.background=d.north?'#1a5fa8':'#2e6b10';
   });
 }
 
-function renderPanel(d) {
-  document.getElementById('p-empty').style.display = 'none';
-  document.getElementById('p-loaded').style.display = 'flex';
-  document.getElementById('p-city-name').textContent = d.city;
-
-  const nav = document.getElementById('p-nav-wrap');
-  nav.innerHTML = d.pubs.length > 1
-    ? `<div class="p-nav">
-         <button onclick="prevPub()">← Prev</button>
-         <span class="p-nav-ctr">Publication ${currentIdx + 1} of ${d.pubs.length}</span>
-         <button onclick="nextPub()">Next →</button>
-       </div>`
-    : '';
-
-  const p = d.pubs[currentIdx];
-  const tagsHTML = p.tags.map(t => {
-    const hl = activeTheme && t.toLowerCase().includes(activeTheme.toLowerCase());
-    return `<span class="tag${hl?' hl':''}">${t}</span>`;
+function drawPanel(d){
+  document.getElementById('pempty').style.display='none';
+  document.getElementById('ploaded').classList.add('show');
+  document.getElementById('pname').textContent=d.city;
+  var nav=document.getElementById('pnav');
+  nav.innerHTML=d.pubs.length>1
+    ?'<div class="p-nav"><button onclick="prevPub()">&#8592; Prev</button><span class="p-nav-ctr">Publication '+(curIdx+1)+' of '+d.pubs.length+'</span><button onclick="nextPub()">Next &#8594;</button></div>'
+    :'';
+  var p=d.pubs[curIdx];
+  var tags=p.tags.map(function(t){
+    var hi=theme&&t.toLowerCase().indexOf(theme.toLowerCase())>=0;
+    return '<span class="tag'+(hi?' hl':'')+'">' +t+'</span>';
   }).join('');
-
-  document.getElementById('p-body').innerHTML = `
-    <div class="pub-year">📅 ${p.year}</div>
-    <div class="pub-title">${p.title}</div>
-    <div class="pub-ref">${p.ref}</div>
-    <div class="pub-sec">
-      <div class="pub-sec-lbl">Summary</div>
-      <p>${p.summary}</p>
-    </div>
-    <div class="pub-takeaway">
-      <div class="pub-sec-lbl">Key takeaway</div>
-      <p>${p.takeaway}</p>
-    </div>
-    <div class="pub-sec">
-      <div class="pub-sec-lbl">Keywords &amp; themes</div>
-      <div class="tags">${tagsHTML}</div>
-    </div>`;
-
-  document.getElementById('p-body').scrollTop = 0;
+  document.getElementById('pbody').innerHTML=
+    '<div class="pub-year">&#128197; '+p.year+'</div>'
+    +'<div class="pub-title">'+p.title+'</div>'
+    +'<div class="pub-ref">'+p.ref+'</div>'
+    +'<div class="pub-sec"><div class="pub-sec-lbl">Summary</div><p>'+p.summary+'</p></div>'
+    +'<div class="pub-tk"><div class="pub-sec-lbl">Key takeaway</div><p>'+p.takeaway+'</p></div>'
+    +'<div class="pub-sec"><div class="pub-sec-lbl">Keywords &amp; themes</div><div class="tags">'+tags+'</div></div>';
+  document.getElementById('pbody').scrollTop=0;
 }
 
-function prevPub() {
-  if (!currentCity) return;
-  const l = PUB[currentCity].pubs.length;
-  currentIdx = (currentIdx - 1 + l) % l;
-  renderPanel(PUB[currentCity]);
-}
-function nextPub() {
-  if (!currentCity) return;
-  const l = PUB[currentCity].pubs.length;
-  currentIdx = (currentIdx + 1) % l;
-  renderPanel(PUB[currentCity]);
-}
+function prevPub(){if(!curCity)return;var l=C[curCity].pubs.length;curIdx=(curIdx-1+l)%l;drawPanel(C[curCity]);}
+function nextPub(){if(!curCity)return;var l=C[curCity].pubs.length;curIdx=(curIdx+1)%l;drawPanel(C[curCity]);}
 </script>
 </body>
 </html>
