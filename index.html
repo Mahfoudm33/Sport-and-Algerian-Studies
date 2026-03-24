@@ -3,15 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sport, Society & Culture in Algeria — Digital Archive</title>
+    <title>Sport, Society & Culture in Algeria — The Academic Stadium</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     
     <style>
         :root {
             --oxford: #1a5fa8; --desert: #fdfcf9; --sand: #f4f1ea;
-            --green: #006233; --red: #b83820; --border: #e0ddd5;
-            --track-red: #c64c38; --field-green: #3b6b4c;
+            --dz-green: #006233; --dz-red: #b83820; --border: #e0ddd5;
+            --track-red: #c64c38; --field-green: #316644;
+            --crowd-dark: #222; --crowd-white: #fafafa;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
@@ -30,11 +31,11 @@
         .hdr { flex: 0 0 auto; padding: 20px 25px; background: #fff; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; z-index: 1000; }
         .hdr-brand { display: flex; align-items: center; gap: 15px; }
         .dz-flag { width: 36px; height: 24px; display: flex; border: 1px solid #ddd; border-radius: 2px; overflow: hidden; }
-        .flag-green { background: var(--green); flex: 1; }
-        .flag-white { background: #fff; flex: 1; }
+        .dz-green { background: var(--dz-green); flex: 1; }
+        .dz-white { background: #fff; flex: 1; }
         .hdr-title { font-family: 'Playfair Display', serif; font-size: 24px; color: #111; line-height: 1.2; margin-bottom: 4px;}
         .hdr-sub { font-size: 11px; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: 0.5px; }
-        .hdr-sub a { color: var(--oxford); text-decoration: none; }
+        .hdr-sub a { color: var(--oxford); text-decoration: none; font-weight: 700;}
         
         .btn-export { background: var(--oxford); color: #fff; border: none; padding: 10px 18px; border-radius: 6px; font-size: 11px; font-weight: 800; cursor: pointer; transition: 0.2s; box-shadow: 0 2px 5px rgba(26,95,168,0.3); }
         .btn-export:hover { background: #144e8c; transform: translateY(-1px); }
@@ -45,30 +46,70 @@
         .pill { padding: 6px 14px; background: var(--sand); border-radius: 20px; font-size: 11px; font-weight: 600; cursor: pointer; white-space: nowrap; border: 1px solid transparent; transition: 0.2s; color: #444; }
         .pill:hover { background: #e8e5de; }
         .pill.active { background: var(--oxford); color: #fff; }
-        .pill-clear { background: transparent; border: none; color: var(--red); font-weight: 800; font-size: 11px; cursor: pointer; margin-left: 10px; }
+        .pill-clear { background: transparent; border: none; color: var(--dz-red); font-weight: 800; font-size: 11px; cursor: pointer; margin-left: 10px; }
 
-        /* Main Layout */
+        /* Main Content Layout */
         .main-content { flex: 1 1 auto; display: flex; flex-direction: row; overflow: hidden; position: relative; }
         
-        /* ── THE TRACK & FIELD VISUALIZATION ── */
-        .track-container { flex: 1 1 auto; position: relative; background: var(--field-green); display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: inset 0 0 50px rgba(0,0,0,0.3); }
+        /* ── THE PACKED ACADEMIC STADIUM ── */
+        .stadium-container { 
+            flex: 1 1 auto; 
+            position: relative; 
+            background: #2a2a2a; /* Stands color */
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            overflow: hidden; 
+            box-shadow: inset 0 0 100px rgba(0,0,0,0.8);
+            /* Crowd Texture Pattern */
+            background-image: 
+                radial-gradient(var(--crowd-white) 10%, transparent 20%),
+                radial-gradient(var(--dz-green) 10%, transparent 20%),
+                radial-gradient(var(--crowd-dark) 10%, transparent 20%);
+            background-size: 10px 10px;
+            background-position: 0 0, 5px 5px, 0 5px;
+            opacity: 0.95;
+        }
+        
+        /* Styling Flags in the stands */
+        .stands-flag { position: absolute; width: 15px; height: 10px; border-radius: 1px; display: flex; transform: rotate(15deg); box-shadow: 0 2px 4px rgba(0,0,0,0.4); pointer-events: none; opacity: 0.8;}
+        .stands-flag .g { background: var(--dz-green); flex: 1; }
+        .stands-flag .w { background: #fff; flex: 1; position: relative;}
+        .stands-flag .w::after { content:''; position: absolute; width: 3px; height: 3px; background: var(--dz-red); border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%,-50%);}
         
         .athletics-track {
             position: relative;
             width: 80%;
             height: 70%;
             border: 60px solid var(--track-red);
-            border-radius: 500px; /* Creates the pill/oval shape */
-            box-shadow: 0 0 0 3px #fff, inset 0 0 0 3px #fff, 0 10px 30px rgba(0,0,0,0.4);
+            border-radius: 500px;
+            box-shadow: 0 0 0 3px #fff, inset 0 0 0 3px #fff, 0 15px 40px rgba(0,0,0,0.6);
+            z-index: 10;
         }
         
         /* Track Lanes (White dashed lines) */
-        .lane { position: absolute; border: 2px dashed rgba(255,255,255,0.5); border-radius: 500px; pointer-events: none; }
+        .lane { position: absolute; border: 2px dashed rgba(255,255,255,0.4); border-radius: 500px; pointer-events: none; }
         .lane-1 { top: -15px; bottom: -15px; left: -15px; right: -15px; }
         .lane-2 { top: -30px; bottom: -30px; left: -30px; right: -30px; }
-        .lane-3 { top: -45px; bottom: -45px; left: -45px; right: -45px; }
         
-        /* Track Markers */
+        /* The Central Field (Tifos laid on grass) */
+        .tifo-field {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: var(--field-green);
+            border-radius: 440px;
+            display: flex; flex-direction: column; align-items: center; justify-content: space-around;
+            padding: 40px;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        /* Historic Algerian Sport Tifos */
+        .tifo { opacity: 0.6; width: 100%; text-align: center; }
+        .tifo-main { font-family: 'Playfair Display', serif; font-size: 60px; font-weight: 800; color: rgba(255,255,255,0.25); text-transform: uppercase; letter-spacing: 5px;}
+        .tifo-sub { font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.2); text-transform: uppercase; letter-spacing: 2px;}
+        .dz-star { color: #ffd700; font-size: 20px;}
+        
+        /* Track Markers (Champion Gold color) */
         .track-marker {
             position: absolute;
             width: 44px;
@@ -86,24 +127,24 @@
             cursor: pointer;
             transform: translate(-50%, -50%);
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            z-index: 10;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            z-index: 50;
         }
         .track-marker span { font-size: 8px; color: #aaa; margin-top: -2px; }
-        .track-marker:hover { transform: translate(-50%, -50%) scale(1.15); background: var(--oxford); border-color: #ffd700; z-index: 20; }
-        .track-marker.active { background: #ffd700; color: #111; border-color: #fff; transform: translate(-50%, -50%) scale(1.25); z-index: 20; }
+        .track-marker:hover { transform: translate(-50%, -50%) scale(1.15); background: var(--oxford); border-color: #ffd700; z-index: 60; }
+        .track-marker.active { background: #ffd700; color: #111; border-color: #fff; transform: translate(-50%, -50%) scale(1.25); z-index: 60; }
         .track-marker.active span { color: #555; }
         
-        .start-line { position: absolute; width: 60px; height: 4px; background: #fff; top: -60px; left: 25%; }
+        .start-line { position: absolute; width: 60px; height: 5px; background: #fff; top: -60px; left: 25%; box-shadow: 0 4px 8px rgba(0,0,0,0.3); }
         
         /* Sidebar */
-        .panel { flex: 0 0 550px; width: 550px; background: #fff; border-left: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; z-index: 10; box-shadow: -4px 0 15px rgba(0,0,0,0.05); }
+        .panel { flex: 0 0 550px; width: 550px; background: #fff; border-left: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; z-index: 1000; box-shadow: -4px 0 15px rgba(0,0,0,0.05); }
         .panel-empty { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 50px; text-align: center; color: #888; }
         .empty-art { font-size: 55px; margin-bottom: 20px; opacity: 0.4; }
         .panel-hdr { flex: 0 0 auto; padding: 20px 30px; background: #fbfbf9; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
         .panel-hdr h2 { font-size: 15px; text-transform: uppercase; letter-spacing: 1px; color: #333; font-weight: 800; }
         .close-panel { background: none; border: none; font-size: 22px; cursor: pointer; color: #aaa; transition: 0.2s; }
-        .close-panel:hover { color: var(--red); }
+        .close-panel:hover { color: var(--dz-red); }
         .panel-body { flex: 1 1 auto; overflow-y: auto; padding: 30px; scroll-behavior: smooth; }
         
         /* Publication Cards */
@@ -118,15 +159,17 @@
         .contrib { background: #f8faff; padding: 20px; border-left: 4px solid var(--oxford); border-radius: 0 6px 6px 0; margin-bottom: 25px; }
         .contrib p { font-size: 14px; line-height: 1.6; color: #1c3553; }
         
-        .pub-link { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px; font-weight: 700; color: #fff; background: var(--green); padding: 14px 24px; border-radius: 6px; text-decoration: none; transition: 0.2s; width: 100%; text-align: center; }
-        .pub-link:hover { background: #004d28; transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0,98,51,0.2); }
+        .pub-link { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px; font-weight: 700; color: #fff; background: var(--field-green); padding: 14px 24px; border-radius: 6px; text-decoration: none; transition: 0.2s; width: 100%; text-align: center; }
+        .pub-link:hover { background: #1c4228; transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0,98,51,0.2); }
         
         @media(max-width: 1000px) {
             .main-content { flex-direction: column; }
-            .track-container { flex: 1 1 45vh; height: 45vh; }
+            .stadium-container { flex: 1 1 45vh; height: 45vh; }
             .panel { flex: 1 1 auto; width: 100%; border-left: none; border-top: 1px solid var(--border); }
-            .athletics-track { border-width: 40px; }
+            .athletics-track { border-width: 40px; width: 90%;}
             .track-marker { width: 36px; height: 36px; font-size: 9px; }
+            .start-line { width: 40px;}
+            .tifo-main { font-size: 30px;}
         }
     </style>
 </head>
@@ -146,10 +189,10 @@
 
     <header class="hdr">
         <div class="hdr-brand">
-            <div class="dz-flag"><div class="flag-green"></div><div class="flag-white"></div></div>
+            <div class="dz-flag"><div class="dz-green"></div><div class="dz-white"></div></div>
             <div>
                 <h1 class="hdr-title">Sport, Society & Culture in Algeria</h1>
-                <p class="hdr-sub">Academic Timeline · Prof. Mahfoud Amara · <a href="https://orcid.org/0000-0002-1418-6710" target="_blank">ORCID: 0000-0002-1418-6710</a></p>
+                <p class="hdr-sub">The Academic Stadium · Prof. Mahfoud Amara · <a href="https://orcid.org/0000-0002-1418-6710" target="_blank">ORCID: 0000-0002-1418-6710</a></p>
             </div>
         </div>
         <button onclick="downloadCSV()" class="btn-export">📊 Download Complete Bibliography</button>
@@ -170,20 +213,25 @@
     </div>
 
     <main class="main-content">
-        <div class="track-container">
+        <div class="stadium-container" id="stadium">
             <div class="athletics-track" id="track">
+                <div class="tifo-field">
+                    <div class="tifo"><div class="tifo-main">Gijon <span class="dz-star">★</span> 1982</div><div class="tifo-sub">The Historic Victory over West Germany</div></div>
+                    <div class="tifo"><div class="tifo-main">FLN Team</div><div class="tifo-sub">Sport & Revolutionary Diplomacy 1958</div></div>
+                    <div class="tifo"><div class="tifo-main">Oran 2022</div><div class="tifo-sub">19th Mediterranean Games - The New Algeria</div></div>
+                    <div class="tifo"><div class="tifo-main">AFCON <span class="dz-star">★</span> <span class="dz-star">★</span></div><div class="tifo-sub">Champion d'Afrique 1990 & 2019</div></div>
+                </div>
                 <div class="lane lane-1"></div>
                 <div class="lane lane-2"></div>
-                <div class="lane lane-3"></div>
                 <div class="start-line"></div>
                 </div>
         </div>
         
         <aside class="panel" id="panel">
             <div class="panel-empty" id="panel-empty">
-                <div class="empty-art">🏃</div>
+                <div class="empty-art">🏃‍♂️</div>
                 <h3>The Academic Track</h3>
-                <p style="margin-top: 12px; font-size: 15px; line-height: 1.6; max-width: 85%;">Click a distance marker on the track to explore extensive academic abstracts, theoretical contributions, and direct web links to Professor Amara's chronological publications.</p>
+                <p style="margin-top: 12px; font-size: 15px; line-height: 1.6; max-width: 85%;">Click a distance marker on the track to explore extensive peer-reviewed abstracts, theoretical contributions, and direct ORCID/DOIs links for Professor Amara's chronological publications.</p>
             </div>
             
             <div id="panel-content" style="display:none; flex-direction:column; height:100%;">
@@ -203,81 +251,99 @@ const DATA = [
     { 
         distance: "0m", year: "2006", title: "Sport and Algerian Nationalism in the ‘Global’ era: within and beyond the nation-state", ref: "Francophone and Postcolonial Studies, Vol. 4, No. 1, 88-115.", url: "https://doi.org/10.3828/fps.2006.4.1.88", 
         summary: "This foundational paper investigates the tension between the Algerian nation-state's rigid desire to project a cohesive territorial identity and the fluid, globalized reality of transnational diaspora athletes. It deeply engages with Algeria's multi-layered identity: Arab, Mediterranean, and crucially, its Saharan and African dimensions.", 
-        contribution: "Argues persuasively that Algerian sport operates in a postcolonial 'third space,' continuously negotiating its borders and sovereignty against the pressures of global migration and Pan-African geopolitics.", tags: ["Postcolonialism", "Nation state formation"], city: "Tamanrasset (Node)" 
+        contribution: "Argues persuasively that Algerian sport operates in a postcolonial 'third space,' continuously negotiating its borders and sovereignty against the pressures of global migration and Pan-African geopolitics.", tags: ["Postcolonialism", "Nation state formation"], geographicNode: "Saharan dimension (Node)" 
     },
     { 
         distance: "20m", year: "2006", title: "Soccer, Post-Colonial and Post-conflict Discourses: Algérie-France 2001", ref: "International Review of Modern Sociology, Vol. 32, No. 2, 217-239.", url: "https://www.jstor.org/stable/41307963", 
         summary: "A profound sociological reading of the infamous and prematurely abandoned 2001 friendly match between France and Algeria at the Stade de France. The research explores how the pitch invasion by young 'Beur' fans exposed the unresolved traumas of the Algerian War and the complexities of transnational diaspora identity.", 
-        contribution: "Pioneered the identification of sport as a highly volatile symbolic space where colonial memory, post-conflict reconciliation, and the fractured identities of the North African diaspora are publicly negotiated.", tags: ["Postcolonialism", "Mediterranean", "Nation state formation"], city: "Annaba (Node)" 
+        contribution: "Pioneered the identification of sport as a highly volatile symbolic space where colonial memory, post-conflict reconciliation, and the fractured identities of the North African diaspora are publicly negotiated.", tags: ["Postcolonialism", "Mediterranean", "Nation state formation"], geographicNode: "Post-colonial memory (Node)" 
     },
     { 
         distance: "40m", year: "2011", title: "Football, the new battlefield of business in Algeria", ref: "The Journal of North African Studies, 16(1).", url: "https://doi.org/10.1080/13629387.2010.536376", 
         summary: "This article critically examines the sudden corporatization of Algerian football following the dramatic, politically charged 2010 World Cup qualification. It analyzes how mobile telecommunication companies co-opted national sporting fervor for aggressive corporate branding.", 
-        contribution: "Provides empirical evidence mapping Algeria's complex transition from a socialist, state-controlled economy to a hybrid market economy via the lens of sport sponsorship and governance.", tags: ["Legitimacy", "Nation state formation"], city: "Ghardaïa (Node)" 
+        contribution: "Provides empirical evidence mapping Algeria's complex transition from a socialist, state-controlled economy to a hybrid market economy via the lens of sport sponsorship and governance.", tags: ["Legitimacy", "Nation state formation"], geographicNode: "Ghardaïa (Node)" 
     },
     { 
         distance: "60m", year: "2012", title: "Football Sub-Culture and Youth Politics in Algeria", ref: "Mediterranean Politics, 17(1), 41–58.", url: "https://doi.org/10.1080/13629387.2012.655046", 
         summary: "Drawing on Pierre Bourdieu’s field theory, this study investigates the emergence of football 'ultras' in Algeria. It explores how systemic youth unemployment, state authoritarianism, and a lack of formal democratic outlets transformed the stadium into one of the only viable public arenas for political expression.", 
-        contribution: "Establishes the stadium not merely as a sporting arena, but as a critical sociological barometer for measuring subterranean political tensions and youth dissent in the Maghreb.", tags: ["Youth", "Legitimacy", "Nation state formation"], city: "Algiers (Node)" 
+        contribution: "Establishes the stadium not merely as a sporting arena, but as a critical sociological barometer for measuring subterranean political tensions and youth dissent in the Maghreb.", tags: ["Youth", "Legitimacy", "Nation state formation"], geographicNode: "Algiers (Node)" 
     },
     { 
         distance: "80m", year: "2021", title: "Moments and memories: football and state narratives in Algeria", ref: "Soccer & Society, 22(8), 1084–1094.", url: "https://doi.org/10.1080/14660970.2019.1680505", 
         summary: "This research interrogates how the Algerian state systematically co-opts major footballing milestones to enforce a unified national narrative. It examines the intense push-and-pull dynamic between organic, popular street celebrations and calculated, top-down state propaganda during times of political crisis.", 
-        contribution: "Provides a robust theoretical framework for understanding the institutionalization of collective memory, demonstrating how regimes activate sporting history to deflect socio-political pressure.", tags: ["Postcolonialism", "Legitimacy", "Nation state formation"], city: "Algiers (Node)" 
+        contribution: "Provides a robust theoretical framework for understanding the institutionalization of collective memory, demonstrating how regimes activate sporting history to deflect socio-political pressure.", tags: ["Postcolonialism", "Legitimacy", "Nation state formation"], geographicNode: "Algiers (Node)" 
     },
     { 
         distance: "100m", year: "2022", title: "Algeria and the FIFA World Cup: between political legitimization and regional rivalry", ref: "Soccer and Society, 23(7), 735–746.", url: "https://doi.org/10.1080/14660970.2022.2059871", 
         summary: "This historical analysis divides Algeria’s relationship with the FIFA World Cup into distinct political eras, emphasizing the geopolitical friction and deep-seated border rivalries with neighboring Morocco and Egypt.", 
-        contribution: "Demonstrates how post-colonial states actively utilize global sporting success as a 'civilizational' project to reinforce borders, project diplomatic strength, and consolidate national identity.", tags: ["Geopolitics", "Legitimacy", "Nation state formation"], city: "Tlemcen (Node)" 
+        contribution: "Demonstrates how post-colonial states actively utilize global sporting success as a 'civilizational' project to reinforce borders, project diplomatic strength, and consolidate national identity.", tags: ["Geopolitics", "Legitimacy", "Nation state formation"], geographicNode: "Tlemcen (Node)" 
     },
     { 
         distance: "120m", year: "2022", title: "Football in Algeria from the “Black Decade” to the Hirak", ref: "MERIP, No. 304.", url: "https://merip.org/2022/10/football-in-algeria-from-the-black-decade-to-the-hirak/", 
         summary: "An expansive historical survey detailing how Algerian football stadiums functioned as rare physical sanctuaries during the extreme violence of the 1990s civil war, and how that legacy evolved directly into the organized protest chants that fueled the 2019 Hirak revolution.", 
-        contribution: "Demonstrates compellingly that football culture is not merely a reflection of society, but an active vessel providing vital continuity for public political life when formal democratic institutions fail.", tags: ["Postcolonialism", "Youth", "Nation state formation"], city: "Ouargla (Node)" 
+        contribution: "Demonstrates compellingly that football culture is not merely a reflection of society, but an active vessel providing vital continuity for public political life when formal democratic institutions fail.", tags: ["Postcolonialism", "Youth", "Nation state formation"], geographicNode: "Ouargla (Node)" 
     },
     { 
         distance: "140m", year: "2023", title: "The 19th Mediterranean Games, Oran 2022 and ‘the New Algeria’", ref: "Asian Journal of Sport History & Culture, 1:3, 234-249.", url: "https://doi.org/10.1080/27690148.2023.2195388", 
         summary: "A comprehensive analysis of how the 2022 Mediterranean Games in Oran were mobilized by the current administration as the symbolic centerpiece of the 'New Algeria' narrative. The paper contextualizes the mega-event within the complex post-Hirak socio-political landscape.", 
-        contribution: "Offers a modern case study on the geopolitical utility of regional mega-events, highlighting how states leverage international spectacles for domestic legitimization and regional soft power projection.", tags: ["Major sport events", "Mediterranean", "Legitimacy", "Geopolitics"], city: "Oran (Node)" 
+        contribution: "Offers a modern case study on the geopolitical utility of regional mega-events, highlighting how states leverage international spectacles for domestic legitimization and regional soft power projection.", tags: ["Major sport events", "Mediterranean", "Legitimacy", "Geopolitics"], geographicNode: "Oran (Node)" 
     },
     { 
         distance: "160m", year: "2024", title: "Online Sources as Alternative Media for Sporting Events’ Consumption in Algeria", ref: "Asian Journal of Sport History & Culture, 3(1):1-21.", url: "https://doi.org/10.1080/27690148.2024.2304318", 
         summary: "A rigorous investigation into how modern Algerian sports fans actively bypass heavily regulated state broadcasts (ENTV). The study maps the explosive growth of pirate IPTV, OTT platforms, and social media streaming.", 
-        contribution: "Innovatively applies the Technology Acceptance Model (TAM) and Uses and Gratifications Theory (UGT) to highlight the democratizing effect of digital platforms against state media monopolies.", tags: ["Youth", "Mediterranean"], city: "Béjaïa (Node)" 
+        contribution: "Innovatively applies the Technology Acceptance Model (TAM) and Uses and Gratifications Theory (UGT) to highlight the democratizing effect of digital platforms against state media monopolies.", tags: ["Youth", "Mediterranean"], geographicNode: "Béjaïa (Node)" 
     },
     { 
         distance: "180m", year: "2025", title: "Living Football, Navigating Politics: Salah Assad’s Life Story", ref: "The International Journal of the History of Sport, 1-17.", url: "https://doi.org/10.1080/09523367.2025.2479455", 
         summary: "An oral history and biographical reconstruction of the life of Salah Assad, a legendary hero of the 1982 World Cup. The paper traces his remarkable journey through the optimism of 1970s socialism and his subsequent entanglement in the political trauma of the 1990s 'Black Decade'.", 
-        contribution: "Successfully bridges micro-history with macro-politics, showing how individual athletic biographies in the Global South are inescapably intertwined with volatile state transitions.", tags: ["Postcolonialism", "Nation state formation"], city: "Constantine (Node)" 
+        contribution: "Successfully bridges micro-history with macro-politics, showing how individual athletic biographies in the Global South are inescapably intertwined with volatile state transitions.", tags: ["Postcolonialism", "Nation state formation"], geographicNode: "Constantine (Node)" 
     },
     { 
         distance: "200m", year: "2025", title: "Imane Khelif: Women’s Boxing, Geopolitical Power and Gendered Media Narratives", ref: "The International Spectator, 1–20.", url: "https://doi.org/10.1080/03932729.2025.2594466", 
         summary: "This article dissects the unprecedented global media storm surrounding Algerian boxer Imane Khelif at the Paris 2024 Olympics. It analyzes the intersection of gender verification politics, Western media bias, Orientalism, and the mobilization of Algerian national pride.", 
-        contribution: "Reframes Khelif’s Olympic victory from a narrative of victimhood into an act of profound postcolonial agency, illustrating the double burden faced by female Muslim athletes.", tags: ["Gender", "Geopolitics", "Major sport events"], city: "Tizi Ouzou (Node)" 
+        contribution: "Reframes Khelif’s Olympic victory from a narrative of victimhood into an act of profound postcolonial agency, illustrating the double burden faced by female Muslim athletes.", tags: ["Gender", "Geopolitics", "Major sport events"], geographicNode: "Tizi Ouzou (Node)" 
     },
     { 
-        distance: "220m", year: "2025", title: "Ghada Mahat: whistling against the odds—female refereeing, gender dynamics, and resistance", ref: "Sport in Society, 1–16.", url: "https://doi.org/10.1080/17430437.2025.2590520", 
+        distance: "220m", year: "2025", title: "Ghada Mahat: whistling against the odds—female refereeing, gender dynamics, and resistance in Algerian soccer", ref: "Sport in Society, 1–16.", url: "https://doi.org/10.1080/17430437.2025.2590520", 
         summary: "Through a detailed biographical lens, this paper investigates the career of Ghada Mahat, the first woman to referee a major men's football match in Algeria. It documents the structural hostility and pervasive patriarchal norms embedded deeply within the nation's sporting institutions.", 
-        contribution: "Introduces the concept of 'quiet resistance' in sport, providing a critical assessment of the paradox between the state's symbolic inclusion of women and enduring structural inequalities.", tags: ["Gender", "Nation state formation"], city: "Tizi Ouzou (Node)" 
+        contribution: "Introduces the concept of 'quiet resistance' in sport, providing a critical assessment of the paradox between the state's symbolic inclusion of women and enduring structural inequalities.", tags: ["Gender", "Nation state formation"], geographicNode: "Tizi Ouzou (Node)" 
     }
 ];
 
 /* ── TRACK GEOMETRY (Mapping the 12 markers around the pill shape) ── */
-// Top straight -> Right Curve -> Bottom Straight -> Left Curve
 const POSITIONS = [
     { top: '-30px', left: '25%' },  // 0m
     { top: '-30px', left: '50%' },  // 20m
     { top: '-30px', left: '75%' },  // 40m
-    { top: '15%', left: 'calc(100% + 30px)' }, // 60m (Right top curve)
-    { top: '50%', left: 'calc(100% + 30px)' }, // 80m (Right middle curve)
-    { top: '85%', left: 'calc(100% + 30px)' }, // 100m (Right bottom curve)
+    { top: '15%', left: 'calc(100% + 30px)' }, // 60m
+    { top: '50%', left: 'calc(100% + 30px)' }, // 80m
+    { top: '85%', left: 'calc(100% + 30px)' }, // 100m
     { top: 'calc(100% + 30px)', left: '75%' }, // 120m
     { top: 'calc(100% + 30px)', left: '50%' }, // 140m
     { top: 'calc(100% + 30px)', left: '25%' }, // 160m
-    { top: '85%', left: '-30px' }, // 180m (Left bottom curve)
-    { top: '50%', left: '-30px' }, // 200m (Left middle curve)
-    { top: '15%', left: '-30px' }, // 220m (Left top curve)
+    { top: '85%', left: '-30px' }, // 180m
+    { top: '50%', left: '-30px' }, // 200m
+    { top: '15%', left: '-30px' }, // 220m
 ];
+
+/* ── INJECT CROWD & FLAGS ── */
+const stadiumEl = document.getElementById('stadium');
+for (let i = 0; i < 40; i++) {
+    const flag = document.createElement('div');
+    flag.className = 'stands-flag';
+    // Random positions and slight rotations in the stands area
+    flag.style.top = `${Math.random() * 100}%`;
+    flag.style.left = `${Math.random() * 100}%`;
+    if (Math.random() > 0.5) { // Ensure flags appear outside the central track
+        if (parseFloat(flag.style.top) > 15 && parseFloat(flag.style.top) < 85 && parseFloat(flag.style.left) > 10 && parseFloat(flag.style.left) < 90) {
+            continue; // Skip injecting inside track area
+        }
+    }
+    flag.style.transform = `rotate(${Math.random() * 40 - 20}deg)`;
+    flag.innerHTML = '<div class="g"></div><div class="w"></div>';
+    stadiumEl.appendChild(flag);
+}
+
 
 /* ── RENDER MARKERS ON TRACK ── */
 const trackEl = document.getElementById('track');
@@ -289,14 +355,35 @@ DATA.forEach((paper, index) => {
     marker.style.top = POSITIONS[index].top;
     marker.style.left = POSITIONS[index].left;
     
-    marker.innerHTML = `${paper.year}<span>${paper.distance}</span>`;
+    // Championship Gold for Imane Khelif node
+    if (paper.distance === "200m") {
+        marker.style.borderColor = "#ffd700";
+        marker.style.background = "#ffd700";
+        marker.style.color = "#111";
+    }
     
-    // Attach data for filtering
+    marker.innerHTML = `${paper.year}<span>${paper.distance}</span>`;
     marker.dataset.tags = paper.tags.join(',');
     
     marker.addEventListener('click', () => {
-        if(activeMarker) activeMarker.classList.remove('active');
-        marker.classList.add('active');
+        if(activeMarker) {
+            // Restore default colors
+            if(activeMarker.innerHTML.includes("200m")) {
+                 activeMarker.style.background = "#ffd700";
+                 activeMarker.style.color = "#111";
+            } else {
+                 activeMarker.classList.remove('active');
+            }
+        }
+        
+        // Apply active colors
+        if (paper.distance === "200m") {
+            marker.style.background = "#fff";
+            marker.style.color = "#ffd700";
+        } else {
+            marker.classList.add('active');
+        }
+        
         activeMarker = marker;
         openSidebar(paper);
     });
@@ -307,7 +394,7 @@ DATA.forEach((paper, index) => {
 function openSidebar(paper) {
     document.getElementById('panel-empty').style.display = 'none';
     document.getElementById('panel-content').style.display = 'flex';
-    document.getElementById('distance-label').textContent = `${paper.distance} Mark • ${paper.city}`;
+    document.getElementById('distance-label').textContent = `${paper.distance} Mark • Chronological Node`;
     
     document.getElementById('panel-body').innerHTML = `
         <article class="pub-card">
@@ -315,24 +402,31 @@ function openSidebar(paper) {
             <h3 class="pub-title">${paper.title}</h3>
             <p class="pub-ref">${paper.ref}</p>
             
-            <div class="section-title">Abstract / Summary</div>
+            <div class="section-title">Peer-Reviewed Abstract</div>
             <p class="pub-summary">${paper.summary}</p>
             
             <div class="contrib">
-                <div class="section-title">Contribution to Knowledge</div>
+                <div class="section-title">Theoretical Contribution to Knowledge</div>
                 <p>${paper.contribution}</p>
             </div>
             
             <a href="${paper.url}" target="_blank" class="pub-link">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-                Read Full Paper via Publisher
+                Read Full Paper via DOI
             </a>
         </article>
     `;
 }
 
 function closePanel() {
-    if(activeMarker) activeMarker.classList.remove('active');
+    if(activeMarker) {
+         if(activeMarker.innerHTML.includes("200m")) {
+             activeMarker.style.background = "#ffd700";
+             activeMarker.style.color = "#111";
+         } else {
+             activeMarker.classList.remove('active');
+         }
+    }
     activeMarker = null;
     document.getElementById('panel-empty').style.display = 'flex';
     document.getElementById('panel-content').style.display = 'none';
@@ -349,7 +443,12 @@ document.querySelectorAll('.pill').forEach(pill => {
             if(tags.includes(theme)) {
                 m.style.opacity = '1';
                 m.style.transform = 'translate(-50%, -50%) scale(1.1)';
-                m.style.borderColor = '#ffd700';
+                // Highlight gold if matching
+                if(m.innerHTML.includes("200m")) {
+                    m.style.borderColor = "#fff";
+                } else {
+                    m.style.borderColor = "#ffd700";
+                }
             } else {
                 m.style.opacity = '0.2';
                 m.style.transform = 'translate(-50%, -50%) scale(0.9)';
@@ -367,7 +466,11 @@ function clearTheme() {
     document.querySelectorAll('.track-marker').forEach(m => {
         m.style.opacity = '1';
         m.style.transform = 'translate(-50%, -50%) scale(1)';
-        m.style.borderColor = '#fff';
+        if(m.innerHTML.includes("200m")) {
+            m.style.borderColor = "#ffd700";
+        } else {
+            m.style.borderColor = "#fff";
+        }
     });
     document.getElementById('clear-btn').style.display = 'none';
     document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
@@ -387,7 +490,7 @@ function downloadCSV() {
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url; 
-    a.download = 'Amara_Academic_Track.csv'; 
+    a.download = 'Amara_Algerian_Sport_Archive.csv'; 
     a.click();
 }
 </script>
