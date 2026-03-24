@@ -6,7 +6,7 @@
     <title>Sport, Society & Culture in Algeria — Digital Archive</title>
     
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css"/>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     
     <style>
         :root {
@@ -15,11 +15,10 @@
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
-        /* Rigid Body Structure to Force Map Height */
         html, body { height: 100%; width: 100%; font-family: 'Inter', sans-serif; background: var(--desert); color: #1a1a1a; overflow: hidden; }
         .shell { display: flex; flex-direction: column; height: 100vh; width: 100vw; }
         
-        /* Header & Navigation (Fixed Heights) */
+        /* Ecosystem Nav */
         .eco-nav { flex: 0 0 auto; background: #121212; color: #fff; padding: 8px 25px; border-bottom: 2px solid var(--oxford); z-index: 1000; }
         .eco-container { display: flex; justify-content: space-between; align-items: center; max-width: 1600px; margin: 0 auto; }
         .eco-label { font-size: 10px; font-weight: 800; color: #777; text-transform: uppercase; letter-spacing: 1px; }
@@ -27,256 +26,38 @@
         .eco-links a { color: #fff; text-decoration: none; font-size: 11px; font-weight: 600; transition: 0.3s; }
         .eco-links a:hover { color: var(--oxford); }
 
-        .hdr { flex: 0 0 auto; padding: 15px 25px; background: #fff; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; z-index: 1000; }
+        /* Header */
+        .hdr { flex: 0 0 auto; padding: 18px 25px; background: #fff; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; z-index: 1000; }
         .hdr-brand { display: flex; align-items: center; gap: 15px; }
         .dz-flag { width: 34px; height: 22px; display: flex; border: 1px solid #ddd; border-radius: 2px; overflow: hidden; }
         .green { background: var(--green); flex: 1; }
         .white { background: #fff; flex: 1; }
-        .hdr-title { font-family: 'Playfair Display', serif; font-size: 22px; }
-        .hdr-sub { font-size: 11px; font-weight: 600; color: #888; text-transform: uppercase; margin-top: 4px; }
-        .btn-export { background: var(--oxford); color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-size: 11px; font-weight: 800; cursor: pointer; transition: 0.2s; }
-        .btn-export:hover { background: #144e8c; }
+        .hdr-title { font-family: 'Playfair Display', serif; font-size: 24px; color: #111; }
+        .hdr-sub { font-size: 11px; font-weight: 600; color: #777; text-transform: uppercase; margin-top: 4px; letter-spacing: 0.5px; }
+        .btn-export { background: var(--oxford); color: #fff; border: none; padding: 10px 18px; border-radius: 6px; font-size: 11px; font-weight: 800; cursor: pointer; transition: 0.2s; box-shadow: 0 2px 5px rgba(26,95,168,0.3); }
+        .btn-export:hover { background: #144e8c; transform: translateY(-1px); }
 
+        /* Filters */
         .filter-strip { flex: 0 0 auto; background: #fff; border-bottom: 1px solid var(--border); padding: 12px 25px; z-index: 1000; }
-        .filter-scroll { display: flex; gap: 8px; overflow-x: auto; }
-        .pill { padding: 6px 14px; background: var(--sand); border-radius: 20px; font-size: 11px; font-weight: 600; cursor: pointer; white-space: nowrap; border: 1px solid transparent; transition: 0.2s; }
+        .filter-scroll { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
+        .pill { padding: 6px 14px; background: var(--sand); border-radius: 20px; font-size: 11px; font-weight: 600; cursor: pointer; white-space: nowrap; border: 1px solid transparent; transition: 0.2s; color: #444; }
+        .pill:hover { background: #e8e5de; }
         .pill.active { background: var(--oxford); color: #fff; }
         .pill-clear { background: transparent; border: none; color: var(--red); font-weight: 800; font-size: 11px; cursor: pointer; margin-left: 10px; }
 
-        /* Main Content (Flexible Height) */
+        /* Main Content */
         .main-content { flex: 1 1 auto; display: flex; flex-direction: row; overflow: hidden; position: relative; }
-        
         #map { flex: 1 1 auto; height: 100%; background: #dcd9d0; z-index: 1; }
         
-        .panel { flex: 0 0 450px; width: 450px; background: #fff; border-left: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; z-index: 10; box-shadow: -4px 0 15px rgba(0,0,0,0.05); }
-        .panel-empty { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px; text-align: center; color: #888; }
-        .empty-art { font-size: 50px; margin-bottom: 20px; opacity: 0.4; }
-        .panel-hdr { flex: 0 0 auto; padding: 18px 25px; background: #fbfbf9; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-        .panel-hdr h2 { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; color: #555; }
-        .close-panel { background: none; border: none; font-size: 20px; cursor: pointer; color: #aaa; transition: 0.2s; }
+        /* Sidebar */
+        .panel { flex: 0 0 500px; width: 500px; background: #fff; border-left: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; z-index: 10; box-shadow: -4px 0 15px rgba(0,0,0,0.05); }
+        .panel-empty { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 50px; text-align: center; color: #888; }
+        .empty-art { font-size: 55px; margin-bottom: 20px; opacity: 0.4; }
+        .panel-hdr { flex: 0 0 auto; padding: 20px 30px; background: #fbfbf9; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+        .panel-hdr h2 { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; color: #333; font-weight: 800; }
+        .close-panel { background: none; border: none; font-size: 22px; cursor: pointer; color: #aaa; transition: 0.2s; }
         .close-panel:hover { color: var(--red); }
-        .panel-body { flex: 1 1 auto; overflow-y: auto; padding: 25px; }
+        .panel-body { flex: 1 1 auto; overflow-y: auto; padding: 30px; scroll-behavior: smooth; }
         
-        /* Cards */
-        .pub-card { border: 1px solid #eee; padding: 20px; border-radius: 8px; margin-bottom: 15px; background: #fff; }
-        .pub-year { font-size: 10px; font-weight: 900; color: var(--oxford); text-transform: uppercase; }
-        .pub-title { font-family: 'Playfair Display', serif; font-size: 18px; margin: 8px 0; line-height: 1.3; }
-        .pub-ref { font-size: 11px; color: #777; font-style: italic; margin-bottom: 15px; }
-        .pub-detail { font-size: 13px; line-height: 1.5; margin-bottom: 12px; }
-        .contrib { background: #f4f8ff; padding: 12px; border-left: 4px solid var(--oxford); border-radius: 4px; color: #334e68; }
-        .pub-link { display: inline-block; font-size: 11px; font-weight: 700; color: var(--oxford); text-decoration: none; margin-top: 10px; }
-        
-        /* Markers */
-        .marker-pin { width: 30px; height: 30px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); display: flex; align-items: center; justify-content: center; border: 2px solid #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.15); transition: transform 0.2s; }
-        .dot { width: 10px; height: 10px; background: #fff; border-radius: 50%; transform: rotate(45deg); }
-        
-        @media(max-width: 900px) {
-            .main-content { flex-direction: column; }
-            #map { flex: 1 1 50%; }
-            .panel { flex: 1 1 50%; width: 100%; border-left: none; border-top: 1px solid var(--border); }
-        }
-    </style>
-</head>
-<body>
-
-<div class="shell">
-    <nav class="eco-nav">
-        <div class="eco-container">
-            <span class="eco-label">Research Ecosystem:</span>
-            <div class="eco-links">
-                <a href="https://mahfoudm33.github.io/Dr-Mahfoud-Amara-in-the-Peninsula-/" target="_blank">The Peninsula Archive</a>
-                <a href="https://mahfoudm33.github.io/Dr-Mahfoud-Amara-Publications-Arab-World/" target="_blank">Arab World Publications</a>
-                <a href="#">Sport in Islam & Muslim Communities</a>
-            </div>
-        </div>
-    </nav>
-
-    <header class="hdr">
-        <div class="hdr-brand">
-            <div class="dz-flag"><div class="green"></div><div class="white"></div></div>
-            <div>
-                <h1 class="hdr-title">Sport, Society & Culture in Algeria</h1>
-                <p class="hdr-sub">Digital Archive · Prof. Mahfoud Amara · Qatar University</p>
-            </div>
-        </div>
-        <button onclick="downloadCSV()" class="btn-export">📊 Export Bibliography</button>
-    </header>
-
-    <div class="filter-strip">
-        <div class="filter-scroll" id="pill-bar">
-            <span class="pill" data-theme="Nation state formation">Nation State Formation</span>
-            <span class="pill" data-theme="Youth">Youth</span>
-            <span class="pill" data-theme="Gender">Gender</span>
-            <span class="pill" data-theme="Major sport events">Major Sport Events</span>
-            <span class="pill" data-theme="Mediterranean">Mediterranean</span>
-            <span class="pill" data-theme="Legitimacy">Legitimacy</span>
-            <span class="pill" data-theme="Postcolonialism">Postcolonialism</span>
-            <span class="pill" data-theme="Geopolitics">Geopolitics</span>
-            <button class="pill-clear" id="clear-btn" style="display:none" onclick="clearTheme()">✕ Reset Map</button>
-        </div>
-    </div>
-
-    <main class="main-content">
-        <div id="map"></div>
-        
-        <aside class="panel" id="panel">
-            <div class="panel-empty" id="panel-empty">
-                <div class="empty-art">🗺️</div>
-                <h3>Geographic Archive</h3>
-                <p>Click a marker on the map to explore extensive summaries and contributions to knowledge across Algeria.</p>
-            </div>
-            
-            <div id="panel-content" style="display:none; flex-direction:column; height:100%;">
-                <div class="panel-hdr">
-                    <h2 id="city-label"></h2>
-                    <button class="close-panel" onclick="closePanel()">✕</button>
-                </div>
-                <div class="panel-body" id="panel-body"></div>
-            </div>
-        </aside>
-    </main>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
-<script>
-/* ── FULL 12-PUBLICATION DATABASE ── */
-const DATA = {
-    algiers: {
-        city: "Algiers", lat: 36.74, lon: 3.06, north: true,
-        pubs: [
-            { year: "2012", title: "Football Sub-Culture and Youth Politics in Algeria", ref: "Mediterranean Politics, 17(1), 41–58.", url: "https://doi.org/10.1080/13629387.2012.655046", summary: "Football fan chants as a medium for protest among youth.", contribution: "Identifies the stadium as a primary alternative site for political dissent.", tags: ["Youth", "Legitimacy", "Nation state formation"] },
-            { year: "2021", title: "Moments and memories: football and state narratives", ref: "Soccer & Society, 22(8), 1084–1094.", url: "https://doi.org/10.1080/14660970.2019.1680505", summary: "State co-option of sporting victories for historical legitimacy.", contribution: "Analyzes the institutionalization of collective memory through sport.", tags: ["Postcolonialism", "Legitimacy", "Nation state formation"] }
-        ]
-    },
-    oran: {
-        city: "Oran", lat: 35.70, lon: -0.64, north: true,
-        pubs: [{ year: "2022", title: "The 19th Mediterranean Games, Oran 2022 and ‘the New Algeria’", ref: "Asian Journal of Sport History & Culture, 1:3, 234-249.", url: "https://doi.org/10.1080/27690148.2023.2195388", summary: "Analyzes the Mediterranean Games as a symbolic platform for state narratives.", contribution: "Unpacks how regional mega-events signal national regeneration.", tags: ["Major sport events", "Mediterranean", "Legitimacy", "Geopolitics"] }]
-    },
-    tiziouzou: {
-        city: "Tizi Ouzou", lat: 36.71, lon: 4.05, north: true,
-        pubs: [
-            { year: "2025", title: "Imane Khelif: Women’s Boxing and Geopolitical Power", ref: "The International Spectator, 1–20.", url: "https://doi.org/10.1080/03932729.2025.2594466", summary: "Frames Paris 2024 boxing controversy as a site of postcolonial agency.", contribution: "Challenges racialized and gendered global media narratives.", tags: ["Gender", "Geopolitics", "Major sport events"] },
-            { year: "2025", title: "Ghada Mahat: Whistling against the odds", ref: "Sport in Society, 1–16.", url: "https://doi.org/10.1080/17430437.2025.2590520", summary: "Study of the first female referee in high-profile Algerian men's football.", contribution: "Assesses symbolic inclusion versus structural resistance.", tags: ["Gender", "Nation state formation"] }
-        ]
-    },
-    tlemcen: {
-        city: "Tlemcen", lat: 34.88, lon: -1.31, north: true,
-        pubs: [{ year: "2022", title: "Algeria and the FIFA World Cup: Regional Rivalry", ref: "Soccer and Society, 23(7), 735–746.", url: "https://doi.org/10.1080/14660970.2022.2059871", summary: "World Cup participation as a project of regional legitimization.", contribution: "Unpacks Maghreb rivalries and 'civilizational' nation-building.", tags: ["Geopolitics", "Legitimacy", "Nation state formation"] }]
-    },
-    constantine: {
-        city: "Constantine", lat: 36.36, lon: 6.61, north: true,
-        pubs: [{ year: "2025", title: "Living Football, Navigating Politics: Salah Assad", ref: "IJHS, 1-17.", url: "https://doi.org/10.1080/09523367.2025.2479455", summary: "Biographical study of a post-colonial sporting legend.", contribution: "Links individual life histories to national political trauma.", tags: ["Postcolonialism", "Nation state formation"] }]
-    },
-    bejaia: {
-        city: "Béjaïa", lat: 36.75, lon: 5.08, north: true,
-        pubs: [{ year: "2024", title: "Online Sources as Alternative Media Consumption", ref: "AJSHC, 3(1):1-21.", url: "https://doi.org/10.1080/27690148.2024.2304318", summary: "How fans use digital platforms to bypass official state broadcasts.", contribution: "Applies TAM/UGT theories to North African sport receivers.", tags: ["Youth", "Mediterranean"] }]
-    },
-    annaba: {
-        city: "Annaba", lat: 36.90, lon: 7.76, north: true,
-        pubs: [{ year: "2006", title: "Post-Colonial Discourses: Algérie-France 2001", ref: "IRMS, Vol. 32, No. 2, 217-239.", url: "https://www.jstor.org/stable/41307963", summary: "Analyzing the 2001 football match as a rupture in colonial memory.", contribution: "Sport as a lens for reconciliation and diaspora identity.", tags: ["Postcolonialism", "Mediterranean", "Nation state formation"] }]
-    },
-    ghardaia: {
-        city: "Ghardaïa", lat: 32.49, lon: 3.67, north: false,
-        pubs: [{ year: "2011", title: "Football, the new battlefield of business", ref: "Journal of North African Studies.", url: "https://doi.org/10.1080/13629387.2010.536376", summary: "The professionalization and commercialization of sport.", contribution: "Maps the post-socialist transition of Algeria's political economy.", tags: ["Legitimacy", "Nation state formation"] }]
-    },
-    ouargla: {
-        city: "Ouargla", lat: 31.95, lon: 5.32, north: false,
-        pubs: [{ year: "2022", title: "Football from the 'Black Decade' to the Hirak", ref: "MERIP, No. 304.", url: "https://merip.org/2022/10/football-in-algeria-from-the-black-decade-to-the-hirak/", summary: "Survival of sport through civil conflict into the 2019 protests.", contribution: "Identifies football culture as a vessel for continuity.", tags: ["Postcolonialism", "Youth", "Nation state formation"] }]
-    },
-    tamanrasset: {
-        city: "Tamanrasset", lat: 22.78, lon: 5.52, north: false,
-        pubs: [{ year: "2006", title: "Sport and Algerian Nationalism in the ‘Global’ era", ref: "FPS, Vol. 4, No. 1, 88-115.", url: "https://doi.org/10.3828/fps.2006.4.1.88", summary: "Territorial identity vs. global diaspora athlete flows.", contribution: "Analyzes the Saharan/Pan-African dimension of postcolonial identity.", tags: ["Postcolonialism", "Nation state formation"] }]
-    }
-};
-
-/* ── MAP INITIALIZATION ── */
-// Ensure exact standard OpenStreetMap layout
-const map = L.map('map', { center: [28.0, 3.0], zoom: 5, minZoom: 4 });
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; OpenStreetMap contributors'
-}).addTo(map);
-
-// Bulletproof Map Render Fix
-setTimeout(() => { map.invalidateSize(); }, 500);
-window.addEventListener('resize', () => { map.invalidateSize(); });
-
-/* ── UI LOGIC ── */
-let activeCityId = null;
-const allMarkers = {};
-
-function createIcon(data, active = false) {
-    const color = active ? '#b83820' : (data.north ? '#1a5fa8' : '#2e6b10');
-    return L.divIcon({
-        className: 'marker-wrap',
-        html: `<div class="marker-pin" style="background:${color}"><div class="dot"></div></div>`,
-        iconSize: [30, 30], iconAnchor: [15, 30] // Anchor to bottom point of pin
-    });
-}
-
-Object.entries(DATA).forEach(([id, info]) => {
-    const marker = L.marker([info.lat, info.lon], { icon: createIcon(info) }).addTo(map);
-    marker.on('click', () => {
-        if (activeCityId) allMarkers[activeCityId].setIcon(createIcon(DATA[activeCityId], false));
-        activeCityId = id;
-        marker.setIcon(createIcon(info, true));
-        map.flyTo([info.lat, info.lon], 6);
-        openSidebar(info);
-    });
-    allMarkers[id] = marker;
-});
-
-function openSidebar(info) {
-    document.getElementById('panel-empty').style.display = 'none';
-    document.getElementById('panel-content').style.display = 'flex';
-    document.getElementById('city-label').textContent = info.city;
-    document.getElementById('panel-body').innerHTML = info.pubs.map(p => `
-        <article class="pub-card">
-            <span class="pub-year">${p.year}</span>
-            <h3 class="pub-title">${p.title}</h3>
-            <p class="pub-ref">${p.ref}</p>
-            <div class="pub-detail"><strong>Summary:</strong> ${p.summary}</div>
-            <div class="pub-detail contrib"><strong>Contribution to Knowledge:</strong> ${p.contribution}</div>
-            <a href="${p.url}" target="_blank" class="pub-link">🔗 Access Publication</a>
-        </article>
-    `).join('');
-}
-
-function closePanel() {
-    if (activeCityId) allMarkers[activeCityId].setIcon(createIcon(DATA[activeCityId], false));
-    activeCityId = null;
-    document.getElementById('panel-empty').style.display = 'flex';
-    document.getElementById('panel-content').style.display = 'none';
-    map.setView([28.0, 3.0], 5);
-}
-
-document.querySelectorAll('.pill').forEach(pill => {
-    pill.addEventListener('click', () => {
-        const theme = pill.dataset.theme;
-        Object.entries(DATA).forEach(([id, info]) => {
-            const match = info.pubs.some(p => p.tags.includes(theme));
-            allMarkers[id].getElement().style.opacity = match ? '1' : '0.15';
-        });
-        document.getElementById('clear-btn').style.display = 'inline-block';
-        pill.classList.add('active');
-    });
-});
-
-function clearTheme() {
-    Object.values(allMarkers).forEach(m => m.getElement().style.opacity = '1');
-    document.getElementById('clear-btn').style.display = 'none';
-    document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
-}
-
-function downloadCSV() {
-    let csv = "Year,City,Title,Reference,Summary,Contribution\n";
-    Object.values(DATA).forEach(c => c.pubs.forEach(p => {
-        csv += `${p.year},${c.city},"${p.title.replace(/"/g,'')}","${p.ref.replace(/"/g,'')}","${p.summary.replace(/"/g,'')}","${p.contribution.replace(/"/g,'')}"\n`;
-    }));
-    const blob = new Blob([csv], { type: 'text/csv' });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url; a.download = 'Amara_Algeria_Scholarship.csv'; a.click();
-}
-</script>
-</body>
-</html>
+        /* Publication Cards */
+        .pub-card { border: 1px solid #eee; padding: 25px; border-radius: 10px; margin-bottom: 2
