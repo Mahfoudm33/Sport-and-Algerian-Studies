@@ -14,10 +14,10 @@
             --dz-green: #006233; --dz-red: #d21034; --border: #e0ddd5;
             
             /* Daytime Stadium Colors */
-            --track-red: #cc4735; /* Brighter, realistic track red */
+            --track-red: #cc4735; 
             --pitch-green: #448041; --pitch-stripe: #3d733b;
             --stands-bg: #e2e8f0; --stands-seat: #ffffff;
-            --container-bg: #f0f4f8; /* Light, airy background replacing the black void */
+            --container-bg: #f0f4f8; 
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
@@ -62,7 +62,6 @@
         .stadium-container { 
             flex: 1 1 auto; 
             position: relative; 
-            /* Clean, light daytime gradient replacing the black background */
             background: radial-gradient(circle at center, #ffffff 0%, var(--container-bg) 100%); 
             overflow: hidden; 
             z-index: 1; 
@@ -77,7 +76,6 @@
         }
         
         .stadium-3d {
-            /* Increased dimensions to make the track much bigger */
             width: 1000px; height: 650px;
             position: relative;
             transform: scale(0.8) rotateX(52deg) rotateZ(-15deg);
@@ -109,7 +107,6 @@
             border: 4px solid #cbd5e1;
             transform: translateZ(-10px);
             z-index: 2;
-            /* White and light grey seat pattern resembling the uploaded image */
             background-image: repeating-radial-gradient(circle at center, var(--stands-seat) 0, var(--stands-seat) 4px, var(--stands-bg) 5px, var(--stands-bg) 12px);
             overflow: hidden;
         }
@@ -135,7 +132,7 @@
         .track {
             position: absolute; top: 0; bottom: 0; left: 0; right: 0;
             background: var(--track-red);
-            border-radius: 350px; /* Adjusted for wider track */
+            border-radius: 350px;
             border: 3px solid #fff;
             box-shadow: 0 0 0 10px var(--track-red), 0 0 0 14px #fff, inset 0 0 20px rgba(0,0,0,0.3), 0 15px 30px rgba(0,0,0,0.2);
             z-index: 4;
@@ -146,7 +143,7 @@
         .lane-1 { top: 15px; bottom: 15px; left: 15px; right: 15px; }
         .lane-2 { top: 30px; bottom: 30px; left: 30px; right: 30px; }
         .lane-3 { top: 45px; bottom: 45px; left: 45px; right: 45px; }
-        .start-line { position: absolute; top: -14px; left: 25%; width: 60px; height: 6px; background: #fff; transform: rotate(90deg); box-shadow: 2px 2px 5px rgba(0,0,0,0.1);}
+        .start-line { position: absolute; top: -14px; left: 20%; width: 60px; height: 6px; background: #fff; transform: rotate(90deg); box-shadow: 2px 2px 5px rgba(0,0,0,0.1);}
 
         .pitch {
             position: absolute; top: 60px; bottom: 60px; left: 60px; right: 60px;
@@ -176,7 +173,7 @@
         .scoreboard {
             position: absolute; top: -250px; left: 50%; width: 500px; height: 140px;
             background: #fff; border: 10px solid #e2e8f0; border-radius: 8px;
-            transform: translateX(-50%) translateZ(120px) rotateX(-55deg); /* Stands upright in 3D */
+            transform: translateX(-50%) translateZ(120px) rotateX(-55deg);
             box-shadow: 0 30px 50px rgba(0,0,0,0.2), inset 0 0 20px rgba(0,0,0,0.05);
             display: flex; flex-direction: column; justify-content: center; padding: 20px;
             z-index: 20; transform-style: preserve-3d;
@@ -194,7 +191,6 @@
             background: var(--oxford); border: 4px solid #fff; border-radius: 50%;
             color: #fff; font-size: 16px; font-weight: 800;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            /* Counter-rotate to stand perfectly upright */
             transform: translate(-50%, -150%) rotateZ(15deg) rotateX(-52deg);
             transform-origin: bottom center; box-shadow: 0 15px 20px rgba(0,0,0,0.4);
             cursor: pointer; transition: 0.3s ease-in-out; z-index: 50;
@@ -271,7 +267,7 @@
                 <p class="hdr-sub">The Academic Stadium · Prof. Mahfoud Amara · <a href="https://orcid.org/0000-0002-1418-6710" target="_blank">ORCID: 0000-0002-1418-6710</a></p>
             </div>
         </div>
-        <button onclick="downloadCSV()" class="btn-export">📊 Export Full Bibliography</button>
+        <button onclick="downloadCSV()" class="btn-export">📊 Export Full Bibliography (CSV)</button>
     </header>
 
     <div class="filter-strip">
@@ -346,65 +342,70 @@
 </div>
 
 <script>
-/* ── FULL DATABASE: EXTENSIVE ORCID ABSTRACTS ── */
+/* ── FULL 13-PAPER DATABASE: EXTENSIVE ORCID ABSTRACTS ── */
 const DATA = [
     { 
-        distance: "0m", year: "2006", title: "Sport and Algerian Nationalism in the ‘Global’ era: within and beyond the nation-state", ref: "Francophone and Postcolonial Studies, Vol. 4, No. 1, 88-115.", url: "https://doi.org/10.3828/fps.2006.4.1.88", 
-        summary: "This foundational theoretical paper investigates the fundamental tension between the Algerian nation-state's rigid desire to project a cohesive territorial identity and the fluid, globalized reality of transnational diaspora athletes. Moving beyond traditional Francophone analysis, the research deeply engages with Algeria's multi-layered identity matrix: Arab, Mediterranean, and crucially, its Saharan and Pan-African dimensions.", 
+        distance: "0m", year: "2003", title: "Between globalization and local ‘modernity’: The diffusion and modernization of football in Algeria", ref: "Soccer & Society, 4(1), 1-26.", url: "https://www.researchgate.net/publication/233952158_Between_globalization_and_local_'Modernity'_The_diffusion_and_modernization_of_football_in_Algeria", 
+        summary: "This foundational study traces the historical diffusion and modernization of football in Algeria, from its initial introduction by French colonial settlers to its rapid appropriation by the indigenous population. It explores the intricate and often violent tensions between the globalizing forces of modern sport, colonial assimilation policies, and local socio-cultural realities. The paper details how football evolved from a tool of the French 'civilizing mission' into a powerful, organized vehicle for anti-colonial resistance and early national consciousness.", 
+        contribution: "Establishes a critical historical baseline for understanding North African sport. By mapping the transition of football from a colonial imposition to a deeply localized cultural institution, the paper provides essential context for the ongoing negotiation of Algerian identity, modernity, and post-colonial statehood.", tags: ["Postcolonialism", "Nation state formation"] 
+    },
+    { 
+        distance: "20m", year: "2006", title: "Sport and Algerian Nationalism in the ‘Global’ era: within and beyond the nation-state", ref: "Francophone and Postcolonial Studies, Vol. 4, No. 1, 88-115.", url: "https://doi.org/10.3828/fps.2006.4.1.88", 
+        summary: "This theoretical paper investigates the fundamental tension between the Algerian nation-state's rigid desire to project a cohesive territorial identity and the fluid, globalized reality of transnational diaspora athletes. Moving beyond traditional Francophone analysis, the research deeply engages with Algeria's multi-layered identity matrix: Arab, Mediterranean, and crucially, its Saharan and Pan-African dimensions.", 
         contribution: "Argues persuasively that Algerian sport operates in a postcolonial 'third space.' It demonstrates how the state is continuously forced to negotiate its borders and sovereignty against the pressures of global migration, lingering colonial legacy, and Pan-African geopolitics.", tags: ["Postcolonialism", "Nation state formation"] 
     },
     { 
-        distance: "20m", year: "2006", title: "Soccer, Post-Colonial and Post-conflict Discourses: Algérie-France 2001", ref: "International Review of Modern Sociology, Vol. 32, No. 2, 217-239.", url: "https://www.jstor.org/stable/41307963", 
+        distance: "40m", year: "2006", title: "Soccer, Post-Colonial and Post-conflict Discourses: Algérie-France 2001", ref: "International Review of Modern Sociology, Vol. 32, No. 2, 217-239.", url: "https://www.jstor.org/stable/41307963", 
         summary: "A profound sociological reading of the infamous and prematurely abandoned 2001 friendly match between France and Algeria at the Stade de France. The research rigorously explores how the pitch invasion by young 'Beur' (French-Algerian) fans violently exposed the unresolved traumas of the Algerian War, the systemic failures of French republican integration, and the intense complexities of transnational diaspora identity.", 
         contribution: "Pioneered the identification of sport as a highly volatile, symbolic space where colonial memory, post-conflict reconciliation, and the fractured, dual-identities of the North African diaspora are publicly and confrontationally negotiated.", tags: ["Postcolonialism", "Mediterranean", "Nation state formation"] 
     },
     { 
-        distance: "40m", year: "2011", title: "Football, the new battlefield of business in Algeria", ref: "The Journal of North African Studies, 16(1).", url: "https://doi.org/10.1080/13629387.2010.536376", 
+        distance: "60m", year: "2011", title: "Football, the new battlefield of business in Algeria", ref: "The Journal of North African Studies, 16(1).", url: "https://doi.org/10.1080/13629387.2010.536376", 
         summary: "This article critically examines the sudden corporatization of Algerian football following the dramatic, politically charged 2010 World Cup qualification against Egypt. It specifically analyzes how multi-national mobile telecommunication companies (such as Djezzy and Nedjma) co-opted national sporting fervor for aggressive corporate branding, creating a new nexus of sport, state, and capital.", 
         contribution: "Provides crucial empirical evidence mapping Algeria's complex, often contradictory transition from a rigid socialist, state-controlled economy to a hybrid, fiercely competitive market economy, viewed exclusively through the lens of sport sponsorship and governance.", tags: ["Legitimacy", "Nation state formation"] 
     },
     { 
-        distance: "60m", year: "2012", title: "Football Sub-Culture and Youth Politics in Algeria", ref: "Mediterranean Politics, 17(1), 41–58.", url: "https://doi.org/10.1080/13629387.2012.655046", 
+        distance: "80m", year: "2012", title: "Football Sub-Culture and Youth Politics in Algeria", ref: "Mediterranean Politics, 17(1), 41–58.", url: "https://doi.org/10.1080/13629387.2012.655046", 
         summary: "Drawing heavily on Pierre Bourdieu’s field theory, this comprehensive study investigates the highly politicized emergence of football 'ultras' in Algeria. It explores how systemic socio-economic marginalization—particularly the phenomenon of unemployed youth (hittistes)—combined with state authoritarianism and a profound lack of formal democratic outlets, has transformed the physical space of the football stadium into one of the only viable public arenas for political expression and cultural resistance.", 
         contribution: "Fundamentally shifts the academic perspective on North African sport by establishing the stadium not merely as an arena for athletic competition, but as a critical sociological barometer for measuring subterranean political tensions and mapping the trajectory of youth dissent in the Maghreb.", tags: ["Youth", "Legitimacy", "Nation state formation"] 
     },
     { 
-        distance: "80m", year: "2021", title: "Moments and memories: football and state narratives in Algeria", ref: "Soccer & Society, 22(8), 1084–1094.", url: "https://doi.org/10.1080/14660970.2019.1680505", 
+        distance: "100m", year: "2021", title: "Moments and memories: football and state narratives in Algeria", ref: "Soccer & Society, 22(8), 1084–1094.", url: "https://doi.org/10.1080/14660970.2019.1680505", 
         summary: "This research interrogates how the Algerian state systematically co-opts major footballing milestones—from the historical FLN team, through the 1982 World Cup generation, up to the 2019 AFCON victory—to construct and enforce a unified national narrative. It examines the intense push-and-pull dynamic between organic, popular street celebrations and calculated, top-down state propaganda during times of acute political crisis.", 
         contribution: "Provides a robust theoretical framework for understanding the institutionalization of collective memory, demonstrating how post-colonial regimes actively weaponize sporting history to deflect domestic socio-political pressure, project regional sovereignty, and legitimize their continued governance.", tags: ["Postcolonialism", "Legitimacy", "Nation state formation"] 
     },
     { 
-        distance: "100m", year: "2022", title: "Algeria and the FIFA World Cup: between political legitimization and regional rivalry", ref: "Soccer and Society, 23(7), 735–746.", url: "https://doi.org/10.1080/14660970.2022.2059871", 
+        distance: "120m", year: "2022", title: "Algeria and the FIFA World Cup: between political legitimization and regional rivalry", ref: "Soccer and Society, 23(7), 735–746.", url: "https://doi.org/10.1080/14660970.2022.2059871", 
         summary: "This historical analysis divides Algeria’s relationship with the FIFA World Cup into distinct political eras: Revolutionary, Reconstruction, and the New Era. The paper emphasizes the geopolitical friction and deep-seated border rivalries with neighboring Morocco and Egypt, examining how the international football pitch serves as a highly visible proxy battlefield for Maghrebi and broader Arab dominance.", 
         contribution: "Demonstrates how post-colonial states actively utilize global sporting success as a 'civilizational' project. It illustrates the use of sport to reinforce physical borders, project military and diplomatic strength, and consolidate national identity in direct opposition to regional rivals.", tags: ["Geopolitics", "Legitimacy", "Nation state formation"] 
     },
     { 
-        distance: "120m", year: "2022", title: "Football in Algeria from the “Black Decade” to the Hirak", ref: "MERIP, No. 304.", url: "https://merip.org/2022/10/football-in-algeria-from-the-black-decade-to-the-hirak/", 
+        distance: "140m", year: "2022", title: "Football in Algeria from the “Black Decade” to the Hirak", ref: "MERIP, No. 304.", url: "https://merip.org/2022/10/football-in-algeria-from-the-black-decade-to-the-hirak/", 
         summary: "An expansive historical survey detailing how Algerian football stadiums functioned as rare physical sanctuaries during the extreme violence of the 1990s civil war. The paper further traces how that unique legacy of stadium solidarity evolved directly into the highly organized protest chants (such as 'La Casa d’El Mouradia') that fueled the massive 2019 Hirak revolution.", 
         contribution: "Demonstrates compellingly that football culture is not merely a passive reflection of society, but an active, historical vessel providing vital continuity for public political life when formal democratic institutions fail or are suspended entirely.", tags: ["Postcolonialism", "Youth", "Nation state formation"] 
     },
     { 
-        distance: "140m", year: "2023", title: "The 19th Mediterranean Games, Oran 2022 and ‘the New Algeria’", ref: "Asian Journal of Sport History & Culture, 1:3, 234-249.", url: "https://doi.org/10.1080/27690148.2023.2195388", 
+        distance: "160m", year: "2023", title: "The 19th Mediterranean Games, Oran 2022 and ‘the New Algeria’", ref: "Asian Journal of Sport History & Culture, 1:3, 234-249.", url: "https://doi.org/10.1080/27690148.2023.2195388", 
         summary: "An extensive geopolitical analysis of how the 2022 Mediterranean Games in Oran were strategically mobilized by the current administration as the symbolic centerpiece of the 'New Algeria' narrative. The paper deeply contextualizes the mega-event within the complex post-Hirak and post-COVID-19 socio-political landscape, critically assessing the state's massive infrastructural investments and diplomatic messaging.", 
         contribution: "Offers a highly contemporary case study on the geopolitical utility of regional mega-events. It highlights how states leverage international spectacles for domestic legitimization, narratives of national regeneration, and the projection of regional soft power in the Mediterranean basin.", tags: ["Major sport events", "Mediterranean", "Legitimacy", "Geopolitics"] 
     },
     { 
-        distance: "160m", year: "2024", title: "Online Sources as Alternative Media for Sporting Events’ Consumption in Algeria", ref: "Asian Journal of Sport History & Culture, 3(1):1-21.", url: "https://doi.org/10.1080/27690148.2024.2304318", 
+        distance: "180m", year: "2024", title: "Online Sources as Alternative Media for Sporting Events’ Consumption in Algeria", ref: "Asian Journal of Sport History & Culture, 3(1):1-21.", url: "https://doi.org/10.1080/27690148.2024.2304318", 
         summary: "A rigorous quantitative and qualitative investigation into how modern Algerian sports fans actively bypass heavily regulated state broadcasts (ENTV). The study meticulously maps the explosive growth of pirate IPTV, OTT platforms, and social media streaming as the primary, decentralized vehicles for consuming both global and local football content.", 
         contribution: "Innovatively applies the Technology Acceptance Model (TAM) and Uses and Gratifications Theory (UGT) to a specific North African context. The paper highlights the democratizing, yet legally ambiguous, effect of digital platforms against entrenched state media monopolies.", tags: ["Youth", "Mediterranean"] 
     },
     { 
-        distance: "180m", year: "2025", title: "Living Football, Navigating Politics: Salah Assad’s Life Story", ref: "The International Journal of the History of Sport, 1-17.", url: "https://doi.org/10.1080/09523367.2025.2479455", 
+        distance: "200m", year: "2025", title: "Living Football, Navigating Politics: Salah Assad’s Life Story", ref: "The International Journal of the History of Sport, 1-17.", url: "https://doi.org/10.1080/09523367.2025.2479455", 
         summary: "An extensive oral history and biographical reconstruction of the life of Salah Assad, a legendary hero of Algeria's 1982 World Cup generation. The paper traces his remarkable and turbulent journey through the optimism of 1970s state socialism, his professional career abroad, and his subsequent, tragic entanglement in the political trauma and extreme violence of the 1990s 'Black Decade'.", 
         contribution: "Masterfully bridges micro-history with macro-politics. The study proves how individual athletic biographies in the Global South are not insulated from, but are inescapably intertwined with, volatile state transitions, the rise of political Islam, and the complex processes of national reconciliation.", tags: ["Postcolonialism", "Nation state formation"] 
     },
     { 
-        distance: "200m", year: "2025", title: "Imane Khelif: Women’s Boxing, Geopolitical Power and Gendered Media Narratives", ref: "The International Spectator, 1–20.", url: "https://doi.org/10.1080/03932729.2025.2594466", 
+        distance: "220m", year: "2025", title: "Imane Khelif: Women’s Boxing, Geopolitical Power and Gendered Media Narratives", ref: "The International Spectator, 1–20.", url: "https://doi.org/10.1080/03932729.2025.2594466", 
         summary: "This article dissects the unprecedented and highly politicized global media storm surrounding Algerian boxer Imane Khelif at the Paris 2024 Olympics. Utilizing a blend of critical feminist and postcolonial frameworks, the research analyzes the intersection of gender verification politics, Western media bias, Orientalism, and the subsequent, fierce mobilization of Algerian national pride in her defense.", 
         contribution: "Brilliantly reframes Khelif’s Olympic victory—moving it away from a Western-imposed narrative of victimhood and controversy into a powerful act of postcolonial agency. It illustrates the unique 'double burden' faced by female Muslim athletes navigating the fraught tensions between the Global North and South.", tags: ["Gender", "Geopolitics", "Major sport events"] 
     },
     { 
-        distance: "220m", year: "2025", title: "Ghada Mahat: whistling against the odds—female refereeing, gender dynamics, and resistance", ref: "Sport in Society, 1–16.", url: "https://doi.org/10.1080/17430437.2025.2590520", 
+        distance: "240m", year: "2025", title: "Ghada Mahat: whistling against the odds—female refereeing, gender dynamics, and resistance", ref: "Sport in Society, 1–16.", url: "https://doi.org/10.1080/17430437.2025.2590520", 
         summary: "Through a detailed biographical and sociological lens, this paper investigates the groundbreaking career of Ghada Mahat, the first woman to referee a major men's football match in Algeria. The study documents the overt structural hostility, entrenched gendered barriers, and pervasive patriarchal norms embedded deeply within the nation's sporting and social institutions.", 
         contribution: "Introduces the vital concept of 'quiet resistance' within the sociology of sport. It provides a critical assessment of the stark paradox between the state's superficial, symbolic inclusion of women in public life and the reality of enduring, systemic structural inequalities.", tags: ["Gender", "Nation state formation"] 
     }
@@ -412,7 +413,7 @@ const DATA = [
 
 /* ── GENERATE CROWD FLAGS IN THE STANDS ── */
 const standsEl = document.getElementById('stands');
-// Generate 200 dynamic flags to simulate a packed crowd
+// Generate dynamic flags to simulate a packed crowd
 for (let i = 0; i < 200; i++) {
     const flag = document.createElement('div');
     flag.className = 'crowd-flag';
@@ -433,21 +434,21 @@ for (let i = 0; i < 200; i++) {
     standsEl.appendChild(flag);
 }
 
-/* ── CALCULATE SAFE TRACK POSITIONS ── */
-// Distributing 12 markers safely on the enlarged red track
+/* ── CALCULATE SAFE TRACK POSITIONS (13 Markers) ── */
 const POSITIONS = [
-    { top: '3%', left: '25%' },   // 0m
-    { top: '3%', left: '50%' },   // 20m 
-    { top: '3%', left: '75%' },   // 40m 
-    { top: '22%', left: '96%' },  // 60m
-    { top: '50%', left: '98%' },  // 80m
-    { top: '78%', left: '96%' },  // 100m
-    { top: '97%', left: '75%' },  // 120m
-    { top: '97%', left: '50%' },  // 140m 
-    { top: '97%', left: '25%' },  // 160m 
-    { top: '78%', left: '4%' },   // 180m
-    { top: '50%', left: '2%' },   // 200m
-    { top: '22%', left: '4%' },   // 220m
+    { top: '3%', left: '20%' },   // 0m (2003)
+    { top: '3%', left: '45%' },   // 20m 
+    { top: '3%', left: '70%' },   // 40m 
+    { top: '18%', left: '94%' },  // 60m 
+    { top: '50%', left: '98%' },  // 80m 
+    { top: '82%', left: '94%' },  // 100m
+    { top: '97%', left: '70%' },  // 120m
+    { top: '97%', left: '45%' },  // 140m 
+    { top: '97%', left: '20%' },  // 160m 
+    { top: '82%', left: '6%' },   // 180m 
+    { top: '50%', left: '2%' },   // 200m 
+    { top: '18%', left: '6%' },   // 220m (Khelif Gold)
+    { top: '6%', left: '12%' },   // 240m
 ];
 
 /* ── INJECT 3D MARKERS ── */
@@ -461,7 +462,7 @@ DATA.forEach((paper, index) => {
     marker.style.left = POSITIONS[index].left;
     
     // Highlight Khelif 2025 Node (Gold)
-    if (paper.distance === "200m") {
+    if (paper.distance === "220m") {
         marker.style.borderColor = "#ffd700";
         marker.style.background = "#ffd700";
         marker.style.color = "#111";
@@ -473,7 +474,7 @@ DATA.forEach((paper, index) => {
     marker.addEventListener('click', () => {
         if(activeMarker) {
             // Restore previous active marker color
-            if(activeMarker.innerHTML.includes("200m")) {
+            if(activeMarker.innerHTML.includes("220m")) {
                  activeMarker.style.background = "#ffd700";
                  activeMarker.style.color = "#111";
             } else {
@@ -482,7 +483,7 @@ DATA.forEach((paper, index) => {
         }
         
         // Highlight new active marker
-        if (paper.distance === "200m") {
+        if (paper.distance === "220m") {
             marker.style.background = "#fff";
             marker.style.color = "#ffd700";
         } else {
@@ -528,7 +529,7 @@ function openSidebar(paper) {
 
 function closePanel() {
     if(activeMarker) {
-         if(activeMarker.innerHTML.includes("200m")) {
+         if(activeMarker.innerHTML.includes("220m")) {
              activeMarker.style.background = "#ffd700";
              activeMarker.style.color = "#111";
          } else {
@@ -552,7 +553,7 @@ document.querySelectorAll('.pill').forEach(pill => {
                 m.style.opacity = '1';
                 m.style.transform = 'translate(-50%, -150%) rotateZ(15deg) rotateX(-52deg) scale(1.15)';
                 m.style.borderColor = '#ffd700';
-                if(m.innerHTML.includes("200m")) { m.style.borderColor = "#fff"; }
+                if(m.innerHTML.includes("220m")) { m.style.borderColor = "#fff"; }
             } else {
                 m.style.opacity = '0.2';
                 m.style.transform = 'translate(-50%, -150%) rotateZ(15deg) rotateX(-52deg) scale(0.85)';
@@ -571,7 +572,7 @@ function clearTheme() {
     document.querySelectorAll('.track-marker').forEach(m => {
         m.style.opacity = '1';
         m.style.transform = 'translate(-50%, -150%) rotateZ(15deg) rotateX(-52deg) scale(1)';
-        if(m.innerHTML.includes("200m")) {
+        if(m.innerHTML.includes("220m")) {
             m.style.color = "#111";
             m.style.borderColor = "#ffd700";
         } else {
