@@ -27,13 +27,13 @@
         .eco-links a:hover { color: var(--oxford); }
 
         /* Header */
-        .hdr { flex: 0 0 auto; padding: 20px 25px; background: #fff; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; z-index: 1000; }
+        .hdr { flex: 0 0 auto; padding: 16px 25px; background: #fff; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; z-index: 1000; }
         .hdr-brand { display: flex; align-items: center; gap: 15px; }
         .dz-flag { width: 36px; height: 24px; display: flex; border: 1px solid #ddd; border-radius: 2px; overflow: hidden; }
         .flag-green { background: var(--dz-green); flex: 1; }
         .flag-white { background: #fff; flex: 1; position: relative; }
         .flag-white::after { content: ''; position: absolute; width: 4px; height: 4px; background: var(--dz-red); border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%,-50%); }
-        .hdr-title { font-family: 'Playfair Display', serif; font-size: 24px; color: #111; line-height: 1.2; margin-bottom: 4px;}
+        .hdr-title { font-family: 'Playfair Display', serif; font-size: 22px; color: #111; line-height: 1.2; margin-bottom: 4px;}
         .hdr-sub { font-size: 11px; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: 0.5px; }
         .hdr-sub a { color: var(--oxford); text-decoration: none; font-weight: 700;}
         
@@ -51,27 +51,33 @@
         /* Main Layout */
         .main-content { flex: 1 1 auto; display: flex; flex-direction: row; overflow: hidden; position: relative; }
         
-        /* ── 3D ISOMETRIC STADIUM (THE ULTIMATE FIX) ── */
+        /* ── 3D ISOMETRIC STADIUM ── */
         .stadium-wrapper {
             flex: 1 1 auto;
             background: #161616;
             display: flex;
             align-items: center;
             justify-content: center;
-            perspective: 1500px; /* Activates 3D space */
+            perspective: 1800px; /* Increased perspective for less distortion */
             overflow: hidden;
             position: relative;
-            box-shadow: inset 0 0 100px #000;
+            box-shadow: inset 0 0 150px #000;
         }
         
         .stadium-3d {
             width: 800px;
             height: 500px;
             position: relative;
-            transform: rotateX(55deg) rotateZ(-15deg);
+            /* Default scale shrunk slightly to keep all markers in frame */
+            transform: scale(0.8) rotateX(55deg) rotateZ(-15deg);
             transform-style: preserve-3d;
             transition: 0.5s ease-in-out;
         }
+        
+        /* Responsive Scaling for smaller screens */
+        @media(max-width: 1400px) { .stadium-3d { transform: scale(0.65) rotateX(55deg) rotateZ(-15deg); } }
+        @media(max-width: 1100px) { .stadium-3d { transform: scale(0.55) rotateX(55deg) rotateZ(-15deg); } }
+        @media(max-width: 768px) { .stadium-3d { transform: scale(0.4) rotateX(55deg) rotateZ(-15deg); } }
         
         /* The Spectator Stands */
         .stands {
@@ -86,12 +92,14 @@
         
         .stands-flag {
             position: absolute;
-            width: 12px; height: 8px;
+            width: 14px; height: 10px;
             display: flex;
             box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+            opacity: 0.8;
         }
         .stands-flag .g { background: var(--dz-green); flex: 1; }
-        .stands-flag .w { background: #fff; flex: 1; }
+        .stands-flag .w { background: #fff; flex: 1; position: relative;}
+        .stands-flag .w::after { content: ''; position: absolute; width: 3px; height: 3px; background: var(--dz-red); border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%,-50%); }
 
         /* The Athletic Track */
         .track {
@@ -144,23 +152,33 @@
         /* 3D Signpost Markers */
         .track-marker {
             position: absolute;
-            width: 44px; height: 44px;
+            width: 46px; height: 46px;
             background: var(--oxford);
             border: 3px solid #fff;
             border-radius: 50%;
             color: #fff;
-            font-size: 12px; font-weight: 800;
+            font-size: 13px; font-weight: 800;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            /* CRITICAL: Counter-rotate the markers so they stand straight up in the 3D space */
+            /* Stands perfectly upright in 3D */
             transform: translate(-50%, -150%) rotateZ(15deg) rotateX(-55deg);
             transform-origin: bottom center;
             box-shadow: 0 15px 15px rgba(0,0,0,0.5);
             cursor: pointer;
             transition: 0.3s ease-in-out;
             z-index: 50;
+            animation: float 3s infinite ease-in-out;
         }
+        
+        /* Gentle bobbing to show interactivity */
+        @keyframes float {
+            0% { transform: translate(-50%, -150%) rotateZ(15deg) rotateX(-55deg) scale(1); }
+            50% { transform: translate(-50%, -155%) rotateZ(15deg) rotateX(-55deg) scale(1.05); box-shadow: 0 20px 20px rgba(0,0,0,0.4); }
+            100% { transform: translate(-50%, -150%) rotateZ(15deg) rotateX(-55deg) scale(1); }
+        }
+
         .track-marker span { font-size: 9px; color: #b3d4ff; margin-top: -2px; }
-        /* The stick of the signpost */
+        
+        /* The pole of the signpost */
         .track-marker::after {
             content: '';
             position: absolute;
@@ -174,8 +192,9 @@
         
         .track-marker:hover, .track-marker.active {
             background: #ffd700; color: #111; border-color: #fff;
-            transform: translate(-50%, -150%) rotateZ(15deg) rotateX(-55deg) scale(1.2);
+            transform: translate(-50%, -150%) rotateZ(15deg) rotateX(-55deg) scale(1.25);
             z-index: 60;
+            animation: none; /* Stops floating when hovered/active */
         }
         .track-marker:hover span, .track-marker.active span { color: #555; }
 
@@ -191,7 +210,7 @@
         
         .pub-card { border: 1px solid #eee; padding: 35px; border-radius: 12px; margin-bottom: 30px; background: #fff; box-shadow: 0 8px 25px rgba(0,0,0,0.03); }
         .pub-year { display: inline-block; font-size: 12px; font-weight: 900; color: var(--oxford); text-transform: uppercase; letter-spacing: 1px; background: #f0f4f8; padding: 6px 12px; border-radius: 4px; margin-bottom: 15px; }
-        .pub-title { font-family: 'Playfair Display', serif; font-size: 24px; margin: 0 0 12px 0; line-height: 1.35; color: #111; }
+        .pub-title { font-family: 'Playfair Display', serif; font-size: 22px; margin: 0 0 12px 0; line-height: 1.35; color: #111; }
         .pub-ref { font-size: 14px; color: #666; font-style: italic; margin-bottom: 25px; padding-bottom: 20px; border-bottom: 1px solid #eee; }
         
         .section-title { font-size: 12px; font-weight: 800; text-transform: uppercase; color: #888; margin-bottom: 10px; letter-spacing: 0.5px; }
@@ -203,11 +222,10 @@
         .pub-link { display: inline-flex; align-items: center; justify-content: center; gap: 10px; font-size: 14px; font-weight: 700; color: #fff; background: var(--dz-green); padding: 16px 24px; border-radius: 8px; text-decoration: none; transition: 0.2s; width: 100%; text-align: center; }
         .pub-link:hover { background: #004d28; transform: translateY(-2px); box-shadow: 0 8px 15px rgba(0,98,51,0.25); }
 
-        @media(max-width: 1100px) {
+        @media(max-width: 1000px) {
             .main-content { flex-direction: column; }
-            .stadium-wrapper { flex: 1 1 50vh; height: 50vh; }
+            .stadium-wrapper { flex: 1 1 45vh; height: 45vh; }
             .panel { flex: 1 1 auto; width: 100%; border-left: none; border-top: 1px solid var(--border); }
-            .stadium-3d { transform: scale(0.6) rotateX(55deg) rotateZ(-15deg); }
         }
     </style>
 </head>
@@ -296,7 +314,7 @@
 </div>
 
 <script>
-/* ── FULL DATABASE: EXTENSIVE ABSTRACTS INCLUDED ── */
+/* ── FULL DATABASE: EXTENSIVE ABSTRACTS ── */
 const DATA = [
     { 
         distance: "0m", year: "2006", title: "Sport and Algerian Nationalism in the ‘Global’ era: within and beyond the nation-state", ref: "Francophone and Postcolonial Studies, Vol. 4, No. 1, 88-115.", url: "https://doi.org/10.3828/fps.2006.4.1.88", 
@@ -362,32 +380,37 @@ const DATA = [
 
 /* ── GENERATE CROWD FLAGS ── */
 const standsEl = document.getElementById('stands');
-for (let i = 0; i < 150; i++) {
+for (let i = 0; i < 180; i++) {
     const flag = document.createElement('div');
     flag.className = 'stands-flag';
-    // Randomize placement in the stands
-    flag.style.top = `${Math.random() * 100}%`;
-    flag.style.left = `${Math.random() * 100}%`;
+    // Keep flags out of the central track hole
+    let top = Math.random() * 100;
+    let left = Math.random() * 100;
+    if (top > 15 && top < 85 && left > 15 && left < 85) {
+        top = top > 50 ? top + 35 : top - 35;
+    }
+    flag.style.top = `${top}%`;
+    flag.style.left = `${left}%`;
     flag.style.transform = `rotate(${Math.random() * 360}deg)`;
-    
     flag.innerHTML = '<div class="g"></div><div class="w"></div>';
     standsEl.appendChild(flag);
 }
 
-/* ── CALCULATE TRACK POSITIONS (0m to 220m) ── */
+/* ── RECALCULATED SAFE TRACK POSITIONS ── */
+// These sit directly on the red border of the .track element
 const POSITIONS = [
-    { top: '-22px', left: '25%' },  // 0m
-    { top: '-22px', left: '50%' },  // 20m
-    { top: '-22px', left: '75%' },  // 40m
-    { top: '15%', left: '102%' },   // 60m
-    { top: '50%', left: '105%' },   // 80m
-    { top: '85%', left: '102%' },   // 100m
-    { top: 'calc(100% + 22px)', left: '75%' }, // 120m
-    { top: 'calc(100% + 22px)', left: '50%' }, // 140m
-    { top: 'calc(100% + 22px)', left: '25%' }, // 160m
-    { top: '85%', left: '-2%' },    // 180m
-    { top: '50%', left: '-5%' },    // 200m
-    { top: '15%', left: '-2%' },    // 220m
+    { top: '5%', left: '25%' },   // 0m (Top straight)
+    { top: '5%', left: '50%' },   // 20m 
+    { top: '5%', left: '75%' },   // 40m 
+    { top: '25%', left: '95%' },  // 60m (Right curve top)
+    { top: '50%', left: '98%' },  // 80m (Right curve middle)
+    { top: '75%', left: '95%' },  // 100m (Right curve bottom)
+    { top: '95%', left: '75%' },  // 120m (Bottom straight)
+    { top: '95%', left: '50%' },  // 140m 
+    { top: '95%', left: '25%' },  // 160m 
+    { top: '75%', left: '5%' },   // 180m (Left curve bottom)
+    { top: '50%', left: '2%' },   // 200m (Left curve middle)
+    { top: '25%', left: '5%' },   // 220m (Left curve top)
 ];
 
 /* ── INJECT 3D MARKERS ── */
@@ -400,11 +423,19 @@ DATA.forEach((paper, index) => {
     marker.style.top = POSITIONS[index].top;
     marker.style.left = POSITIONS[index].left;
     
+    // Highlight Khelif 2025 Node
+    if (paper.distance === "200m") {
+        marker.style.borderColor = "#ffd700";
+        marker.style.color = "#ffd700";
+    }
+    
     marker.innerHTML = `${paper.year}<span>${paper.distance}</span>`;
     marker.dataset.tags = paper.tags.join(',');
     
     marker.addEventListener('click', () => {
-        if(activeMarker) activeMarker.classList.remove('active');
+        if(activeMarker) {
+            activeMarker.classList.remove('active');
+        }
         marker.classList.add('active');
         activeMarker = marker;
         openSidebar(paper);
@@ -456,11 +487,13 @@ document.querySelectorAll('.pill').forEach(pill => {
         markers.forEach(m => {
             if(m.dataset.tags.includes(theme)) {
                 m.style.opacity = '1';
+                m.style.transform = 'translate(-50%, -150%) rotateZ(15deg) rotateX(-55deg) scale(1.15)';
                 m.style.background = '#ffd700';
                 m.style.color = '#111';
                 m.style.borderColor = '#fff';
             } else {
-                m.style.opacity = '0.3';
+                m.style.opacity = '0.25';
+                m.style.transform = 'translate(-50%, -150%) rotateZ(15deg) rotateX(-55deg) scale(0.85)';
                 m.style.background = 'var(--oxford)';
                 m.style.color = '#fff';
             }
@@ -475,8 +508,15 @@ document.querySelectorAll('.pill').forEach(pill => {
 function clearTheme() {
     document.querySelectorAll('.track-marker').forEach(m => {
         m.style.opacity = '1';
+        m.style.transform = 'translate(-50%, -150%) rotateZ(15deg) rotateX(-55deg) scale(1)';
         m.style.background = 'var(--oxford)';
-        m.style.color = '#fff';
+        if(m.innerHTML.includes("200m")) {
+            m.style.color = "#ffd700";
+            m.style.borderColor = "#ffd700";
+        } else {
+            m.style.color = "#fff";
+            m.style.borderColor = "#fff";
+        }
     });
     document.getElementById('clear-btn').style.display = 'none';
     document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
