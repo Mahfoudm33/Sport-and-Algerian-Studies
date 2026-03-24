@@ -5,36 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sport, Society & Culture in Algeria — The Academic Stadium</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=Playfair+Display:wght@700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     
     <style>
         :root {
             --oxford: #1a5fa8; --desert: #fdfcf9; --sand: #f4f1ea;
             --dz-green: #006233; --dz-red: #d21034; --border: #e0ddd5;
-            --track-red: #b53c2a; --pitch-green: #3a6c38; --pitch-stripe: #336031;
-            --stands-grey: #4a4a4a; --seat-grey: #333;
+            --track-red: #b33922; --pitch-green: #386b36; --pitch-stripe: #2f5c2d;
+            --stands-base: #2a2a2a;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
         html, body { height: 100%; width: 100%; font-family: 'Inter', sans-serif; background: var(--desert); color: #1a1a1a; overflow: hidden; }
         .shell { display: flex; flex-direction: column; height: 100vh; width: 100vw; }
         
-        /* Ecosystem Nav */
-        .eco-nav { flex: 0 0 auto; background: #121212; color: #fff; padding: 10px 25px; border-bottom: 2px solid var(--oxford); z-index: 1001; }
+        /* ── ECOSYSTEM NAV ── */
+        .eco-nav { flex: 0 0 auto; background: #111; color: #fff; padding: 10px 25px; border-bottom: 2px solid var(--oxford); z-index: 1001; }
         .eco-container { display: flex; justify-content: space-between; align-items: center; max-width: 1600px; margin: 0 auto; }
         .eco-label { font-size: 10px; font-weight: 800; color: #888; text-transform: uppercase; letter-spacing: 1px; }
         .eco-links { display: flex; gap: 20px; }
         .eco-links a { color: #fff; text-decoration: none; font-size: 11px; font-weight: 600; transition: 0.3s; }
         .eco-links a:hover { color: var(--oxford); }
 
-        /* Header */
+        /* ── HEADER ── */
         .hdr { flex: 0 0 auto; padding: 16px 25px; background: #fff; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; z-index: 1001; }
         .hdr-brand { display: flex; align-items: center; gap: 15px; }
         
         /* ACCURATE SVG FLAG */
         .hdr-flag { width: 44px; height: 28px; border-radius: 3px; overflow: hidden; border: 1px solid #ddd; display: flex; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .hdr-flag svg { width: 100%; height: 100%; }
-
         .hdr-title { font-family: 'Playfair Display', serif; font-size: 22px; color: #111; line-height: 1.2; margin-bottom: 4px;}
         .hdr-sub { font-size: 11px; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: 0.5px; }
         .hdr-sub a { color: var(--oxford); text-decoration: none; font-weight: 700;}
@@ -42,7 +40,7 @@
         .btn-export { background: var(--oxford); color: #fff; border: none; padding: 10px 18px; border-radius: 6px; font-size: 11px; font-weight: 800; cursor: pointer; transition: 0.2s; box-shadow: 0 2px 5px rgba(26,95,168,0.3); }
         .btn-export:hover { background: #144e8c; transform: translateY(-1px); }
 
-        /* Filters */
+        /* ── FILTERS ── */
         .filter-strip { flex: 0 0 auto; background: #fff; border-bottom: 1px solid var(--border); padding: 12px 25px; z-index: 1001; }
         .filter-scroll { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
         .pill { padding: 6px 14px; background: var(--sand); border-radius: 20px; font-size: 11px; font-weight: 600; cursor: pointer; white-space: nowrap; border: 1px solid transparent; transition: 0.2s; color: #444; }
@@ -50,171 +48,180 @@
         .pill.active { background: var(--oxford); color: #fff; }
         .pill-clear { background: transparent; border: none; color: var(--dz-red); font-weight: 800; font-size: 11px; cursor: pointer; margin-left: 10px; }
 
-        /* Main Layout */
+        /* ── MAIN LAYOUT ── */
         .main-content { flex: 1 1 auto; display: flex; flex-direction: row; overflow: hidden; position: relative; }
         
-        /* ── THE VISUAL STADIUM CONTAINER ── */
+        /* ── 3D OLYMPIC STADIUM ENVIRONMENT ── */
         .stadium-container { 
             flex: 1 1 auto; 
             position: relative; 
-            background: #222; 
+            background: radial-gradient(circle at center, #222 0%, #0a0a0a 100%); 
             overflow: hidden; 
             z-index: 1; 
             box-shadow: inset 0 0 150px #000;
         }
 
-        /* ── 3D ISOMETRIC STADIUM ── */
         .stadium-wrapper {
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            perspective: 2000px; /* Activates 3D space */
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            display: flex; align-items: center; justify-content: center;
+            perspective: 2500px;
             z-index: 5;
         }
         
         .stadium-3d {
-            width: 800px;
-            height: 500px;
+            width: 850px; height: 550px;
             position: relative;
-            transform: scale(0.75) rotateX(55deg) rotateZ(-15deg);
+            transform: scale(0.7) rotateX(55deg) rotateZ(-15deg);
             transform-style: preserve-3d;
             transition: 0.5s ease-in-out;
         }
         
         /* Responsive Scaling */
-        @media(max-width: 1400px) { .stadium-3d { transform: scale(0.65) rotateX(55deg) rotateZ(-15deg); } }
+        @media(max-width: 1400px) { .stadium-3d { transform: scale(0.6) rotateX(55deg) rotateZ(-15deg); } }
         @media(max-width: 1100px) { .stadium-3d { transform: scale(0.5) rotateX(55deg) rotateZ(-15deg); } }
         @media(max-width: 768px) { .stadium-3d { transform: scale(0.35) rotateX(55deg) rotateZ(-15deg); } }
         
-        /* ── Visual stands with seats ── */
-        .stands-container {
-            position: absolute;
-            top: -160px; bottom: -160px; left: -160px; right: -160px;
-            background: var(--stands-grey);
+        /* STADIUM ARCHITECTURE */
+        .stands-outer {
+            position: absolute; top: -160px; bottom: -160px; left: -160px; right: -160px;
+            background: linear-gradient(135deg, #333, #111);
             border-radius: 400px;
-            box-shadow: 0 40px 100px rgba(0,0,0,0.9), inset 0 0 60px rgba(0,0,0,0.9);
-            border: 8px solid #222;
+            box-shadow: 0 50px 100px rgba(0,0,0,0.9), inset 0 0 60px rgba(0,0,0,0.8);
+            border: 10px solid #444;
+            transform: translateZ(-20px);
             z-index: 1;
-            /* SEAT PATTERN */
-            background-image: 
-                radial-gradient(circle, var(--seat-grey) 3px, transparent 3px), 
-                radial-gradient(circle, var(--seat-grey) 3px, transparent 3px);
-            background-size: 14px 14px;
-            background-position: 0 0, 7px 7px;
-            opacity: 0.95;
+        }
+        
+        .stands-inner {
+            position: absolute; top: -100px; bottom: -100px; left: -100px; right: -100px;
+            background: var(--stands-base);
+            border-radius: 350px;
+            box-shadow: inset 0 0 80px rgba(0,0,0,0.9);
+            border: 4px solid #1a1a1a;
+            transform: translateZ(-10px);
+            z-index: 2;
+            background-image: radial-gradient(circle, #444 2px, transparent 2px);
+            background-size: 10px 10px;
             overflow: hidden;
         }
 
-        /* ── Crowd waving flags ── */
+        /* ── THE CROWD (WAVING FLAGS) ── */
         .crowd-flag {
-            position: absolute;
-            width: 18px; height: 12px;
-            display: flex;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.6);
-            animation: flagWave 2.5s infinite ease-in-out;
-            opacity: 0.85;
-            z-index: 2;
+            position: absolute; width: 14px; height: 9px; display: flex;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.6);
+            animation: flagWave 2s infinite ease-in-out;
+            opacity: 0.85; z-index: 3;
         }
         .crowd-flag .g { background: var(--dz-green); flex: 1; }
         .crowd-flag .w { background: #fff; flex: 1; position: relative;}
-        .crowd-flag .w::after { content: ''; position: absolute; width: 4px; height: 4px; background: var(--dz-red); border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+        .crowd-flag .w::after { content: ''; position: absolute; width: 3px; height: 3px; background: var(--dz-red); border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%,-50%); }
 
         @keyframes flagWave {
             0% { transform: translateY(0) rotate(-15deg); }
-            50% { transform: translateY(-8px) rotate(15deg); }
+            50% { transform: translateY(-5px) rotate(15deg); }
             100% { transform: translateY(0) rotate(-15deg); }
         }
 
-        /* The Athletic Track */
+        /* ── ATHLETIC TRACK & FIELD ── */
         .track {
-            position: absolute;
-            top: 0; bottom: 0; left: 0; right: 0;
+            position: absolute; top: 0; bottom: 0; left: 0; right: 0;
             background: var(--track-red);
             border-radius: 250px;
             border: 2px solid #fff;
-            box-shadow: 0 0 0 8px var(--track-red), 0 0 0 12px #fff, inset 0 0 25px rgba(0,0,0,0.6), 0 20px 50px rgba(0,0,0,0.5);
-            z-index: 3;
+            box-shadow: 0 0 0 8px var(--track-red), 0 0 0 12px #fff, inset 0 0 30px rgba(0,0,0,0.5), 0 20px 40px rgba(0,0,0,0.6);
+            z-index: 4;
+            transform: translateZ(0px);
         }
         
-        /* Track Lanes */
-        .lane { position: absolute; border: 1.5px dashed rgba(255,255,255,0.5); border-radius: 250px; }
+        .lane { position: absolute; border: 1.5px dashed rgba(255,255,255,0.5); border-radius: 250px; pointer-events: none;}
         .lane-1 { top: 12px; bottom: 12px; left: 12px; right: 12px; }
         .lane-2 { top: 24px; bottom: 24px; left: 24px; right: 24px; }
         .lane-3 { top: 36px; bottom: 36px; left: 36px; right: 36px; }
         .start-line { position: absolute; top: -12px; left: 25%; width: 50px; height: 5px; background: #fff; transform: rotate(90deg); box-shadow: 2px 2px 5px rgba(0,0,0,0.3);}
 
-        /* The Football Pitch */
         .pitch {
-            position: absolute;
-            top: 48px; bottom: 48px; left: 48px; right: 48px;
+            position: absolute; top: 48px; bottom: 48px; left: 48px; right: 48px;
             border-radius: 200px;
             background: repeating-linear-gradient(to right, var(--pitch-green), var(--pitch-green) 40px, var(--pitch-stripe) 40px, var(--pitch-stripe) 80px);
             box-shadow: inset 0 0 40px rgba(0,0,0,0.7);
             border: 3px solid rgba(255,255,255,0.9);
-            z-index: 4;
+            z-index: 5; overflow: hidden;
         }
-        
-        /* The Tifos on the Pitch */
-        .tifo {
-            position: absolute;
-            background: #fff;
-            padding: 10px 25px;
-            font-family: 'Playfair Display', serif;
-            font-weight: 800;
-            color: #111;
-            box-shadow: 2px 10px 20px rgba(0,0,0,0.6);
-            border-radius: 3px;
-            background-image: linear-gradient(to right, rgba(0,0,0,0.05) 1px, transparent 1px);
-            background-size: 15px 100%;
-        }
-        .tifo.gijon { top: 22%; left: 18%; transform: rotate(-8deg); border-left: 10px solid var(--dz-green); border-right: 10px solid var(--dz-red); }
-        .tifo.hirak { top: 62%; left: 42%; transform: rotate(6deg); border-left: 10px solid var(--dz-red); border-right: 10px solid var(--dz-green); }
-        .tifo.fln { bottom: 22%; right: 18%; transform: rotate(-6deg); border-left: 10px solid #000; border-right: 10px solid var(--dz-green); }
-        .tifo-title { font-size: 24px; letter-spacing: 1px; color: #111;}
-        .tifo-sub { font-size: 10px; text-transform: uppercase; color: #555; font-family: 'Inter', sans-serif;}
 
-        /* 3D Signpost Markers */
+        /* ── THEMATIC TIFOS ON PITCH ── */
+        .tifo {
+            position: absolute; background: #fff; padding: 12px 30px;
+            font-family: 'Playfair Display', serif; font-weight: 800; color: #111;
+            box-shadow: 5px 15px 25px rgba(0,0,0,0.5); border-radius: 2px;
+            background-image: linear-gradient(to right, rgba(0,0,0,0.05) 1px, transparent 1px); background-size: 15px 100%;
+        }
+        .tifo-giant { top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(5deg); border-top: 15px solid var(--dz-green); border-bottom: 15px solid var(--dz-red); padding: 20px 40px;}
+        .tifo.gijon { top: 20%; left: 15%; transform: rotate(-8deg); border-left: 8px solid var(--dz-green); border-right: 8px solid var(--dz-red); }
+        .tifo.fln { bottom: 20%; right: 15%; transform: rotate(-5deg); border-left: 8px solid #000; border-right: 8px solid var(--dz-green); }
+        
+        .tifo-title { font-size: 24px; letter-spacing: 1px; color: #111;}
+        .tifo-title-giant { font-size: 32px; letter-spacing: 2px; }
+        .tifo-sub { font-size: 11px; text-transform: uppercase; color: #555; font-family: 'Inter', sans-serif;}
+
+        /* ── LED SCOREBOARD (REPLACING THE MAP ERROR) ── */
+        .scoreboard {
+            position: absolute; top: -220px; left: 50%; width: 450px; height: 120px;
+            background: #050505; border: 8px solid #333; border-radius: 8px;
+            transform: translateX(-50%) translateZ(120px) rotateX(-55deg); /* Stands upright in 3D */
+            box-shadow: 0 30px 50px rgba(0,0,0,0.8), inset 0 0 20px #000;
+            display: flex; flex-direction: column; justify-content: center; padding: 15px;
+            z-index: 20; transform-style: preserve-3d;
+        }
+        .led-text {
+            font-family: 'Share Tech Mono', monospace; font-size: 14px;
+            color: #0f0; text-shadow: 0 0 8px #0f0; margin-bottom: 8px; letter-spacing: 1px;
+        }
+        .led-alert { color: #f00; text-shadow: 0 0 8px #f00; font-weight: bold;}
+        .led-highlight { color: #ffb700; text-shadow: 0 0 8px #ffb700; font-size: 18px;}
+
+        /* ── OLYMPIC FLAME CAULDRON (Ghardaïa Mosaic Style) ── */
+        .cauldron-base {
+            position: absolute; bottom: -200px; left: 50%; width: 80px; height: 80px;
+            background: repeating-conic-gradient(#c8872a 0% 10%, #1a5fa8 10% 20%, #fdfcf9 20% 30%);
+            border-radius: 50%; border: 4px solid #fff;
+            transform: translateX(-50%) translateZ(40px) rotateX(-55deg);
+            box-shadow: 0 20px 30px rgba(0,0,0,0.8); z-index: 20;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .flame {
+            width: 40px; height: 60px; background: radial-gradient(ellipse at bottom, #fff 0%, #ffd700 20%, #ff5722 60%, transparent 100%);
+            border-radius: 50% 50% 20% 20%; transform-origin: bottom center;
+            animation: flicker 0.5s infinite alternate; filter: blur(2px); margin-top: -40px;
+        }
+        @keyframes flicker {
+            0% { transform: scale(1) rotate(-2deg); opacity: 0.9; }
+            100% { transform: scale(1.1) rotate(2deg); opacity: 1; }
+        }
+
+        /* ── 3D SIGNPOST MARKERS (THE TIMELINE) ── */
         .track-marker {
-            position: absolute;
-            width: 48px; height: 48px;
-            background: var(--oxford);
-            border: 3px solid #fff;
-            border-radius: 50%;
-            color: #fff;
-            font-size: 14px; font-weight: 800;
+            position: absolute; width: 48px; height: 48px;
+            background: var(--oxford); border: 3px solid #fff; border-radius: 50%;
+            color: #fff; font-size: 14px; font-weight: 800;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            /* Counter-rotate the markers so they stand straight up */
+            /* Counter-rotate to stand perfectly upright */
             transform: translate(-50%, -150%) rotateZ(15deg) rotateX(-55deg);
-            transform-origin: bottom center;
-            box-shadow: 0 15px 20px rgba(0,0,0,0.6);
-            cursor: pointer;
-            transition: 0.3s ease-in-out;
-            z-index: 50;
+            transform-origin: bottom center; box-shadow: 0 15px 20px rgba(0,0,0,0.6);
+            cursor: pointer; transition: 0.3s ease-in-out; z-index: 50;
         }
         .track-marker span { font-size: 9px; color: #b3d4ff; margin-top: -2px; }
-        
-        /* The pole of the signpost */
         .track-marker::after {
-            content: '';
-            position: absolute;
-            bottom: -28px; left: 50%;
-            transform: translateX(-50%);
-            width: 5px; height: 28px;
-            background: #e0e0e0;
-            box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
-            z-index: -1;
+            content: ''; position: absolute; bottom: -30px; left: 50%;
+            transform: translateX(-50%); width: 5px; height: 30px; background: #e0e0e0;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.5); z-index: -1;
         }
-        
         .track-marker:hover, .track-marker.active {
             background: #ffd700; color: #111; border-color: #fff;
-            transform: translate(-50%, -150%) rotateZ(15deg) rotateX(-55deg) scale(1.25);
-            z-index: 60;
+            transform: translate(-50%, -150%) rotateZ(15deg) rotateX(-55deg) scale(1.25); z-index: 60;
         }
         .track-marker:hover span, .track-marker.active span { color: #555; }
 
-        /* Sidebar UI */
+        /* ── ACADEMIC SIDEBAR ── */
         .panel { flex: 0 0 580px; width: 580px; background: #fff; border-left: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; z-index: 1000; box-shadow: -4px 0 20px rgba(0,0,0,0.1); }
         .panel-empty { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 50px; text-align: center; color: #888; }
         .empty-art { font-size: 65px; margin-bottom: 20px; opacity: 0.5; }
@@ -224,7 +231,7 @@
         .close-panel:hover { color: var(--dz-red); }
         .panel-body { flex: 1 1 auto; overflow-y: auto; padding: 35px; scroll-behavior: smooth; }
         
-        .pub-card { border: 1px solid #eee; padding: 35px; border-radius: 12px; margin-bottom: 30px; background: #fff; box-shadow: 0 8px 25px rgba(0,0,0,0.04); }
+        .pub-card { border: 1px solid #eee; padding: 35px; border-radius: 12px; margin-bottom: 30px; background: #fff; box-shadow: 0 8px 25px rgba(0,0,0,0.03); }
         .pub-year { display: inline-block; font-size: 12px; font-weight: 900; color: var(--oxford); text-transform: uppercase; letter-spacing: 1px; background: #f0f4f8; padding: 6px 12px; border-radius: 4px; margin-bottom: 15px; }
         .pub-title { font-family: 'Playfair Display', serif; font-size: 22px; margin: 0 0 12px 0; line-height: 1.35; color: #111; }
         .pub-ref { font-size: 14px; color: #666; font-style: italic; margin-bottom: 25px; padding-bottom: 20px; border-bottom: 1px solid #eee; }
@@ -263,8 +270,7 @@
         <div class="hdr-brand">
             <div class="hdr-flag">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3 2">
-                    <rect width="3" height="2" fill="#fff"/>
-                    <rect width="1.5" height="2" fill="#006233"/>
+                    <rect width="3" height="2" fill="#fff"/><rect width="1.5" height="2" fill="#006233"/>
                     <path fill="#d21034" d="m1.725 1a.332.332 0 1 1 -.664 0c0 -.081.029 -.155.077 -.213a.267.267 0 1 0 0 .426c-.048 -.058 -.077 -.132 -.077 -.213zm.1.189 2.5 7.691 -6.551 -4.759h8.102l-6.551 4.759z" transform="translate(-.17) rotate(18)"/>
                 </svg>
             </div>
@@ -273,7 +279,7 @@
                 <p class="hdr-sub">The Academic Stadium · Prof. Mahfoud Amara · <a href="https://orcid.org/0000-0002-1418-6710" target="_blank">ORCID: 0000-0002-1418-6710</a></p>
             </div>
         </div>
-        <button onclick="downloadCSV()" class="btn-export">📊 Export Full Bibliography (CSV)</button>
+        <button onclick="downloadCSV()" class="btn-export">📊 Export Full Bibliography</button>
     </header>
 
     <div class="filter-strip">
@@ -293,21 +299,30 @@
     <main class="main-content">
         <div class="stadium-container">
             <div class="stadium-wrapper">
-                <div class="stadium-3d" id="track-container">
-                    <div class="stands-container" id="stands"></div>
+                <div class="stadium-3d" id="stadium">
+                    
+                    <div class="scoreboard">
+                        <div class="led-text led-alert">> MAP STATUS: PENDING AUTH (401)</div>
+                        <div class="led-text">> OVERRIDE: STADIUM TIMELINE ENGAGED</div>
+                        <div class="led-text led-highlight">> AWAITING USER INPUT...</div>
+                    </div>
+
+                    <div class="stands-outer"></div>
+                    <div class="stands-inner" id="stands"></div>
+                    
                     <div class="track">
                         <div class="lane lane-1"></div>
                         <div class="lane lane-2"></div>
                         <div class="lane lane-3"></div>
                         <div class="start-line"></div>
                         <div class="pitch">
+                            <div class="tifo tifo-giant">
+                                <div class="tifo-title-giant">AFCON 2019 ★ ★</div>
+                                <div class="tifo-sub">Champions d'Afrique & The Hirak Movement</div>
+                            </div>
                             <div class="tifo gijon">
                                 <div class="tifo-title">Gijón 1982 ★</div>
                                 <div class="tifo-sub">Historic Victory against West Germany</div>
-                            </div>
-                            <div class="tifo hirak">
-                                <div class="tifo-title">AFCON 2019 ★ ★</div>
-                                <div class="tifo-sub">Champions d'Afrique & The Hirak</div>
                             </div>
                             <div class="tifo fln">
                                 <div class="tifo-title">FLN Team 1958</div>
@@ -315,6 +330,11 @@
                             </div>
                         </div>
                     </div>
+                    
+                    <div class="cauldron-base">
+                        <div class="flame"></div>
+                    </div>
+
                     </div>
             </div>
         </div>
@@ -323,7 +343,7 @@
             <div class="panel-empty" id="panel-empty">
                 <div class="empty-art">🏟️</div>
                 <h3>Enter the Stadium</h3>
-                <p style="margin-top: 15px; font-size: 16px; line-height: 1.6; max-width: 85%;">Click a distance signpost on the athletic track to explore Professor Amara's extensive peer-reviewed abstracts, theoretical contributions, and direct ORCID web links.</p>
+                <p style="margin-top: 15px; font-size: 16px; line-height: 1.6; max-width: 85%;">Click a distance signpost on the 3D athletic track to explore Professor Amara's extensive peer-reviewed abstracts, theoretical contributions, and direct ORCID web links.</p>
             </div>
             
             <div id="panel-content" style="display:none; flex-direction:column; height:100%;">
@@ -338,7 +358,7 @@
 </div>
 
 <script>
-/* ── FULL DATABASE: EXTENSIVE ABSTRACTS ── */
+/* ── FULL DATABASE: EXTENSIVE ORCID ABSTRACTS ── */
 const DATA = [
     { 
         distance: "0m", year: "2006", title: "Sport and Algerian Nationalism in the ‘Global’ era: within and beyond the nation-state", ref: "Francophone and Postcolonial Studies, Vol. 4, No. 1, 88-115.", url: "https://doi.org/10.3828/fps.2006.4.1.88", 
@@ -352,7 +372,7 @@ const DATA = [
     },
     { 
         distance: "40m", year: "2011", title: "Football, the new battlefield of business in Algeria", ref: "The Journal of North African Studies, 16(1).", url: "https://doi.org/10.1080/13629387.2010.536376", 
-        summary: "This article critically examines the sudden corporatization of Algerian football following the dramatic, politically charged 2010 World Cup qualification against Egypt. It specifically analyzes how multi-national mobile telecommunication companies (such as Djezzy and Nedjma) co-opted national sporting fervor for aggressive corporate branding, creating a new nexus of sport, state, and capital.", 
+        summary: "This article critically examines the sudden corporatization of Algerian football following the dramatic, politically charged 2010 World Cup qualification against Egypt. It specifically analyzes how multi-national mobile telecommunication companies co-opted national sporting fervor for aggressive corporate branding, creating a new nexus of sport, state, and capital.", 
         contribution: "Provides crucial empirical evidence mapping Algeria's complex, often contradictory transition from a rigid socialist, state-controlled economy to a hybrid, fiercely competitive market economy, viewed exclusively through the lens of sport sponsorship and governance.", tags: ["Legitimacy", "Nation state formation"] 
     },
     { 
@@ -404,20 +424,21 @@ const DATA = [
 
 /* ── GENERATE CROWD FLAGS IN THE STANDS ── */
 const standsEl = document.getElementById('stands');
-// Generate 250 dynamic flags to simulate a packed crowd
-for (let i = 0; i < 250; i++) {
+// Generate 200 dynamic flags to simulate a packed crowd
+for (let i = 0; i < 200; i++) {
     const flag = document.createElement('div');
     flag.className = 'crowd-flag';
     
+    // Distribute randomly across the stands, avoiding the center hole
     let top, left;
-    // Keep flags out of the center hole (the pitch area)
     do {
         top = Math.random() * 100;
         left = Math.random() * 100;
-    } while (top > 15 && top < 85 && left > 15 && left < 85); 
+    } while (top > 20 && top < 80 && left > 20 && left < 80); 
 
     flag.style.top = `${top}%`;
     flag.style.left = `${left}%`;
+    flag.style.transform = `rotate(${Math.random() * 360}deg)`;
     flag.style.animationDelay = `${Math.random() * 2.5}s`; 
 
     flag.innerHTML = '<div class="g"></div><div class="w"></div>';
@@ -425,7 +446,7 @@ for (let i = 0; i < 250; i++) {
 }
 
 /* ── CALCULATE SAFE TRACK POSITIONS ── */
-// Distributing 12 markers around the track (0m to 220m)
+// Distributing 12 markers safely on the red track
 const POSITIONS = [
     { top: '3%', left: '25%' },   // 0m
     { top: '3%', left: '50%' },   // 20m 
@@ -442,7 +463,7 @@ const POSITIONS = [
 ];
 
 /* ── INJECT 3D MARKERS ── */
-const trackContainer = document.getElementById('track-container');
+const stadiumEl = document.getElementById('stadium');
 let activeMarker = null;
 
 DATA.forEach((paper, index) => {
@@ -463,7 +484,6 @@ DATA.forEach((paper, index) => {
     
     marker.addEventListener('click', () => {
         if(activeMarker) {
-            // Restore previous active marker color
             if(activeMarker.innerHTML.includes("200m")) {
                  activeMarker.style.background = "#ffd700";
                  activeMarker.style.color = "#111";
@@ -472,7 +492,6 @@ DATA.forEach((paper, index) => {
             }
         }
         
-        // Highlight new active marker
         if (paper.distance === "200m") {
             marker.style.background = "#fff";
             marker.style.color = "#ffd700";
@@ -484,7 +503,7 @@ DATA.forEach((paper, index) => {
         openSidebar(paper);
     });
     
-    trackContainer.appendChild(marker);
+    stadiumEl.appendChild(marker);
 });
 
 function openSidebar(paper) {
@@ -512,6 +531,9 @@ function openSidebar(paper) {
             </a>
         </article>
     `;
+    
+    // Update Scoreboard Text
+    document.querySelector('.led-highlight').textContent = `> DATA LOADED: ${paper.year} (${paper.distance})`;
 }
 
 function closePanel() {
@@ -526,6 +548,7 @@ function closePanel() {
     activeMarker = null;
     document.getElementById('panel-empty').style.display = 'flex';
     document.getElementById('panel-content').style.display = 'none';
+    document.querySelector('.led-highlight').textContent = `> AWAITING USER INPUT...`;
 }
 
 /* ── FILTER SYSTEM ── */
@@ -542,7 +565,7 @@ document.querySelectorAll('.pill').forEach(pill => {
                 if(m.innerHTML.includes("200m")) { m.style.borderColor = "#fff"; }
             } else {
                 m.style.opacity = '0.2';
-                m.style.transform = 'translate(-50%, -150%) rotateZ(15deg) rotateX(-55deg) scale(0.9)';
+                m.style.transform = 'translate(-50%, -150%) rotateZ(15deg) rotateX(-55deg) scale(0.85)';
                 m.style.borderColor = '#fff';
             }
         });
@@ -550,6 +573,7 @@ document.querySelectorAll('.pill').forEach(pill => {
         document.getElementById('clear-btn').style.display = 'inline-block';
         document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
         pill.classList.add('active');
+        document.querySelector('.led-highlight').textContent = `> FILTER ENGAGED: ${theme.toUpperCase()}`;
     });
 });
 
@@ -567,6 +591,7 @@ function clearTheme() {
     });
     document.getElementById('clear-btn').style.display = 'none';
     document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+    document.querySelector('.led-highlight').textContent = `> AWAITING USER INPUT...`;
 }
 
 /* ── CSV EXPORT ── */
