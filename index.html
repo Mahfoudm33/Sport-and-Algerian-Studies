@@ -10,7 +10,7 @@
     <style>
         :root {
             --oxford: #1a5fa8; --desert: #fdfcf9; --sand: #f4f1ea;
-            --dz-green: #006233; --dz-red: #b83820; --border: #e0ddd5;
+            --dz-green: #006233; --dz-red: #d21034; --border: #e0ddd5;
             --track-red: #b53c2a; --pitch-green: #3a6c38; --pitch-stripe: #336031;
             --stands-grey: #4a4a4a; --seat-grey: #333;
         }
@@ -32,7 +32,7 @@
         .hdr-brand { display: flex; align-items: center; gap: 15px; }
         
         /* ACCURATE SVG FLAG */
-        .hdr-flag { width: 40px; height: 26px; border-radius: 2px; overflow: hidden; border: 1px solid #ddd; display: flex; }
+        .hdr-flag { width: 44px; height: 28px; border-radius: 3px; overflow: hidden; border: 1px solid #ddd; display: flex; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         .hdr-flag svg { width: 100%; height: 100%; }
 
         .hdr-title { font-family: 'Playfair Display', serif; font-size: 22px; color: #111; line-height: 1.2; margin-bottom: 4px;}
@@ -57,13 +57,13 @@
         .stadium-container { 
             flex: 1 1 auto; 
             position: relative; 
-            background: #2a2a2a; 
+            background: #222; 
             overflow: hidden; 
             z-index: 1; 
             box-shadow: inset 0 0 150px #000;
         }
 
-        /* ── 3D ISOMETRIC STADIUM (THE ULTIMATE FIX) ── */
+        /* ── 3D ISOMETRIC STADIUM ── */
         .stadium-wrapper {
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -83,7 +83,7 @@
             transition: 0.5s ease-in-out;
         }
         
-        /* Responsive Scaling for smaller screens */
+        /* Responsive Scaling */
         @media(max-width: 1400px) { .stadium-3d { transform: scale(0.65) rotateX(55deg) rotateZ(-15deg); } }
         @media(max-width: 1100px) { .stadium-3d { transform: scale(0.5) rotateX(55deg) rotateZ(-15deg); } }
         @media(max-width: 768px) { .stadium-3d { transform: scale(0.35) rotateX(55deg) rotateZ(-15deg); } }
@@ -91,39 +91,40 @@
         /* ── Visual stands with seats ── */
         .stands-container {
             position: absolute;
-            top: -150px; bottom: -150px; left: -150px; right: -150px;
+            top: -160px; bottom: -160px; left: -160px; right: -160px;
             background: var(--stands-grey);
             border-radius: 400px;
-            box-shadow: 0 40px 100px rgba(0,0,0,0.9);
-            border: 8px solid #333;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.9), inset 0 0 60px rgba(0,0,0,0.9);
+            border: 8px solid #222;
             z-index: 1;
             /* SEAT PATTERN */
             background-image: 
-                radial-gradient(circle, var(--seat-grey) 2px, transparent 2px), 
-                radial-gradient(circle, var(--seat-grey) 2px, transparent 2px);
-            background-size: 10px 10px;
-            background-position: 0 0, 5px 5px;
+                radial-gradient(circle, var(--seat-grey) 3px, transparent 3px), 
+                radial-gradient(circle, var(--seat-grey) 3px, transparent 3px);
+            background-size: 14px 14px;
+            background-position: 0 0, 7px 7px;
             opacity: 0.95;
             overflow: hidden;
         }
 
-        /* ── Crowd waving flags (The Appealing Surrounding) ── */
+        /* ── Crowd waving flags ── */
         .crowd-flag {
             position: absolute;
-            width: 15px; height: 10px;
+            width: 18px; height: 12px;
             display: flex;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.4);
-            animation: flagWave 2s infinite ease-in-out;
-            opacity: 0.8;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.6);
+            animation: flagWave 2.5s infinite ease-in-out;
+            opacity: 0.85;
+            z-index: 2;
         }
         .crowd-flag .g { background: var(--dz-green); flex: 1; }
         .crowd-flag .w { background: #fff; flex: 1; position: relative;}
-        .crowd-flag .w::after { content: ''; position: absolute; width: 3px; height: 3px; background: var(--dz-red); border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+        .crowd-flag .w::after { content: ''; position: absolute; width: 4px; height: 4px; background: var(--dz-red); border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%,-50%); }
 
         @keyframes flagWave {
-            0% { transform: translateY(0) rotate(-10deg); }
-            50% { transform: translateY(-5px) rotate(10deg); }
-            100% { transform: translateY(0) rotate(-10deg); }
+            0% { transform: translateY(0) rotate(-15deg); }
+            50% { transform: translateY(-8px) rotate(15deg); }
+            100% { transform: translateY(0) rotate(-15deg); }
         }
 
         /* The Athletic Track */
@@ -133,16 +134,16 @@
             background: var(--track-red);
             border-radius: 250px;
             border: 2px solid #fff;
-            box-shadow: 0 0 0 8px var(--track-red), 0 0 0 10px #fff, inset 0 0 20px rgba(0,0,0,0.5);
-            z-index: 2;
+            box-shadow: 0 0 0 8px var(--track-red), 0 0 0 12px #fff, inset 0 0 25px rgba(0,0,0,0.6), 0 20px 50px rgba(0,0,0,0.5);
+            z-index: 3;
         }
         
         /* Track Lanes */
-        .lane { position: absolute; border: 1.5px dashed rgba(255,255,255,0.4); border-radius: 250px; }
+        .lane { position: absolute; border: 1.5px dashed rgba(255,255,255,0.5); border-radius: 250px; }
         .lane-1 { top: 12px; bottom: 12px; left: 12px; right: 12px; }
         .lane-2 { top: 24px; bottom: 24px; left: 24px; right: 24px; }
         .lane-3 { top: 36px; bottom: 36px; left: 36px; right: 36px; }
-        .start-line { position: absolute; top: -10px; left: 25%; width: 50px; height: 4px; background: #fff; transform: rotate(90deg);}
+        .start-line { position: absolute; top: -12px; left: 25%; width: 50px; height: 5px; background: #fff; transform: rotate(90deg); box-shadow: 2px 2px 5px rgba(0,0,0,0.3);}
 
         /* The Football Pitch */
         .pitch {
@@ -150,57 +151,58 @@
             top: 48px; bottom: 48px; left: 48px; right: 48px;
             border-radius: 200px;
             background: repeating-linear-gradient(to right, var(--pitch-green), var(--pitch-green) 40px, var(--pitch-stripe) 40px, var(--pitch-stripe) 80px);
-            box-shadow: inset 0 0 30px rgba(0,0,0,0.6);
-            border: 2px solid rgba(255,255,255,0.8);
-            z-index: 3;
+            box-shadow: inset 0 0 40px rgba(0,0,0,0.7);
+            border: 3px solid rgba(255,255,255,0.9);
+            z-index: 4;
         }
         
         /* The Tifos on the Pitch */
         .tifo {
             position: absolute;
             background: #fff;
-            padding: 8px 20px;
+            padding: 10px 25px;
             font-family: 'Playfair Display', serif;
             font-weight: 800;
             color: #111;
-            box-shadow: 2px 10px 20px rgba(0,0,0,0.5);
-            border-radius: 2px;
+            box-shadow: 2px 10px 20px rgba(0,0,0,0.6);
+            border-radius: 3px;
             background-image: linear-gradient(to right, rgba(0,0,0,0.05) 1px, transparent 1px);
             background-size: 15px 100%;
         }
-        .tifo.gijon { top: 25%; left: 20%; transform: rotate(-8deg); border-left: 8px solid var(--dz-green); border-right: 8px solid var(--dz-red); }
-        .tifo.hirak { top: 60%; left: 45%; transform: rotate(6deg); border-left: 8px solid var(--dz-red); border-right: 8px solid var(--dz-green); }
-        .tifo.fln { bottom: 20%; right: 15%; transform: rotate(-5deg); border-left: 8px solid #000; border-right: 8px solid var(--dz-green); }
-        .tifo-title { font-size: 20px; letter-spacing: 1px; }
-        .tifo-sub { font-size: 10px; text-transform: uppercase; color: #555; }
+        .tifo.gijon { top: 22%; left: 18%; transform: rotate(-8deg); border-left: 10px solid var(--dz-green); border-right: 10px solid var(--dz-red); }
+        .tifo.hirak { top: 62%; left: 42%; transform: rotate(6deg); border-left: 10px solid var(--dz-red); border-right: 10px solid var(--dz-green); }
+        .tifo.fln { bottom: 22%; right: 18%; transform: rotate(-6deg); border-left: 10px solid #000; border-right: 10px solid var(--dz-green); }
+        .tifo-title { font-size: 24px; letter-spacing: 1px; color: #111;}
+        .tifo-sub { font-size: 10px; text-transform: uppercase; color: #555; font-family: 'Inter', sans-serif;}
 
         /* 3D Signpost Markers */
         .track-marker {
             position: absolute;
-            width: 46px; height: 46px;
+            width: 48px; height: 48px;
             background: var(--oxford);
             border: 3px solid #fff;
             border-radius: 50%;
             color: #fff;
-            font-size: 13px; font-weight: 800;
+            font-size: 14px; font-weight: 800;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            /* CRITICAL: Counter-rotate the markers so they stand straight up in the 3D space */
+            /* Counter-rotate the markers so they stand straight up */
             transform: translate(-50%, -150%) rotateZ(15deg) rotateX(-55deg);
             transform-origin: bottom center;
-            box-shadow: 0 15px 15px rgba(0,0,0,0.5);
+            box-shadow: 0 15px 20px rgba(0,0,0,0.6);
             cursor: pointer;
             transition: 0.3s ease-in-out;
             z-index: 50;
         }
         .track-marker span { font-size: 9px; color: #b3d4ff; margin-top: -2px; }
+        
         /* The pole of the signpost */
         .track-marker::after {
             content: '';
             position: absolute;
-            bottom: -25px; left: 50%;
+            bottom: -28px; left: 50%;
             transform: translateX(-50%);
-            width: 4px; height: 25px;
-            background: #fff;
+            width: 5px; height: 28px;
+            background: #e0e0e0;
             box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
             z-index: -1;
         }
@@ -215,14 +217,14 @@
         /* Sidebar UI */
         .panel { flex: 0 0 580px; width: 580px; background: #fff; border-left: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; z-index: 1000; box-shadow: -4px 0 20px rgba(0,0,0,0.1); }
         .panel-empty { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 50px; text-align: center; color: #888; }
-        .empty-art { font-size: 65px; margin-bottom: 20px; opacity: 0.4; }
+        .empty-art { font-size: 65px; margin-bottom: 20px; opacity: 0.5; }
         .panel-hdr { flex: 0 0 auto; padding: 25px 35px; background: #fbfbf9; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
         .panel-hdr h2 { font-size: 16px; text-transform: uppercase; letter-spacing: 1px; color: #333; font-weight: 800; }
         .close-panel { background: none; border: none; font-size: 26px; cursor: pointer; color: #aaa; transition: 0.2s; }
         .close-panel:hover { color: var(--dz-red); }
         .panel-body { flex: 1 1 auto; overflow-y: auto; padding: 35px; scroll-behavior: smooth; }
         
-        .pub-card { border: 1px solid #eee; padding: 35px; border-radius: 12px; margin-bottom: 30px; background: #fff; box-shadow: 0 8px 25px rgba(0,0,0,0.03); }
+        .pub-card { border: 1px solid #eee; padding: 35px; border-radius: 12px; margin-bottom: 30px; background: #fff; box-shadow: 0 8px 25px rgba(0,0,0,0.04); }
         .pub-year { display: inline-block; font-size: 12px; font-weight: 900; color: var(--oxford); text-transform: uppercase; letter-spacing: 1px; background: #f0f4f8; padding: 6px 12px; border-radius: 4px; margin-bottom: 15px; }
         .pub-title { font-family: 'Playfair Display', serif; font-size: 22px; margin: 0 0 12px 0; line-height: 1.35; color: #111; }
         .pub-ref { font-size: 14px; color: #666; font-style: italic; margin-bottom: 25px; padding-bottom: 20px; border-bottom: 1px solid #eee; }
@@ -261,7 +263,8 @@
         <div class="hdr-brand">
             <div class="hdr-flag">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3 2">
-                    <rect width="3" height="2" fill="#fff"/><rect width="1.5" height="2" fill="#006233"/>
+                    <rect width="3" height="2" fill="#fff"/>
+                    <rect width="1.5" height="2" fill="#006233"/>
                     <path fill="#d21034" d="m1.725 1a.332.332 0 1 1 -.664 0c0 -.081.029 -.155.077 -.213a.267.267 0 1 0 0 .426c-.048 -.058 -.077 -.132 -.077 -.213zm.1.189 2.5 7.691 -6.551 -4.759h8.102l-6.551 4.759z" transform="translate(-.17) rotate(18)"/>
                 </svg>
             </div>
@@ -288,9 +291,9 @@
     </div>
 
     <main class="main-content">
-        <div class="stadium-container" id="stadium">
+        <div class="stadium-container">
             <div class="stadium-wrapper">
-                <div class="stadium-3d" id="track">
+                <div class="stadium-3d" id="track-container">
                     <div class="stands-container" id="stands"></div>
                     <div class="track">
                         <div class="lane lane-1"></div>
@@ -399,44 +402,47 @@ const DATA = [
     }
 ];
 
-/* ── GENERATE VISUAL stands & CROWD FLAGS (Replaces Black Surrounding) ── */
+/* ── GENERATE CROWD FLAGS IN THE STANDS ── */
 const standsEl = document.getElementById('stands');
-for (let i = 0; i < 250; i++) { // Generated flags and crowd
+// Generate 250 dynamic flags to simulate a packed crowd
+for (let i = 0; i < 250; i++) {
     const flag = document.createElement('div');
     flag.className = 'crowd-flag';
-    // Position flags only in the stands area
+    
     let top, left;
+    // Keep flags out of the center hole (the pitch area)
     do {
         top = Math.random() * 100;
         left = Math.random() * 100;
-    } while (top > 15 && top < 85 && left > 15 && left < 85); // Skip central hole
+    } while (top > 15 && top < 85 && left > 15 && left < 85); 
 
     flag.style.top = `${top}%`;
     flag.style.left = `${left}%`;
-    flag.style.animationDelay = `${Math.random() * 2}s`; // Offset waving
+    flag.style.animationDelay = `${Math.random() * 2.5}s`; 
 
     flag.innerHTML = '<div class="g"></div><div class="w"></div>';
     standsEl.appendChild(flag);
 }
 
-/* ── CALCULATE SAFE TRACK POSITIONS (0m to 220m) ── */
+/* ── CALCULATE SAFE TRACK POSITIONS ── */
+// Distributing 12 markers around the track (0m to 220m)
 const POSITIONS = [
-    { top: '3%', left: '25%' },   // 0m (Top straight)
+    { top: '3%', left: '25%' },   // 0m
     { top: '3%', left: '50%' },   // 20m 
     { top: '3%', left: '75%' },   // 40m 
-    { top: '22%', left: '96%' },  // 60m (Right curve top)
-    { top: '50%', left: '98%' },  // 80m (Right curve middle)
-    { top: '78%', left: '96%' },  // 100m (Right curve bottom)
-    { top: '97%', left: '75%' },  // 120m (Bottom straight)
+    { top: '22%', left: '96%' },  // 60m
+    { top: '50%', left: '98%' },  // 80m
+    { top: '78%', left: '96%' },  // 100m
+    { top: '97%', left: '75%' },  // 120m
     { top: '97%', left: '50%' },  // 140m 
     { top: '97%', left: '25%' },  // 160m 
-    { top: '78%', left: '4%' },   // 180m (Left curve bottom)
-    { top: '50%', left: '2%' },   // 200m (Left curve middle)
-    { top: '22%', left: '4%' },   // 220m (Left curve top)
+    { top: '78%', left: '4%' },   // 180m
+    { top: '50%', left: '2%' },   // 200m
+    { top: '22%', left: '4%' },   // 220m
 ];
 
 /* ── INJECT 3D MARKERS ── */
-const trackEl = document.getElementById('track');
+const trackContainer = document.getElementById('track-container');
 let activeMarker = null;
 
 DATA.forEach((paper, index) => {
@@ -445,7 +451,7 @@ DATA.forEach((paper, index) => {
     marker.style.top = POSITIONS[index].top;
     marker.style.left = POSITIONS[index].left;
     
-    // Championship Gold for Imane Khelif node
+    // Highlight Khelif 2025 Node (Gold)
     if (paper.distance === "200m") {
         marker.style.borderColor = "#ffd700";
         marker.style.background = "#ffd700";
@@ -457,7 +463,7 @@ DATA.forEach((paper, index) => {
     
     marker.addEventListener('click', () => {
         if(activeMarker) {
-            // Restore default colors
+            // Restore previous active marker color
             if(activeMarker.innerHTML.includes("200m")) {
                  activeMarker.style.background = "#ffd700";
                  activeMarker.style.color = "#111";
@@ -466,7 +472,7 @@ DATA.forEach((paper, index) => {
             }
         }
         
-        // Apply active colors
+        // Highlight new active marker
         if (paper.distance === "200m") {
             marker.style.background = "#fff";
             marker.style.color = "#ffd700";
@@ -478,13 +484,13 @@ DATA.forEach((paper, index) => {
         openSidebar(paper);
     });
     
-    trackEl.appendChild(marker);
+    trackContainer.appendChild(marker);
 });
 
 function openSidebar(paper) {
     document.getElementById('panel-empty').style.display = 'none';
     document.getElementById('panel-content').style.display = 'flex';
-    document.getElementById('distance-label').textContent = `${paper.distance} Mark • Chronological Node`;
+    document.getElementById('distance-label').textContent = `${paper.distance} Mark • Academic Timeline`;
     
     document.getElementById('panel-body').innerHTML = `
         <article class="pub-card">
@@ -533,10 +539,7 @@ document.querySelectorAll('.pill').forEach(pill => {
                 m.style.opacity = '1';
                 m.style.transform = 'translate(-50%, -150%) rotateZ(15deg) rotateX(-55deg) scale(1.15)';
                 m.style.borderColor = '#ffd700';
-                // Champion Gold exception
-                if(m.innerHTML.includes("200m")) {
-                    m.style.borderColor = "#fff";
-                }
+                if(m.innerHTML.includes("200m")) { m.style.borderColor = "#fff"; }
             } else {
                 m.style.opacity = '0.2';
                 m.style.transform = 'translate(-50%, -150%) rotateZ(15deg) rotateX(-55deg) scale(0.9)';
@@ -554,7 +557,6 @@ function clearTheme() {
     document.querySelectorAll('.track-marker').forEach(m => {
         m.style.opacity = '1';
         m.style.transform = 'translate(-50%, -150%) rotateZ(15deg) rotateX(-55deg) scale(1)';
-        
         if(m.innerHTML.includes("200m")) {
             m.style.color = "#111";
             m.style.borderColor = "#ffd700";
