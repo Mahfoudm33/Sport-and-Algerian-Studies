@@ -23,6 +23,23 @@
         
         html, body { height: 100%; width: 100%; font-family: 'Inter', sans-serif; background: var(--desert); color: #1a1a1a; overflow: hidden; }
         .shell { display: flex; flex-direction: column; height: 100vh; width: 100vw; }
+
+        /* ── SKIP LINK (Accessibility) ── */
+        .skip-link {
+            position: absolute; top: -100px; left: 10px;
+            background: var(--oxford); color: #fff; padding: 12px 20px;
+            font-size: 14px; font-weight: 700; z-index: 9999;
+            border-radius: 0 0 6px 6px; text-decoration: none;
+            transition: top 0.2s;
+        }
+        .skip-link:focus { top: 0; }
+
+        /* ── SCREEN-READER ONLY UTILITY ── */
+        .sr-only {
+            position: absolute; width: 1px; height: 1px;
+            padding: 0; margin: -1px; overflow: hidden;
+            clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+        }
         
         /* ── ECOSYSTEM NAV ── */
         .eco-nav { flex: 0 0 auto; background: #111; color: #fff; padding: 10px 25px; border-bottom: 2px solid var(--oxford); z-index: 1001; }
@@ -54,6 +71,16 @@
         .pill:hover { background: #e8e5de; }
         .pill.active { background: var(--oxford); color: #fff; }
         .pill-clear { background: transparent; border: none; color: var(--dz-red); font-weight: 800; font-size: 11px; cursor: pointer; margin-left: 10px; }
+
+        /* ── FOCUS STYLES (Accessibility) ── */
+        .pill:focus-visible, .track-marker:focus-visible, .btn-export:focus-visible, .close-panel:focus-visible, .pub-link:focus-visible, .eco-links a:focus-visible, .pill-clear:focus-visible {
+            outline: 3px solid var(--oxford);
+            outline-offset: 2px;
+        }
+        .track-marker:focus-visible {
+            outline: 3px solid #ffd700;
+            outline-offset: 4px;
+        }
 
         /* ── MAIN LAYOUT ── */
         .main-content { flex: 1 1 auto; display: flex; flex-direction: row; overflow: hidden; position: relative; }
@@ -236,97 +263,121 @@
             .stadium-container { flex: 1 1 45vh; height: 45vh; }
             .panel { flex: 1 1 auto; width: 100%; border-left: none; border-top: 1px solid var(--border); }
         }
+
+        /* ── REDUCED MOTION (Accessibility) ── */
+        @media (prefers-reduced-motion: reduce) {
+            .crowd-flag { animation: none !important; }
+            .track-marker { transition: none !important; }
+            .stadium-3d { transition: none !important; }
+            .btn-export { transition: none !important; }
+            .pub-link { transition: none !important; }
+            .pill { transition: none !important; }
+        }
     </style>
 </head>
 <body>
 
+<!-- SKIP LINK — keyboard & screen-reader users jump straight to publications -->
+<a class="skip-link" href="#panel">Skip to publication panel</a>
+
 <div class="shell">
-    <nav class="eco-nav">
+    <nav class="eco-nav" aria-label="Digital research ecosystem">
         <div class="eco-container">
             <span class="eco-label">Digital Research Ecosystem:</span>
             <div class="eco-links">
-                <a href="https://mahfoudm33.github.io/Dr-Mahfoud-Amara-in-the-Peninsula-/" target="_blank">The Peninsula Archive</a>
-                <a href="https://mahfoudm33.github.io/Dr-Mahfoud-Amara-Publications-Arab-World/" target="_blank">Arab World Publications</a>
-                <a href="https://mahfoudm33.github.io/Dr-Mahfoud-Amara-webpage-/index.html" target="_blank">Personal Webpage</a>
-                <a href="https://mahfoudm33.github.io/Sport-in-Islam-and-Muslim-Communities-Project/" target="_blank">Sport in Islam & Muslim Communties</a>
+                <a href="https://mahfoudm33.github.io/Dr-Mahfoud-Amara-in-the-Peninsula-/" target="_blank" rel="noopener noreferrer">The Peninsula Archive</a>
+                <a href="https://mahfoudm33.github.io/Dr-Mahfoud-Amara-Publications-Arab-World/" target="_blank" rel="noopener noreferrer">Arab World Publications</a>
+                <a href="https://mahfoudm33.github.io/Dr-Mahfoud-Amara-webpage-/index.html" target="_blank" rel="noopener noreferrer">Personal Webpage</a>
+                <a href="https://mahfoudm33.github.io/Sport-in-Islam-and-Muslim-Communities-Project/" target="_blank" rel="noopener noreferrer">Sport in Islam &amp; Muslim Communities</a>
             </div>
         </div>
     </nav>
 
     <header class="hdr">
         <div class="hdr-brand">
-            <div class="hdr-flag">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600">
+            <div class="hdr-flag" role="img" aria-label="Flag of Algeria: green and white vertical halves with a red crescent and star at centre">
+                <!-- CORRECTED Algerian flag SVG -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" aria-hidden="true" focusable="false">
                     <rect width="450" height="600" fill="#006233"/>
                     <rect x="450" width="450" height="600" fill="#ffffff"/>
-                    <path fill="#d21034" d="M450,150 A150,150 0 1,0 450,450 A120,120 0 1,1 450,150 Z"/>
-                    <polygon fill="#d21034" points="450,225 470,285 535,285 485,325 505,385 450,350 395,385 415,325 365,285 430,285" transform="rotate(15 450 315)"/>
+                    <circle cx="450" cy="300" r="150" fill="#d21034"/>
+                    <circle cx="480" cy="300" r="120" fill="#ffffff"/>
+                    <polygon fill="#d21034" points="467,210 484,262 540,262 495,295 512,347 467,314 422,347 439,295 394,262 450,262"/>
                 </svg>
             </div>
             <div>
-                <h1 class="hdr-title">Sport, Society & Culture in Algeria</h1>
-                <p class="hdr-sub">The Academic Stadium · Prof. Mahfoud Amara · <a href="https://orcid.org/0000-0002-1418-6710" target="_blank">ORCID: 0000-0002-1418-6710</a></p>
+                <h1 class="hdr-title">Sport, Society &amp; Culture in Algeria</h1>
+                <p class="hdr-sub">The Academic Stadium &middot; Prof. Mahfoud Amara &middot; <a href="https://orcid.org/0000-0002-1418-6710" target="_blank" rel="noopener noreferrer">ORCID: 0000-0002-1418-6710</a></p>
             </div>
         </div>
-        <button onclick="downloadCSV()" class="btn-export">📊 Export Full Bibliography (CSV)</button>
+        <button onclick="downloadCSV()" class="btn-export" aria-label="Export full bibliography as CSV file">&#x1F4CA; Export Full Bibliography (CSV)</button>
     </header>
 
-    <div class="filter-strip">
-        <div class="filter-scroll" id="pill-bar">
-            <span class="pill" data-theme="Nation state formation">Nation State Formation</span>
-            <span class="pill" data-theme="Youth">Youth</span>
-            <span class="pill" data-theme="Gender">Gender</span>
-            <span class="pill" data-theme="Major sport events">Major Sport Events</span>
-            <span class="pill" data-theme="Mediterranean">Mediterranean</span>
-            <span class="pill" data-theme="Legitimacy">Legitimacy</span>
-            <span class="pill" data-theme="Postcolonialism">Postcolonialism</span>
-            <span class="pill" data-theme="Geopolitics">Geopolitics</span>
-            <button class="pill-clear" id="clear-btn" style="display:none" onclick="clearTheme()">✕ Reset Track</button>
+    <div class="filter-strip" role="toolbar" aria-label="Filter publications by theme">
+        <div class="filter-scroll" id="pill-bar" role="group" aria-label="Theme filters">
+            <span class="pill" data-theme="Nation state formation" role="button" tabindex="0" aria-pressed="false">Nation State Formation</span>
+            <span class="pill" data-theme="Youth" role="button" tabindex="0" aria-pressed="false">Youth</span>
+            <span class="pill" data-theme="Gender" role="button" tabindex="0" aria-pressed="false">Gender</span>
+            <span class="pill" data-theme="Major sport events" role="button" tabindex="0" aria-pressed="false">Major Sport Events</span>
+            <span class="pill" data-theme="Mediterranean" role="button" tabindex="0" aria-pressed="false">Mediterranean</span>
+            <span class="pill" data-theme="Legitimacy" role="button" tabindex="0" aria-pressed="false">Legitimacy</span>
+            <span class="pill" data-theme="Postcolonialism" role="button" tabindex="0" aria-pressed="false">Postcolonialism</span>
+            <span class="pill" data-theme="Geopolitics" role="button" tabindex="0" aria-pressed="false">Geopolitics</span>
+            <button class="pill-clear" id="clear-btn" style="display:none" onclick="clearTheme()" aria-label="Clear theme filter">&#x2715; Reset Track</button>
         </div>
     </div>
 
     <main class="main-content">
-        <div class="stadium-container">
+        <!-- Stadium visual: entirely decorative for screen readers -->
+        <div class="stadium-container" role="region" aria-label="Interactive 3D stadium timeline — use the publication list below for accessible navigation">
+            
+            <!-- Screen-reader accessible publication list (hidden visually) -->
+            <div class="sr-only" role="navigation" aria-label="Accessible publication timeline">
+                <h2>Publication Timeline — Select a paper to read its details</h2>
+                <ul id="sr-pub-list"></ul>
+            </div>
+
             <div class="stadium-wrapper">
                 <div class="stadium-3d" id="stadium">
                     
-                    <div class="scoreboard">
-                        <div class="led-text led-alert">> MAP STATUS: OFFLINE</div>
-                        <div class="led-text">> OVERRIDE: ACADEMIC STADIUM ENGAGED</div>
-                        <div class="led-text led-highlight">> AWAITING USER INPUT...</div>
+                    <div class="scoreboard" aria-hidden="true">
+                        <div class="led-text led-alert">&gt; MAP STATUS: OFFLINE</div>
+                        <div class="led-text">&gt; OVERRIDE: ACADEMIC STADIUM ENGAGED</div>
+                        <div class="led-text led-highlight" id="scoreboard-status">&gt; AWAITING USER INPUT...</div>
                     </div>
 
-                    <div class="stands-outer"></div>
-                    <div class="stands-inner" id="stands"></div>
+                    <div class="stands-outer" aria-hidden="true"></div>
+                    <div class="stands-inner" id="stands" aria-hidden="true"></div>
                     
-                    <div class="track">
+                    <div class="track" aria-hidden="true">
                         <div class="lane lane-1"></div>
                         <div class="lane lane-2"></div>
                         <div class="lane lane-3"></div>
                         <div class="start-line"></div>
                         <div class="pitch">
                             <div class="tifo tifo-giant">
-                                <div class="tifo-title-giant">AFCON 2019 ★ ★</div>
-                                <div class="tifo-sub">Champions d'Afrique & The Hirak Movement</div>
+                                <div class="tifo-title-giant">AFCON 2019 &#x2605; &#x2605;</div>
+                                <div class="tifo-sub">Champions d'Afrique &amp; The Hirak Movement</div>
                             </div>
                             <div class="tifo gijon">
-                                <div class="tifo-title">Gijón 1982 ★</div>
+                                <div class="tifo-title">Gij&oacute;n 1982 &#x2605;</div>
                                 <div class="tifo-sub">Historic Victory against West Germany</div>
                             </div>
                             <div class="tifo fln">
                                 <div class="tifo-title">FLN Team 1958</div>
-                                <div class="tifo-sub">Sport & Revolutionary Diplomacy</div>
+                                <div class="tifo-sub">Sport &amp; Revolutionary Diplomacy</div>
                             </div>
                         </div>
                     </div>
 
+                    <!-- Track markers are injected here by JavaScript -->
                     </div>
             </div>
         </div>
         
-        <aside class="panel" id="panel">
+        <aside class="panel" id="panel" role="region" aria-label="Publication detail panel" aria-live="polite">
             <div class="panel-empty" id="panel-empty">
-                <div class="empty-art">🏟️</div>
+                <div class="empty-art" aria-hidden="true">&#x1F3DF;&#xFE0F;</div>
                 <h3>Enter the Stadium</h3>
                 <p style="margin-top: 15px; font-size: 16px; line-height: 1.6; max-width: 85%;">Click a distance signpost on the 3D athletic track to explore Professor Amara's extensive peer-reviewed abstracts, theoretical contributions, and direct ORCID web links.</p>
             </div>
@@ -334,9 +385,9 @@
             <div id="panel-content" style="display:none; flex-direction:column; height:100%;">
                 <div class="panel-hdr">
                     <h2 id="distance-label"></h2>
-                    <button class="close-panel" onclick="closePanel()">✕</button>
+                    <button class="close-panel" onclick="closePanel()" aria-label="Close publication panel">&#x2715;</button>
                 </div>
-                <div class="panel-body" id="panel-body"></div>
+                <div class="panel-body" id="panel-body" tabindex="-1"></div>
             </div>
         </aside>
     </main>
@@ -346,12 +397,12 @@
 /* ── FULL 13-PAPER DATABASE: EXTENSIVE ORCID ABSTRACTS ── */
 const DATA = [
     { 
-        distance: "0m", year: "2003", title: "Between globalization and local ‘modernity’: The diffusion and modernization of football in Algeria", ref: "Soccer & Society, 4(1), 1-26.", url: "https://www.researchgate.net/publication/233952158_Between_globalization_and_local_'Modernity'_The_diffusion_and_modernization_of_football_in_Algeria", 
+        distance: "0m", year: "2003", title: "Between globalization and local 'modernity': The diffusion and modernization of football in Algeria", ref: "Soccer & Society, 4(1), 1-26.", url: "https://www.researchgate.net/publication/233952158_Between_globalization_and_local_'Modernity'_The_diffusion_and_modernization_of_football_in_Algeria", 
         summary: "This foundational study traces the historical diffusion and modernization of football in Algeria, from its initial introduction by French colonial settlers to its rapid appropriation by the indigenous population. It explores the intricate and often violent tensions between the globalizing forces of modern sport, colonial assimilation policies, and local socio-cultural realities. The paper details how football evolved from a tool of the French 'civilizing mission' into a powerful, organized vehicle for anti-colonial resistance and early national consciousness.", 
         contribution: "Establishes a critical historical baseline for understanding North African sport. By mapping the transition of football from a colonial imposition to a deeply localized cultural institution, the paper provides essential context for the ongoing negotiation of Algerian identity, modernity, and post-colonial statehood.", tags: ["Postcolonialism", "Nation state formation"] 
     },
     { 
-        distance: "20m", year: "2006", title: "Sport and Algerian Nationalism in the ‘Global’ era: within and beyond the nation-state", ref: "Francophone and Postcolonial Studies, Vol. 4, No. 1, 88-115.", url: "https://doi.org/10.3828/fps.2006.4.1.88", 
+        distance: "20m", year: "2006", title: "Sport and Algerian Nationalism in the 'Global' era: within and beyond the nation-state", ref: "Francophone and Postcolonial Studies, Vol. 4, No. 1, 88-115.", url: "https://doi.org/10.3828/fps.2006.4.1.88", 
         summary: "This theoretical paper investigates the fundamental tension between the Algerian nation-state's rigid desire to project a cohesive territorial identity and the fluid, globalized reality of transnational diaspora athletes. Moving beyond traditional Francophone analysis, the research deeply engages with Algeria's multi-layered identity matrix: Arab, Mediterranean, and crucially, its Saharan and Pan-African dimensions.", 
         contribution: "Argues persuasively that Algerian sport operates in a postcolonial 'third space.' It demonstrates how the state is continuously forced to negotiate its borders and sovereignty against the pressures of global migration, lingering colonial legacy, and Pan-African geopolitics.", tags: ["Postcolonialism", "Nation state formation"] 
     },
@@ -367,7 +418,7 @@ const DATA = [
     },
     { 
         distance: "80m", year: "2012", title: "Football Sub-Culture and Youth Politics in Algeria", ref: "Mediterranean Politics, 17(1), 41–58.", url: "https://doi.org/10.1080/13629387.2012.655046", 
-        summary: "Drawing heavily on Pierre Bourdieu’s field theory, this comprehensive study investigates the highly politicized emergence of football 'ultras' in Algeria. It explores how systemic socio-economic marginalization—particularly the phenomenon of unemployed youth (hittistes)—combined with state authoritarianism and a profound lack of formal democratic outlets, has transformed the physical space of the football stadium into one of the only viable public arenas for political expression and cultural resistance.", 
+        summary: "Drawing heavily on Pierre Bourdieu's field theory, this comprehensive study investigates the highly politicized emergence of football 'ultras' in Algeria. It explores how systemic socio-economic marginalization—particularly the phenomenon of unemployed youth (hittistes)—combined with state authoritarianism and a profound lack of formal democratic outlets, has transformed the physical space of the football stadium into one of the only viable public arenas for political expression and cultural resistance.", 
         contribution: "Fundamentally shifts the academic perspective on North African sport by establishing the stadium not merely as an arena for athletic competition, but as a critical sociological barometer for measuring subterranean political tensions and mapping the trajectory of youth dissent in the Maghreb.", tags: ["Youth", "Legitimacy", "Nation state formation"] 
     },
     { 
@@ -377,33 +428,33 @@ const DATA = [
     },
     { 
         distance: "120m", year: "2022", title: "Algeria and the FIFA World Cup: between political legitimization and regional rivalry", ref: "Soccer and Society, 23(7), 735–746.", url: "https://doi.org/10.1080/14660970.2022.2059871", 
-        summary: "This historical analysis divides Algeria’s relationship with the FIFA World Cup into distinct political eras: Revolutionary, Reconstruction, and the New Era. The paper emphasizes the geopolitical friction and deep-seated border rivalries with neighboring Morocco and Egypt, examining how the international football pitch serves as a highly visible proxy battlefield for Maghrebi and broader Arab dominance.", 
+        summary: "This historical analysis divides Algeria's relationship with the FIFA World Cup into distinct political eras: Revolutionary, Reconstruction, and the New Era. The paper emphasizes the geopolitical friction and deep-seated border rivalries with neighboring Morocco and Egypt, examining how the international football pitch serves as a highly visible proxy battlefield for Maghrebi and broader Arab dominance.", 
         contribution: "Demonstrates how post-colonial states actively utilize global sporting success as a 'civilizational' project. It illustrates the use of sport to reinforce physical borders, project military and diplomatic strength, and consolidate national identity in direct opposition to regional rivals.", tags: ["Geopolitics", "Legitimacy", "Nation state formation"] 
     },
     { 
         distance: "140m", year: "2022", title: "Football in Algeria from the “Black Decade” to the Hirak", ref: "MERIP, No. 304.", url: "https://merip.org/2022/10/football-in-algeria-from-the-black-decade-to-the-hirak/", 
-        summary: "An expansive historical survey detailing how Algerian football stadiums functioned as rare physical sanctuaries during the extreme violence of the 1990s civil war. The paper further traces how that unique legacy of stadium solidarity evolved directly into the highly organized protest chants (such as 'La Casa d’El Mouradia') that fueled the massive 2019 Hirak revolution.", 
+        summary: "An expansive historical survey detailing how Algerian football stadiums functioned as rare physical sanctuaries during the extreme violence of the 1990s civil war. The paper further traces how that unique legacy of stadium solidarity evolved directly into the highly organized protest chants (such as 'La Casa d'El Mouradia') that fueled the massive 2019 Hirak revolution.", 
         contribution: "Demonstrates compellingly that football culture is not merely a passive reflection of society, but an active, historical vessel providing vital continuity for public political life when formal democratic institutions fail or are suspended entirely.", tags: ["Postcolonialism", "Youth", "Nation state formation"] 
     },
     { 
-        distance: "160m", year: "2023", title: "The 19th Mediterranean Games, Oran 2022 and ‘the New Algeria’", ref: "Asian Journal of Sport History & Culture, 1:3, 234-249.", url: "https://doi.org/10.1080/27690148.2023.2195388", 
+        distance: "160m", year: "2023", title: "The 19th Mediterranean Games, Oran 2022 and 'the New Algeria'", ref: "Asian Journal of Sport History & Culture, 1:3, 234-249.", url: "https://doi.org/10.1080/27690148.2023.2195388", 
         summary: "An extensive geopolitical analysis of how the 2022 Mediterranean Games in Oran were strategically mobilized by the current administration as the symbolic centerpiece of the 'New Algeria' narrative. The paper deeply contextualizes the mega-event within the complex post-Hirak and post-COVID-19 socio-political landscape, critically assessing the state's massive infrastructural investments and diplomatic messaging.", 
         contribution: "Offers a highly contemporary case study on the geopolitical utility of regional mega-events. It highlights how states leverage international spectacles for domestic legitimization, narratives of national regeneration, and the projection of regional soft power in the Mediterranean basin.", tags: ["Major sport events", "Mediterranean", "Legitimacy", "Geopolitics"] 
     },
     { 
-        distance: "180m", year: "2024", title: "Online Sources as Alternative Media for Sporting Events’ Consumption in Algeria", ref: "Asian Journal of Sport History & Culture, 3(1):1-21.", url: "https://doi.org/10.1080/27690148.2024.2304318", 
+        distance: "180m", year: "2024", title: "Online Sources as Alternative Media for Sporting Events' Consumption in Algeria", ref: "Asian Journal of Sport History & Culture, 3(1):1-21.", url: "https://doi.org/10.1080/27690148.2024.2304318", 
         summary: "A rigorous quantitative and qualitative investigation into how modern Algerian sports fans actively bypass heavily regulated state broadcasts (ENTV). The study meticulously maps the explosive growth of pirate IPTV, OTT platforms, and social media streaming as the primary, decentralized vehicles for consuming both global and local football content.", 
         contribution: "Innovatively applies the Technology Acceptance Model (TAM) and Uses and Gratifications Theory (UGT) to a specific North African context. The paper highlights the democratizing, yet legally ambiguous, effect of digital platforms against entrenched state media monopolies.", tags: ["Youth", "Mediterranean"] 
     },
     { 
-        distance: "200m", year: "2025", title: "Living Football, Navigating Politics: Salah Assad’s Life Story", ref: "The International Journal of the History of Sport, 1-17.", url: "https://doi.org/10.1080/09523367.2025.2479455", 
+        distance: "200m", year: "2025", title: "Living Football, Navigating Politics: Salah Assad's Life Story", ref: "The International Journal of the History of Sport, 1-17.", url: "https://doi.org/10.1080/09523367.2025.2479455", 
         summary: "An extensive oral history and biographical reconstruction of the life of Salah Assad, a legendary hero of Algeria's 1982 World Cup generation. The paper traces his remarkable and turbulent journey through the optimism of 1970s state socialism, his professional career abroad, and his subsequent, tragic entanglement in the political trauma and extreme violence of the 1990s 'Black Decade'.", 
         contribution: "Masterfully bridges micro-history with macro-politics. The study proves how individual athletic biographies in the Global South are not insulated from, but are inescapably intertwined with, volatile state transitions, the rise of political Islam, and the complex processes of national reconciliation.", tags: ["Postcolonialism", "Nation state formation"] 
     },
     { 
-        distance: "220m", year: "2025", title: "Imane Khelif: Women’s Boxing, Geopolitical Power and Gendered Media Narratives", ref: "The International Spectator, 1–20.", url: "https://doi.org/10.1080/03932729.2025.2594466", 
+        distance: "220m", year: "2025", title: "Imane Khelif: Women's Boxing, Geopolitical Power and Gendered Media Narratives", ref: "The International Spectator, 1–20.", url: "https://doi.org/10.1080/03932729.2025.2594466", 
         summary: "This article dissects the unprecedented and highly politicized global media storm surrounding Algerian boxer Imane Khelif at the Paris 2024 Olympics. Utilizing a blend of critical feminist and postcolonial frameworks, the research analyzes the intersection of gender verification politics, Western media bias, Orientalism, and the subsequent, fierce mobilization of Algerian national pride in her defense.", 
-        contribution: "Brilliantly reframes Khelif’s Olympic victory—moving it away from a Western-imposed narrative of victimhood and controversy into a powerful act of postcolonial agency. It illustrates the unique 'double burden' faced by female Muslim athletes navigating the fraught tensions between the Global North and South.", tags: ["Gender", "Geopolitics", "Major sport events"] 
+        contribution: "Brilliantly reframes Khelif's Olympic victory—moving it away from a Western-imposed narrative of victimhood and controversy into a powerful act of postcolonial agency. It illustrates the unique 'double burden' faced by female Muslim athletes navigating the fraught tensions between the Global North and South.", tags: ["Gender", "Geopolitics", "Major sport events"] 
     },
     { 
         distance: "240m", year: "2025", title: "Ghada Mahat: whistling against the odds—female refereeing, gender dynamics, and resistance", ref: "Sport in Society, 1–16.", url: "https://doi.org/10.1080/17430437.2025.2590520", 
@@ -414,12 +465,11 @@ const DATA = [
 
 /* ── GENERATE CROWD FLAGS IN THE STANDS ── */
 const standsEl = document.getElementById('stands');
-// Generate dynamic flags to simulate a packed crowd
 for (let i = 0; i < 200; i++) {
     const flag = document.createElement('div');
     flag.className = 'crowd-flag';
+    flag.setAttribute('aria-hidden', 'true');
     
-    // Distribute randomly across the stands, avoiding the center hole
     let top, left;
     do {
         top = Math.random() * 100;
@@ -437,32 +487,36 @@ for (let i = 0; i < 200; i++) {
 
 /* ── CALCULATE SAFE TRACK POSITIONS (13 Markers) ── */
 const POSITIONS = [
-    { top: '3%', left: '20%' },   // 0m (2003)
-    { top: '3%', left: '45%' },   // 20m 
-    { top: '3%', left: '70%' },   // 40m 
-    { top: '18%', left: '94%' },  // 60m 
-    { top: '50%', left: '98%' },  // 80m 
-    { top: '82%', left: '94%' },  // 100m
-    { top: '97%', left: '70%' },  // 120m
-    { top: '97%', left: '45%' },  // 140m 
-    { top: '97%', left: '20%' },  // 160m 
-    { top: '82%', left: '6%' },   // 180m 
-    { top: '50%', left: '2%' },   // 200m 
-    { top: '18%', left: '6%' },   // 220m (Khelif Gold)
-    { top: '6%', left: '12%' },   // 240m
+    { top: '3%', left: '20%' },
+    { top: '3%', left: '45%' },
+    { top: '3%', left: '70%' },
+    { top: '18%', left: '94%' },
+    { top: '50%', left: '98%' },
+    { top: '82%', left: '94%' },
+    { top: '97%', left: '70%' },
+    { top: '97%', left: '45%' },
+    { top: '97%', left: '20%' },
+    { top: '82%', left: '6%' },
+    { top: '50%', left: '2%' },
+    { top: '18%', left: '6%' },
+    { top: '6%', left: '12%' },
 ];
 
-/* ── INJECT 3D MARKERS ── */
+/* ── INJECT 3D MARKERS (visual) + SR LIST (accessible) ── */
 const stadiumEl = document.getElementById('stadium');
+const srList = document.getElementById('sr-pub-list');
 let activeMarker = null;
 
 DATA.forEach((paper, index) => {
+    // ── VISUAL MARKER ──
     const marker = document.createElement('div');
     marker.className = 'track-marker';
     marker.style.top = POSITIONS[index].top;
     marker.style.left = POSITIONS[index].left;
+    marker.setAttribute('role', 'button');
+    marker.setAttribute('tabindex', '0');
+    marker.setAttribute('aria-label', `${paper.year}: ${paper.title} — ${paper.distance} mark`);
     
-    // Highlight Khelif 2025 Node (Gold)
     if (paper.distance === "220m") {
         marker.style.borderColor = "#ffd700";
         marker.style.background = "#ffd700";
@@ -471,19 +525,18 @@ DATA.forEach((paper, index) => {
     
     marker.innerHTML = `${paper.year}<span>${paper.distance}</span>`;
     marker.dataset.tags = paper.tags.join(',');
+    marker.dataset.index = index;
     
-    marker.addEventListener('click', () => {
+    function activateMarker() {
         if(activeMarker) {
-            // Restore previous active marker color
-            if(activeMarker.innerHTML.includes("220m")) {
-                 activeMarker.style.background = "#ffd700";
-                 activeMarker.style.color = "#111";
+            if(activeMarker.dataset.index === '11') {
+                activeMarker.style.background = "#ffd700";
+                activeMarker.style.color = "#111";
             } else {
-                 activeMarker.classList.remove('active');
+                activeMarker.classList.remove('active');
             }
         }
         
-        // Highlight new active marker
         if (paper.distance === "220m") {
             marker.style.background = "#fff";
             marker.style.color = "#ffd700";
@@ -493,44 +546,68 @@ DATA.forEach((paper, index) => {
         
         activeMarker = marker;
         openSidebar(paper);
+    }
+    
+    marker.addEventListener('click', activateMarker);
+    marker.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            activateMarker();
+        }
     });
     
     stadiumEl.appendChild(marker);
+
+    // ── SCREEN-READER LIST ITEM ──
+    const li = document.createElement('li');
+    const srBtn = document.createElement('button');
+    srBtn.textContent = `${paper.year} (${paper.distance}): ${paper.title} — ${paper.ref}`;
+    srBtn.style.cssText = 'background:none;border:none;cursor:pointer;text-align:left;font-size:14px;padding:6px 0;color:var(--oxford);text-decoration:underline;';
+    srBtn.addEventListener('click', () => {
+        activateMarker();
+    });
+    li.appendChild(srBtn);
+    srList.appendChild(li);
 });
 
 function openSidebar(paper) {
     document.getElementById('panel-empty').style.display = 'none';
-    document.getElementById('panel-content').style.display = 'flex';
-    document.getElementById('distance-label').textContent = `${paper.distance} Mark • Academic Timeline`;
+    const panelContent = document.getElementById('panel-content');
+    panelContent.style.display = 'flex';
+    document.getElementById('distance-label').textContent = `${paper.distance} Mark \u2022 Academic Timeline`;
     
-    document.getElementById('panel-body').innerHTML = `
-        <article class="pub-card">
+    const panelBody = document.getElementById('panel-body');
+    panelBody.innerHTML = `
+        <article class="pub-card" aria-label="Publication: ${paper.title}">
             <span class="pub-year">${paper.year}</span>
             <h3 class="pub-title">${paper.title}</h3>
             <p class="pub-ref">${paper.ref}</p>
             
-            <div class="section-title">Peer-Reviewed Abstract</div>
-            <p class="pub-summary">${paper.summary}</p>
+            <div class="section-title" id="abstract-heading-${paper.distance}">Peer-Reviewed Abstract</div>
+            <p class="pub-summary" aria-labelledby="abstract-heading-${paper.distance}">${paper.summary}</p>
             
-            <div class="contrib">
-                <div class="section-title">Theoretical Contribution to Knowledge</div>
-                <p>${paper.contribution}</p>
+            <div class="contrib" role="note">
+                <div class="section-title" id="contrib-heading-${paper.distance}">Theoretical Contribution to Knowledge</div>
+                <p aria-labelledby="contrib-heading-${paper.distance}">${paper.contribution}</p>
             </div>
             
-            <a href="${paper.url}" target="_blank" class="pub-link">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+            <a href="${paper.url}" target="_blank" rel="noopener noreferrer" class="pub-link" aria-label="Read full paper: ${paper.title} — opens in new tab">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="margin-right: 6px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
                 Read Full Paper via ORCID / Publisher
             </a>
         </article>
     `;
     
+    // Move focus to the panel body so screen readers announce the new content
+    panelBody.focus();
+    
     // Update Scoreboard Text
-    document.querySelector('.led-highlight').textContent = `> DATA LOADED: ${paper.year} (${paper.distance})`;
+    document.getElementById('scoreboard-status').textContent = `> DATA LOADED: ${paper.year} (${paper.distance})`;
 }
 
 function closePanel() {
     if(activeMarker) {
-         if(activeMarker.innerHTML.includes("220m")) {
+         if(activeMarker.dataset.index === '11') {
              activeMarker.style.background = "#ffd700";
              activeMarker.style.color = "#111";
          } else {
@@ -540,32 +617,44 @@ function closePanel() {
     activeMarker = null;
     document.getElementById('panel-empty').style.display = 'flex';
     document.getElementById('panel-content').style.display = 'none';
-    document.querySelector('.led-highlight').textContent = `> AWAITING USER INPUT...`;
+    document.getElementById('scoreboard-status').textContent = `> AWAITING USER INPUT...`;
 }
 
 /* ── FILTER SYSTEM ── */
+function activatePill(pill) {
+    const theme = pill.dataset.theme;
+    const markers = document.querySelectorAll('.track-marker');
+    
+    markers.forEach(m => {
+        if(m.dataset.tags && m.dataset.tags.includes(theme)) {
+            m.style.opacity = '1';
+            m.style.transform = 'translate(-50%, -150%) rotateZ(15deg) rotateX(-52deg) scale(1.15)';
+            m.style.borderColor = '#ffd700';
+            if(m.dataset.index === '11') { m.style.borderColor = "#fff"; }
+        } else {
+            m.style.opacity = '0.2';
+            m.style.transform = 'translate(-50%, -150%) rotateZ(15deg) rotateX(-52deg) scale(0.85)';
+            m.style.borderColor = '#fff';
+        }
+    });
+    
+    document.getElementById('clear-btn').style.display = 'inline-block';
+    document.querySelectorAll('.pill').forEach(p => {
+        p.classList.remove('active');
+        p.setAttribute('aria-pressed', 'false');
+    });
+    pill.classList.add('active');
+    pill.setAttribute('aria-pressed', 'true');
+    document.getElementById('scoreboard-status').textContent = `> FILTER ENGAGED: ${theme.toUpperCase()}`;
+}
+
 document.querySelectorAll('.pill').forEach(pill => {
-    pill.addEventListener('click', () => {
-        const theme = pill.dataset.theme;
-        const markers = document.querySelectorAll('.track-marker');
-        
-        markers.forEach(m => {
-            if(m.dataset.tags.includes(theme)) {
-                m.style.opacity = '1';
-                m.style.transform = 'translate(-50%, -150%) rotateZ(15deg) rotateX(-52deg) scale(1.15)';
-                m.style.borderColor = '#ffd700';
-                if(m.innerHTML.includes("220m")) { m.style.borderColor = "#fff"; }
-            } else {
-                m.style.opacity = '0.2';
-                m.style.transform = 'translate(-50%, -150%) rotateZ(15deg) rotateX(-52deg) scale(0.85)';
-                m.style.borderColor = '#fff';
-            }
-        });
-        
-        document.getElementById('clear-btn').style.display = 'inline-block';
-        document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
-        pill.classList.add('active');
-        document.querySelector('.led-highlight').textContent = `> FILTER ENGAGED: ${theme.toUpperCase()}`;
+    pill.addEventListener('click', () => activatePill(pill));
+    pill.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            activatePill(pill);
+        }
     });
 });
 
@@ -573,7 +662,7 @@ function clearTheme() {
     document.querySelectorAll('.track-marker').forEach(m => {
         m.style.opacity = '1';
         m.style.transform = 'translate(-50%, -150%) rotateZ(15deg) rotateX(-52deg) scale(1)';
-        if(m.innerHTML.includes("220m")) {
+        if(m.dataset.index === '11') {
             m.style.color = "#111";
             m.style.borderColor = "#ffd700";
         } else {
@@ -582,8 +671,11 @@ function clearTheme() {
         }
     });
     document.getElementById('clear-btn').style.display = 'none';
-    document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
-    document.querySelector('.led-highlight').textContent = `> AWAITING USER INPUT...`;
+    document.querySelectorAll('.pill').forEach(p => {
+        p.classList.remove('active');
+        p.setAttribute('aria-pressed', 'false');
+    });
+    document.getElementById('scoreboard-status').textContent = `> AWAITING USER INPUT...`;
 }
 
 /* ── CSV EXPORT ── */
