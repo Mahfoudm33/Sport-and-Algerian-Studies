@@ -1,5 +1,5 @@
 # Sport, Society & Culture in Algeria: A Digital Research Archive
-### Project Lead: Prof. Mahfoud Amara (Associate Professor, Qatar University)
+### Project Lead: Dr. Mahfoud Amara (Associate Professor, Qatar University)
 
 [![Live Platform](https://img.shields.io/badge/Status-Live-green)](https://mahfoudm33.github.io/Sport-and-Algerian-Studies/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
@@ -52,4 +52,4 @@ This project is licensed under the MIT License.
 > Amara, M. (2026). *Sport, Society & Culture in Algeria: A Digital Research Archive*. GitHub Pages. Available at: https://mahfoudm33.github.io/Sport-and-Algerian-Studies/
 
 ---
-*For academic inquiries or collaborations, please contact Prof. Mahfoud Amara through Qatar University.*
+*For academic inquiries or collaborations, please contact Dr. Mahfoud Amara through Qatar University.*
